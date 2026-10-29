@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WalkMeIn · The ultimate experience for your clients</title>
+<meta name="description" content="A 3D model of every apartment in your project: buyers understand the layout, walk through the home and arrive at the sales office ready to decide. One payment, no subscription.">
+<meta name="theme-color" content="#1d2621">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://walkmein.com/"><link rel="alternate" hreflang="ar" href="https://walkmein.com/ar/"><link rel="alternate" hreflang="en" href="https://walkmein.com/en/">
+<link rel="stylesheet" href="../style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
+<style>:root{--f:"Inter","Heebo",system-ui,Arial,sans-serif}/* LTR overrides for the English page (the base stylesheet is authored RTL) */
+@media (min-width:900px){.hsteps li{text-align:left}#voice .pbot{text-align:left}.qn{left:auto;right:40px}}
+.qn{left:auto;right:22px}
+.wa small{text-align:left}.tnum{text-align:left}.lform input[dir=ltr]{text-align:left}
+.pvtx li::before{right:auto;left:0}
+.chart{transform:none}
+.rooms2 em{text-align:right}
+</style>
+</head>
+<body>
+<aside class="side" aria-hidden="true">
+  <p class="big">Walk<br>MeIn</p>
+  <p class="cap">REAL ESTATE<br><span>Apartment experience</span></p>
+</aside>
+
+<div class="app" id="app">
+    <header class="bar" id="bar">
+      <a class="logo" href="./">WalkMeIn</a>
+      <nav class="dnav" aria-label="Navigation"><a href="#flow">How it works</a><a href="#model">The model</a><a href="#voice">Audio tour</a><a href="#why">Dashboard</a><a href="#pricing">Pricing</a></nav>
+      <div class="bends"><a class="lang" href="../" hreflang="he" lang="he">HE</a><a class="lang" href="../ar/" hreflang="ar" lang="ar">عربي</a><a class="dcta" href="#contact" style="white-space:nowrap">Book demo</a><button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><i></i><i></i></button></div>
+    </header>
+<div class="menu" id="menu" aria-hidden="true">
+  <img class="mmodel" src="../img/i-model.webp" alt="">
+  <nav class="mlist" aria-label="Sections">
+    <a href="#flow"><small>01</small>How it works</a>
+    <a href="#model"><small>02</small>The model in action</a>
+    <a href="#voice"><small>03</small>Narrated tour</a>
+    <a href="#why"><small>04</small>Your dashboard</a>
+    <a href="#feats"><small>05</small>All features</a>
+    <a href="#how2" class="hw"><small>06</small>How we work</a>
+    <a href="#pricing"><small>07</small>Pricing</a>
+    <a href="#faq"><small>08</small>FAQ</a>
+  </nav>
+  <div class="mfoot"><a class="slide" href="#contact"><span class="knob"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span><b>Book a demo</b><em>›››</em></a><p>One payment · No subscription · Hosting included</p></div>
+</div>
+
+  <!-- 1 · hero -->
+  <section class="hero" id="top">
+    <picture><img class="photo" src="../img/hero-wide.webp" alt="Modern residential building at dusk, windows lit"></picture>
+    <svg class="apts" id="apts" viewBox="0 0 2688 1520" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g><path class="ap av" data-n="9" data-f="5" data-cx="789" data-cy="407" d="M635,270 L943,342 L943,536 L635,481Z"/><path class="ap av" data-n="10" data-f="5" data-cx="1097" data-cy="471" d="M943,342 L1251,414 L1251,591 L943,536Z"/><path class="ap av" data-n="7" data-f="4" data-cx="789" data-cy="606" d="M635,481 L943,536 L943,722 L635,684Z"/><path class="ap av" data-n="8" data-f="4" data-cx="1097" data-cy="652" d="M943,536 L1251,591 L1251,760 L943,722Z"/><path class="ap av" data-n="5" data-f="3" data-cx="789" data-cy="787" d="M635,684 L943,722 L943,889 L635,853Z"/><path class="ap av" data-n="6" data-f="3" data-cx="1097" data-cy="824" d="M943,722 L1251,760 L1251,926 L943,889Z"/><path class="ap av" data-n="3" data-f="2" data-cx="789" data-cy="971" d="M635,853 L943,889 L943,1077 L635,1064Z"/><path class="ap av" data-n="4" data-f="2" data-cx="1097" data-cy="996" d="M943,889 L1251,926 L1251,1090 L943,1077Z"/></g><g id="apin" class="apin"><line id="apl" x1="0" y1="0" x2="0" y2="0"/><circle id="apc" r="9"/></g></svg>
+    <div class="aptag" id="aptag"><div class="atop"><span class="av2" id="apav">D</span><div><b id="aptb">Daniel from Miami</b><small id="aptk">Viewed apartment 7</small></div></div><span class="st" id="apts"><i></i>Now</span></div>
+        <div class="htxt">
+      <p class="for" id="forLine" hidden></p>
+      <h1>The ultimate experience<br>for your clients.</h1>
+      <p class="lead">A 3D model of every apartment in your project. Buyers get it, walk through it and show up to the meeting ready to decide.</p>
+      <a class="slide" href="#flow"><span class="knob"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><b>Explore the experience</b><em>›››</em></a>
+    </div>
+  </section>
+
+  <!-- the problem today -->
+  <section class="story pain-s" id="pain">
+    <div class="sin">
+      <header class="shd"><h2>The biggest decision of their lives.<br>Based on a flat floor plan.</h2><p>Buyers get a PDF, a few renderings and one sentence about each room. From that, they’re supposed to picture what it will feel like to live there.</p></header>
+      <div class="pgrid">
+        <article class="pp">
+          <div class="pg pg1" aria-hidden="true">
+            <svg class="fp" viewBox="0 0 200 140"><rect x="4" y="4" width="192" height="132" rx="2"/><path d="M114 4v132M4 84h110M114 54h82M64 84v52"/><path class="door" d="M40 84a14 14 0 0 1 14-14"/></svg>
+            <span class="dim"><i></i><b>5.60</b></span>
+            <span class="qm q1">?</span><span class="qm q2">?</span><span class="qm q3">?</span>
+          </div>
+          <h3>Not everyone can read a floor plan</h3><p>Lines and dimensions don’t add up to a room, a sense of space or a feeling.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg2" aria-hidden="true">
+            <div class="docs"><div class="doc"><i></i><s></s><s></s><small>Project A</small></div><div class="doc"><i></i><s></s><s></s><small>Project B</small></div><div class="doc"><i></i><s></s><s></s><small>Project C</small></div><div class="doc"><i></i><s></s><s></s><small>Project D</small></div></div>
+            <span class="stamp">Same old</span>
+          </div>
+          <h3>Every project looks the same</h3><p>A floor plan, a rendering and a short blurb. Buyers jump from project to project without understanding a single apartment.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg3" aria-hidden="true">
+            <div class="cal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="prog"><span>Virtual tour production</span><b class="pct"></b><div><i></i></div></div>
+            <div class="cost"><span>Budget</span><div><i></i></div></div>
+          </div>
+          <h3>A full virtual tour? Expensive and slow</h3><p>A big budget and weeks of production, just to get the sofa and the countertops right.</p>
+        </article>
+      </div>
+      <p class="pq"><b>“But how will it feel?”</b><span>The question we’ve heard from thousands of buyers over the years</span></p>
+      <p class="bridge">Buyers don’t need another rendering. They need someone to walk them through the apartment.</p>
+    </div>
+  </section>
+
+  <!-- what changes: one band per audience, three explained feature cards each -->
+  <section class="story sol-s" id="solve">
+    <div class="sin">
+      <header class="shd"><h2>An experience that explains the apartment.<br>In days, not months.</h2><p>WalkMeIn turns a sales floor plan into a tour buyers actually understand. Developers go live fast, and sales reps know exactly who they’re talking to.</p></header>
+
+      <div class="band b-buy">
+        <div class="bhd"><span class="bno">01</span><div><span class="who">For buyers</span><h3>They understand the apartment, not just see it</h3><p>Instead of guessing from a PDF, buyers walk around the apartment, hear about every room and see how it will look.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-model" aria-hidden="true"><span class="ring"></span><img src="../img/i-model.webp" alt=""><span class="drag">↔ Drag to rotate</span></div>
+            <div class="ftx"><b>Spin the apartment 360°</b><p>A 3D model of the apartment. See which way each room faces, where the balcony is and how big the living room is compared to the rest.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-route" aria-hidden="true"><img src="../img/f-plan.webp" alt="">
+              <svg viewBox="0 0 960 720" preserveAspectRatio="xMidYMid slice"><path class="route" d="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/><circle class="vdot2" r="16"><animateMotion dur="10s" repeatCount="indefinite" path="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/></circle></svg>
+              <div class="vcap"><span class="pl">▶</span><div class="vtx"><i>“This is the balcony, 14 m² facing the view…”</i><i>“The living room gets light from two sides…”</i><i>“The kitchen opens onto the dining area…”</i><i>“And here’s the primary suite…”</i></div><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+            <div class="ftx"><b>An audio tour guides them</b><p>A warm voiceover takes them from room to room and explains what they’re seeing, like an agent walking them through the apartment.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-gal" aria-hidden="true"><img src="../img/f-rooms.webp" alt=""><img src="../img/f-tour.webp" alt=""><img src="../img/f-orbit.webp" alt=""><span class="glab"><i>Living room</i><i>Kitchen</i><i>Bedroom</i></span></div>
+            <div class="ftx"><b>A rendering for every room</b><p>Click a room to see a realistic rendering of it, without the developer having to produce a full 3D tour.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-dev">
+        <div class="bhd"><span class="bno">02</span><div><span class="who">For developers</span><h3>Live in days, not months</h3><p>We don’t fuss over countertop colors or sofa models. We focus on what buyers need: space, proportions and flow.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-gantt" aria-hidden="true"><div class="gw"><span>Week</span><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></div>
+              <div class="gr"><span>Virtual tour</span><div><b class="slow"></b></div></div>
+              <div class="gr me"><span>WalkMeIn</span><div><b class="fast"></b><em>✓ Live</em></div></div></div>
+            <div class="ftx"><b>Produced in days</b><p>A full virtual tour takes two months. WalkMeIn is ready within days of receiving your floor plans.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-race" aria-hidden="true"><div class="lane"><span>Competitor</span><div><i class="car them"></i></div></div><div class="lane me"><span>You</span><div><i class="car us"></i></div></div><span class="flag">🏁 Live</span></div>
+            <div class="ftx"><b>Beat the competition</b><p>You’re already showing buyers a complete experience while other projects are still in production or stuck with a PDF.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-time" aria-hidden="true"><span class="tl">Average time on the floor plans page</span><b class="tnum" data-to="252">0:00</b><div class="tb2"><div><i class="b1"></i><small>Standard PDF</small></div><div><i class="b2"></i><small>With WalkMeIn</small></div></div></div>
+            <div class="ftx"><b>Buyers stay longer</b><p>Instead of glancing at a PDF and leaving, buyers tour, click and compare apartments. More time, more interest.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-sale">
+        <div class="bhd"><span class="bno">03</span><div><span class="who">For sales teams</span><h3>Know what buyers saw before you pick up the phone</h3><p>Every visit is tracked. Leads arrive with the full picture, and your sales rep comes to the call prepared.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-heat" aria-hidden="true"><img src="../img/f-plan.webp" alt="">
+              <span class="blob bl1"></span><span class="blob bl2"></span><span class="blob bl3"></span>
+              <span class="hl hl1"><i></i>Living room · 3:40 min</span><span class="hl hl2"><i></i>Primary bedroom · 2:05</span><span class="hl hl3"><i></i>Kitchen · 1:12</span></div>
+            <div class="ftx"><b>A heatmap of every visit</b><p>See which rooms buyers spent the most time in and what caught their eye. Now you know what to talk about.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-link" aria-hidden="true"><div class="url"><span class="typ">walkmein.com/p/dani</span><i class="caret"></i></div><div class="wmsg"><span class="wi">✆</span><div><b>Sent to Daniel</b><small>Hi Daniel, here’s your apartment in 3D</small></div><span class="ticks">✓✓</span></div></div>
+            <div class="ftx"><b>A personal link for every client</b><p>Send each buyer their own link on WhatsApp, and see when they opened it, how long they watched and what they came back to.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-lead" aria-hidden="true"><div class="nt"><span class="lav">D</span><div><b>New lead · Daniel Carter</b><small>Interested in a 4-room, type C</small></div></div>
+              <p class="ll"><span>Rooms visited</span><b>6 of 8</b></p><p class="ll"><span>Most time</span><b>Living room</b></p><p class="ll"><span>Visits</span><b>3</b></p><p class="ll"><span>Source</span><b>Facebook</b></p></div>
+            <div class="ftx"><b>Leads that come with a history</b><p>Anyone who leaves their details on the site lands in your CRM with everything they viewed. No pointless warm-up questions.</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · flow dashboard -->
+  <section class="sheet" id="flow">
+    <h2 class="sh big">From a sales floor plan<em>to an experience buyers remember</em></h2>
+    <p class="intro">You send the floor plan. We turn it into a 3D model, and buyers get one link to spin, tour and understand the apartment.</p>
+    <div class="flow"><span class="track" aria-hidden="true"><i></i></span>
+      <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M27 24 C27 34 40 36 44 40"/><path d="M73 24 C73 34 60 36 56 40"/>
+        <path d="M44 62 C40 66 27 68 27 76"/><path d="M56 62 C60 66 73 68 73 76"/>
+      </svg>
+      <div class="node n1"><span class="sn">1</span><img src="../img/i-plan.webp" alt=""><small>Send</small><b>PDF floor plan</b></div>
+      <div class="node n2"><span class="sn">2</span><img src="../img/i-building.webp" alt=""><small>For all</small><b>unit types</b></div>
+      <div class="node big n3"><span class="sn">3</span><img src="../img/i-model.webp" alt=""><small>Get a model</small><b>360°</b></div>
+      <div class="node n4"><span class="sn">4</span><img src="../img/i-tour.webp" alt=""><small>with</small><b>Guided tour</b></div>
+      <div class="node n5"><span class="sn">5</span><img src="../img/i-phone.webp" alt=""><small>Shared via</small><b>WhatsApp link</b></div>
+    </div>
+  </section>
+
+  <!-- 3 · pinned 3D: the model stays, the feature cards swap under it -->
+  <section class="pin" id="model" data-pin>
+    <div class="stick">
+      <div class="phead"><div><h2 class="sh big">Spin it. Check it. Step inside.<em>Five ways buyers get to know the apartment</em></h2></div><p class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></p></div>
+      <div class="live card">
+        <canvas id="gl" aria-label="A live 3D model of the apartment"></canvas>
+        <p class="tag t1">Living room and kitchen<b>28 m²</b></p>
+        <p class="tag t2">Balcony<b>18 m²</b></p>
+        <p class="tag t3">Primary suite<b>14 m²</b></p>
+        <p class="hint" id="hint"><svg viewBox="0 0 24 24"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3"/></svg>Drag to rotate</p>
+      </div>
+      <div class="deck" id="deck"><article class="dcard" data-i="0"><span class="di"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><div><small>1 / 5</small><b>Free 360° rotation</b><p>Drag and spin. Every corner of the apartment, from every angle.</p></div></article><article class="dcard" data-i="1"><span class="di"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><div><small>2 / 5</small><b>Floor plan and 3D</b><p>A top-down view like the sales floor plan, and one click takes you back to the model.</p></div></article><article class="dcard" data-i="2"><span class="di"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><div><small>3 / 5</small><b>Rooms and dimensions</b><p>Click a room to highlight it and see its area.</p></div></article><article class="dcard" data-i="3"><span class="di"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><div><small>4 / 5</small><b>Layered view</b><p>Floor, walls and furniture. See how the apartment is put together.</p></div></article><article class="dcard" data-i="4"><span class="di"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><small>5 / 5</small><b>At eye level</b><p>Step into the living room and look out toward the balcony.</p></div></article></div>
+    </div>
+  </section>
+
+  <!-- 4 · narrated walk-through on the realistic model -->
+  <section class="sheet" id="voice">
+    <h2 class="sh big">Guided apartment tour<em>Buyers walk through the apartment while a professional voice explains each room</em></h2>
+    <p class="vp">Buyers walk through the apartment room by room while a professional voice explains what they’re seeing. Here’s how it looks in the Marc Chagall project by Guy & Doron Levy.</p>
+    <div class="player card" id="player">
+      <video id="tourVid" src="../media/tour.mp4" poster="../media/tour.jpg" muted loop playsinline preload="metadata" aria-label="Guided tour of a penthouse living room at Marc Chagall"></video>
+      <div class="ptop"><span class="lv"><i></i>Guided tour</span><span class="stop">Stop 2 of 10 · Living and dining</span></div>
+      <div class="pbot">
+        <p class="sub2" id="sub2"><span>This</span> <span>is</span> <span>the heart</span> <span>of the</span> <span>home:</span> <span>a</span> <span>72-square-meter</span> <span>open space</span> <span>connecting</span> <span>the living room,</span> <span>dining</span> <span>area</span> <span>and</span> <span>kitchen.</span> <span>Three-meter</span> <span>ceilings,</span> <span>double-glazed</span> <span>aluminum</span> <span>windows</span> <span>with</span> <span>electric</span> <span>shading,</span> <span>and a</span> <span>smart-home</span> <span>system</span> <span>that</span> <span>controls</span> <span>the air</span> <span>conditioning,</span> <span>shutters</span> <span>and lighting.</span></p>
+        <div class="prow">
+          <button class="snd" id="snd" aria-pressed="false" aria-label="Turn on narration"><svg class="on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 10l4 4M21 10l-4 4"/></svg></button>
+          <canvas class="vwave" id="vwave" aria-hidden="true"></canvas>
+          <span class="vt" id="vt">0:00</span>
+        </div>
+        <p class="tapme" id="tapme">Turn on sound to hear the narration</p>
+      </div>
+    </div>
+    <div class="stops"><span class="done">Entrance</span><span class="cur">Living room</span><span>Kitchen</span><span>West balcony</span><span>Bedrooms</span><span>Primary suite</span></div>
+  </section>
+
+  <!-- 4b · why it sells -->
+  <section class="sheet" id="why">
+    <h2 class="sh big">What you see once buyers are inside<em>Project dashboard: who viewed, for how long, and which apartment</em></h2>
+    <div class="dash" id="dash">
+      <div class="dtop">
+        <div class="card kpi"><small>Model views this week</small><b data-n="1284">0</b><span class="up">+32% vs. last week</span></div>
+        <div class="card kpi"><small>Average viewing time</small><b data-n="4.6" data-d="1" data-s=" min">0</b><span class="up">3x a PDF page</span></div>
+        <div class="card kpi"><small>WhatsApp shares</small><b data-n="217">0</b><span class="up">The link gets passed to partners</span></div>
+        <div class="card kpi y"><small>Left details for a meeting</small><b data-n="64">0</b><span class="up">From inside the guided tour</span></div>
+      </div>
+      <div class="card dmodel"><div class="dmh"><b>Most viewed apartments</b><span class="live2"><i></i>Live</span></div><img src="../img/f-rooms.webp" alt=""><p class="hot h1"><b>Apartment 8</b>412 views</p><p class="hot h2"><b>Apartment 12</b>356 views</p><p class="hot h3"><b>Penthouse</b>298 views</p></div>
+      <div class="card chartc" id="chartc">
+        <div class="chd"><div><small>Views and inquiries by day</small><b>Last 14 days</b></div></div>
+        <svg class="bars" id="bars" viewBox="0 0 280 120" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <p class="legend"><span class="ly"></span>Views<span class="lg2"></span>Inquiries</p>
+      </div>
+      <div class="card src"><b>Where buyers come from</b>
+        <div class="donut"><svg viewBox="0 0 42 42" aria-hidden="true"><circle class="dbg" cx="21" cy="21" r="15.9"/><circle class="seg s1" cx="21" cy="21" r="15.9" style="--v:46;--o:0"/><circle class="seg s2" cx="21" cy="21" r="15.9" style="--v:27;--o:46"/><circle class="seg s3" cx="21" cy="21" r="15.9" style="--v:17;--o:73"/><circle class="seg s4" cx="21" cy="21" r="15.9" style="--v:10;--o:90"/></svg><p><b>46%</b><small>WhatsApp</small></p></div>
+        <ul class="dl"><li><i class="c1"></i>WhatsApp<em>46%</em></li><li><i class="c2"></i>Paid campaign<em>27%</em></li><li><i class="c3"></i>Project website<em>17%</em></li><li><i class="c4"></i>Sales office<em>10%</em></li></ul>
+      </div>
+      <div class="card rooms2"><b>Where buyers linger</b>
+        <p><span>Living room and kitchen</span><i style="--w:86%"></i><em>1:48</em></p>
+        <p><span>Balcony</span><i style="--w:64%"></i><em>1:12</em></p>
+        <p><span>Primary suite</span><i style="--w:52%"></i><em>0:58</em></p>
+        <p><span>Extra room</span><i style="--w:30%"></i><em>0:34</em></p>
+      </div>
+      <div class="card feed"><b>Recent activity</b>
+        <p><i class="g"></i>A buyer from Limassol finished a tour of apartment 8<small>2 min ago</small></p>
+        <p><i></i>Apartment 12 link shared on WhatsApp<small>6 min ago</small></p>
+        <p><i class="y"></i>New inquiry: penthouse, floor 7<small>11 min ago</small></p>
+      </div>
+    </div>
+    <p class="note2">Dashboard data is for illustration only.</p>
+  </section>
+
+  <!-- 4c · all features, dark -->
+  <section class="feats2" id="feats">
+    <h2 class="sh big">Everything in the platform<em>It’s all in one link</em></h2>
+    <div class="fwrap">
+      <div class="fvis"><span class="ring"></span><img class="fimg" id="fimg" src="../img/f-orbit.webp" alt=""><img class="ffloat" src="../img/i-model.webp" alt=""><p class="fcount"><b>11</b>features in one experience</p></div>
+      <div class="flist">
+        <div class="acc" id="acc"><details class="fi" open data-img="../img/f-orbit.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><b>Free 360° rotation</b><i class="pm"></i></summary><p>Drag, spin and zoom into every corner of the apartment. Works with a finger on mobile and a mouse on desktop.</p></details><details class="fi" data-img="../img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><b>Floor plan and 3D</b><i class="pm"></i></summary><p>Switch between the original sales floor plan and the model in one click, connecting the drawing to reality.</p></details><details class="fi" data-img="../img/f-rooms.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><b>Rooms and dimensions</b><i class="pm"></i></summary><p>A list of rooms with areas and dimensions. Click a room to highlight it in the model.</p></details><details class="fi" data-img="../img/f-explode.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><b>Layered view</b><i class="pm"></i></summary><p>Floor, walls and furniture as separate layers, so buyers can see how the apartment is built.</p></details><details class="fi" data-img="../media/tour.jpg"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><b>Eye-level walkthrough</b><i class="pm"></i></summary><p>Step inside and look around, just like visiting a model apartment.</p></details><details class="fi" data-img="../img/f-tour.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>Narrated guided tour</b><i class="pm"></i></summary><p>A ready-made route through the rooms, with a professional English voiceover that explains every space.</p></details><details class="fi" data-img="../img/i-building.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><b>Floor and apartment selection</b><i class="pm"></i></summary><p>A rendering of the building with its floors and apartments. Pick an apartment and jump straight into its 3D model.</p></details><details class="fi" data-img="../img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><b>Inquiry form in every apartment</b><i class="pm"></i></summary><p>Buyers leave their details from inside the apartment they like, and the lead arrives with the apartment name.</p></details><details class="fi" data-img="../img/i-phone.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg></span><b>WhatsApp and website link</b><i class="pm"></i></summary><p>One link to send on WhatsApp, embed on the project website and show on the sales office screen.</p></details><details class="fi" data-img="../img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><b>More languages</b><i class="pm"></i></summary><p>The same experience in Arabic, Russian or French, for buyers from abroad.</p></details><details class="fi" data-img="../img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><b>CRM integration</b><i class="pm"></i></summary><p>Inquiries go straight into your system, along with the apartment the buyer viewed.</p></details></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · how it works, simulated step by step -->
+  <section class="pin" id="how" data-pin>
+    <div class="stick">
+      <h2 class="sh">How it works<em>From floor plan to model, in days</em></h2>
+      <div class="hstage card" id="hstage">
+        <div class="hs s1"><div class="drop"><img src="../img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>apartment_12.pdf<span class="pbar"><i></i></span></p></div></div>
+        <div class="hs s2"><div class="build"><img class="ghost" src="../img/i-model.webp" alt=""><img class="solid" src="../img/i-model.webp" alt=""><span class="scan"></span></div><p class="cap">Built to the plan’s dimensions</p></div>
+        <div class="hs s3"><div class="review"><img src="../img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>Move the kitchen door</p><p class="pinx p2 done"><b>✓</b>Updated</p></div></div>
+        <div class="hs s4"><div class="live2"><img src="../img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>Sent on WhatsApp ✓✓</small></p></div></div>
+      </div>
+      <ol class="hsteps" id="hsteps">
+        <li><i>1</i><b>Send floor plans</b><p>PDF or DWG for each unit type.</p></li>
+        <li><i>2</i><b>We build the model</b><p>True-to-plan dimensions, clean furniture.</p></li>
+        <li><i>3</i><b>Feedback round</b><p>A review link, and we make the updates.</p></li>
+        <li><i>4</i><b>Go live</b><p>A link for buyers, embedded on your site.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5b · how it works, desktop bento -->
+  <section class="sheet bento-sec" id="how2">
+    <h2 class="sh big">How it works<em>From PDF floor plan to live model, in days</em></h2>
+    <div class="bento">
+      <article class="bx b1"><span class="bn">1</span><div class="bt"><b>Send floor plans</b><p>PDF or DWG for each unit type. That’s all we need from you.</p></div><div class="bv"><img class="fly" src="../img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>apartment_12.pdf<span class="pbar"><i class="loop"></i></span></p></div></article>
+      <article class="bx b2"><span class="bn">2</span><div class="bt"><b>We build the model</b><p>True-to-plan dimensions, clean furniture and a style that fits the project.</p></div><div class="bv build2"><img class="ghost" src="../img/i-model.webp" alt=""><img class="solid" src="../img/i-model.webp" alt=""><span class="scan"></span></div></article>
+      <article class="bx b3"><span class="bn">3</span><div class="bt"><b>Feedback round</b><p>You get a review link, send your comments and we make the updates.</p></div><div class="bv rev2"><img src="../img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>Move the kitchen door</p><p class="pinx p2"><b>✓</b>Updated</p></div></article>
+      <article class="bx b4"><span class="bn">4</span><div class="bt"><b>Go live</b><p>A link for buyers, website embedding and updates throughout the sales campaign.</p></div><div class="bv"><img class="ph2" src="../img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>Sent on WhatsApp ✓✓</small></p></div></article>
+      <article class="bx b5"><img src="../img/i-key.webp" alt=""><div><small>From floor plan to live model</small><b>Days, not months</b></div><a class="cta2" href="#contact">Book a demo</a></article>
+    </div>
+  </section>
+
+  <section class="sheet" id="meter">
+    <div class="card meter">
+      <div class="mh"><img src="../img/i-key.webp" alt=""><div><small>From floor plan to finished model</small><b>Days <sup>not months</sup></b></div><a class="arrow" href="#contact" aria-label="Book a demo"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M8 7h9v9"/></svg></a></div>
+      <div class="bar2"><i></i></div>
+      <p class="mf"><span>Send a floor plan</span><span>Model live</span></p>
+    </div>
+  </section>
+
+  <!-- 6 · pricing -->
+  <section class="sheet" id="pricing">
+    <h2 class="sh big">Build your package<em>Pay once. The more apartments, the less each one costs</em></h2>
+    <div class="calc" id="calc">
+      <div class="cfg">
+        <div class="card base"><span class="bi2"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg></span><div><b>Project base · ₪1,490</b><p>Your first unit type, a shareable link, website embed, inquiry form and hosting until the end of sales.</p></div></div>
+        <div class="card types"><div class="th"><div><b>How many unit types?</b><p>Each additional type costs less than the last</p></div><div class="step"><button type="button" id="minus" aria-label="Fewer">−</button><output id="nTypes">4</output><button type="button" id="plus" aria-label="More">+</button></div></div>
+          <input type="range" id="range" min="1" max="20" value="4" aria-label="Number of unit types">
+          <div class="tiers"><span data-t="1"><b>2–3</b>₪890 per type</span><span data-t="2"><b>4–8</b>₪690 per type</span><span data-t="3"><b>9 and up</b>₪490 per type</span></div>
+        </div>
+        <div class="adds" id="adds">
+          <label class="card add"><input type="checkbox" data-k="real" data-per="400"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg></span><span class="at"><b>Realistic rendering</b><small>Materials, light and window views</small><button type="button" class="peek" data-peek="real">See how it looks<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪400 per type</em></label>
+          <label class="card add"><input type="checkbox" data-k="tour" data-fix="1200"><span class="ai"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="at"><b>Narrated guided tour</b><small>Script and voice for the whole project</small><button type="button" class="peek" data-peek="tour">See how it looks<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,200</em></label>
+          <label class="card add"><input type="checkbox" data-k="bld" data-fix="1900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><span class="at"><b>Pick an apartment on the building</b><small>Floors, apartments and availability</small><button type="button" class="peek" data-peek="bld">See how it looks<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,900</em></label>
+          <label class="card add"><input type="checkbox" data-k="lang" data-fix="600"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="at"><b>Extra language</b><small>Arabic, Russian or French</small><button type="button" class="peek" data-peek="lang">See how it looks<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪600</em></label>
+          <label class="card add"><input type="checkbox" data-k="crm" data-fix="900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><span class="at"><b>CRM integration</b><small>Inquiries go straight into your system</small><button type="button" class="peek" data-peek="crm">See how it looks<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪900</em></label>
+        </div>
+      </div>
+      <aside class="card sum" id="sum">
+        <p class="sk">Your package</p>
+        <p class="tot"><span id="total">₪0</span><small>One-time payment, plus VAT</small></p>
+        <p class="per">About <b id="per">₪0</b> per unit type</p>
+        <div class="perbar"><i id="perbar"></i></div>
+        <ul id="lines"></ul>
+        <ul class="incl"><li>Hosting and maintenance until the end of sales</li><li>Floor plan updates included</li><li>No subscription, no monthly fees</li></ul>
+        <a class="slide" href="#contact" id="sumcta" role="button"><span class="knob"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></span><b>Book a demo call</b><em>›››</em></a>
+        <p class="pil">Want to start small? Pilot a single unit type for ₪990, credited in full if you continue.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 7 · faq -->
+  <section class="sheet" id="faq">
+    <h2 class="sh big">FAQ<em>Everything developers ask us</em></h2>
+    <div class="qtabs" role="tablist"><button role="tab" data-g="0" aria-selected="true">Pricing and payment<i>3</i></button><button role="tab" data-g="1" aria-selected="false">The process<i>4</i></button><button role="tab" data-g="2" aria-selected="false">The buyer experience<i>4</i></button><button role="tab" data-g="3" aria-selected="false">Marketing and leads<i>3</i></button></div>
+    <div class="qstage" id="qstage"><div class="qdeck" data-g="0"><article class="qc" data-i="0"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>Is there a monthly fee or hosting charge?</h3><p>No. Hosting, maintenance and updates are covered by the one-time payment until the project is sold out. Once it sells, you’re done.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>Can we start with one apartment?</h3><p>Yes. The ₪990 pilot covers one unit type, and if you move on to a package, the full amount is credited.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>Who owns the model?</h3><p>The model is built for your project, and you can use it across every marketing channel until sales close.</p></div></article></div><div class="qdeck" data-g="1" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>What do you need from us?</h3><p>The sales floor plans for each unit type, as PDF or DWG. If you have renderings, a logo and brand guidelines, we’ll match the model to them.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>How long does it take?</h3><p>The first unit type is usually ready within a few business days of receiving the plans. A full project depends on the number of unit types.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>What if the floor plan changes?</h3><p>We update the model. Floor plan changes and availability updates during the sales campaign are included.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>Can we choose the furniture and style?</h3><p>Yes. The furniture is tailored to your project’s audience and your brand style.</p></div></article></div><div class="qdeck" data-g="2" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>Is it a realistic rendering?</h3><p>The base model is a clean architectural model that explains the apartment: dimensions, layout and flow. The Signature package also adds a realistic mode with materials and lighting, like in the Marc Chagall project.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>Does it work on mobile?</h3><p>Yes. It’s built mobile-first and works in any modern browser, with nothing to install.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>Do buyers need to download an app?</h3><p>No. It’s a regular link that opens in the browser, from WhatsApp, email or your website.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>Who records the narration?</h3><p>A professional English voice actor, from a script we write based on the project specs and you approve.</p></div></article></div><div class="qdeck" data-g="3" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>Where is it shown?</h3><p>On a dedicated link, embedded on the project website, in landing pages and campaigns, and on the sales office screen.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>Can we embed it on our website?</h3><p>Yes. You get a simple embed code, and the model opens right inside your project page.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>How do inquiries reach us?</h3><p>From a form inside every apartment, to WhatsApp, email or straight into your CRM, with the name of the apartment the buyer viewed.</p></div></article></div></div>
+    <div class="qnav"><button id="qprev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><span id="qcount">1 / 3</span><button id="qnext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
+  </section>
+
+  <!-- 8 · contact -->
+  <section class="sheet dark" id="contact">
+    <div class="ctx">
+      <span class="ceb">Demo call · 20 minutes</span>
+      <h2 class="ch">See your project<br><em>through your buyers’ eyes.</em></h2>
+      <p class="cl">In a short call, we’ll show you the experience in action, walk you through what your sales team learns about every lead, and build a plan for your project together.</p>
+      <ul class="cpts"><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>Live demo: model, audio tour and dashboard</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>A work plan and timeline for your project</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>A clear quote based on your unit types</li></ul>
+    </div>
+    <form id="form" class="lform" novalidate>
+      <div class="lfh"><b>Book a demo call</b><span>Leave your details and we’ll get back to you to find a time that works</span></div>
+      <label class="fld"><span>Full name</span><input name="name" required autocomplete="name" placeholder="John Smith"></label>
+      <label class="fld"><span>Company / project</span><input name="company" autocomplete="organization" placeholder="Company or project name"></label>
+      <label class="fld"><span>Phone</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+1 305 000 0000" dir="ltr"></label>
+      <label class="fld"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="name@company.com" dir="ltr"></label>
+      <button class="lbtn" type="submit">Book my demo call<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="msg" id="msg" role="status"></p>
+      <p class="lsafe"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Your details stay with us</p>
+    </form>
+    <div class="fmodel"><p class="word">WALKMEIN</p><canvas id="gl2" aria-hidden="true"></canvas><p class="fnote">Your apartment, before it’s built.</p></div>
+    <footer class="foot">
+      <div class="fbrand"><b>WalkMeIn</b><p>A 3D apartment experience that sells: model, audio tour and data on every buyer.</p><a class="fcta" href="#contact">Book a demo call</a></div>
+      <nav class="fcol" aria-label="Product"><h3>Product</h3><a href="#pain">Why WalkMeIn</a><a href="#flow">How it works</a><a href="#model">The model in action</a><a href="#voice">Narrated tour</a><a href="#why">Your dashboard</a><a href="#feats">All features</a></nav>
+      <nav class="fcol" aria-label="Work with us"><h3>Work with us</h3><a href="#how2">How we work</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav>
+      <div class="fbot"><span>WalkMeIn by Elevate Digital Studio</span><a href="#top">Back to top ↑</a></div>
+    </footer>
+  </section>
+
+  <!-- floating tab bar -->
+  <nav class="tabs" id="tabs" aria-label="Navigation">
+    <a href="#top" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg><span>Home</span></a>
+    <a href="#model"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><span>The model</span></a>
+    <a href="#contact" class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Demo</span></a>
+    <a href="#pricing"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg><span>Pricing</span></a>
+    <a href="#faq"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.2v.1"/></svg><span>Questions</span></a>
+  </nav>
+</div>
+<script type="module" src="../app.en.js"></script>
+
+<!-- add-on preview -->
+<div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-labelledby="pvT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox">
+    <button class="pvx" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="pvvis" id="pvVis"></div>
+    <div class="pvtx"><span class="pvtag" id="pvTag"></span><h3 id="pvT"></h3><p id="pvD"></p><ul id="pvL"></ul>
+      <div class="pvact"><button class="pvadd" id="pvAdd"></button><span class="pvprice" id="pvP"></span></div></div>
+  </div>
+</div>
+
+<!-- lead form with the chosen package -->
+<div class="pv ldm" id="leadM" hidden role="dialog" aria-modal="true" aria-labelledby="ldT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox ldbox">
+    <button class="pvx" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="ldsum"><span class="pvtag">Your selected package</span><p class="ldtot" id="ldTot"></p><small>One-time payment, plus VAT</small><ul id="ldLines"></ul></div>
+    <form class="lform ldform" id="ldForm" novalidate>
+      <div class="lfh"><b id="ldT">Let’s book a demo call</b><span>We’ll go through your package together and see it in action</span></div>
+      <label class="fld"><span>Full name</span><input name="name" required autocomplete="name" placeholder="John Smith"></label>
+      <label class="fld"><span>Company / project</span><input name="company" autocomplete="organization" placeholder="Company or project name"></label>
+      <label class="fld"><span>Phone</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+1 305 000 0000" dir="ltr"></label>
+      <label class="fld"><span>Email</span><input name="email" type="email" autocomplete="email" placeholder="name@company.com" dir="ltr"></label>
+      <button class="lbtn" type="submit">Book a demo call<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      <p class="msg" id="ldMsg" role="status"></p>
+    </form>
+  </div>
+</div>
+</body>
+</html>

@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
   d = d || {};
   if (d.botcheck) return res.status(200).json({ success: true });
   if (!d.name || !d.phone) return res.status(400).json({ success: false, message: 'missing name/phone' });
-  d.source = (d.pkg ? 'מחשבון התמחור' : 'טופס תחתית העמוד') + (d.lang === 'ar' ? ' · עמוד בערבית' : '');
+  d.source = (d.pkg ? 'מחשבון התמחור' : 'טופס תחתית העמוד') + ({ ar: ' · עמוד בערבית', en: ' · עמוד באנגלית' }[d.lang] || '');
   d.when = new Date().toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem', dateStyle: 'short', timeStyle: 'short' });
   const subject = `ליד חדש מ־WalkMeIn: ${d.name}${d.pkg ? ' · חבילה ' + ils(d.pkg.total) : ''}`;
   const r = await fetch('https://api.resend.com/emails', {

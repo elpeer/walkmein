@@ -1,0 +1,7 @@
+/* LTR overrides for the English page (the base stylesheet is authored RTL) */
+@media (min-width:900px){.hsteps li{text-align:left}#voice .pbot{text-align:left}.qn{left:auto;right:40px}}
+.qn{left:auto;right:22px}
+.wa small{text-align:left}.tnum{text-align:left}.lform input[dir=ltr]{text-align:left}
+.pvtx li::before{right:auto;left:0}
+.chart{transform:none}
+.rooms2 em{text-align:right}
