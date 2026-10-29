@@ -1282,3 +1282,7 @@ section{scroll-margin-top:70px}
 
 .lform .msg.ok{color:#2e6a1f;background:#e4f0dc;padding:10px 12px;border-radius:12px}
 .lbtn:disabled{opacity:.6;cursor:wait}
+
+/* language switch */
+.lang{display:inline-grid;place-items:center;height:40px;padding:0 14px;border-radius:30px;font-size:14px;font-weight:600;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 0 0 1px rgba(255,255,255,.25) inset;margin-inline-end:8px}
+.bar.solid .lang{background:rgba(28,31,27,.06);box-shadow:none}
