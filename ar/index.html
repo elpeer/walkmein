@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WalkMeIn · التجربة المثالية لعملائكم</title>
+<meta name="description" content="نموذج ثلاثي الأبعاد لكل شقة في المشروع: يفهم المشترون التقسيم، ويتجولون في الشقة، ويصلون إلى مكتب المبيعات وقد اتخذوا قرارهم. دفعة واحدة، بلا اشتراك.">
+<meta name="theme-color" content="#1d2621">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://walkmein.com/"><link rel="alternate" hreflang="ar" href="https://walkmein.com/ar/">
+<link rel="stylesheet" href="../style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
+<style>:root{--f:"IBM Plex Sans Arabic","Heebo",system-ui,Arial,sans-serif}</style>
+</head>
+<body>
+<aside class="side" aria-hidden="true">
+  <p class="big">Walk<br>MeIn</p>
+  <p class="cap">REAL ESTATE<br><span>Apartment experience</span></p>
+</aside>
+
+<div class="app" id="app">
+    <header class="bar" id="bar">
+      <a class="logo" href="./">WalkMeIn</a>
+      <nav class="dnav" aria-label="التنقل"><a href="#flow">كيف يعمل</a><a href="#model">النموذج</a><a href="#voice">جولة صوتية</a><a href="#why">لوحة التحكم</a><a href="#pricing">الأسعار</a></nav>
+      <div class="bends"><a class="lang" href="../" hreflang="he" lang="he" aria-label="עברית">עברית</a><a class="dcta" href="#contact" style="white-space:nowrap">احجزوا عرضًا</a><button class="burger" id="burger" aria-label="القائمة" aria-expanded="false"><i></i><i></i></button></div>
+    </header>
+<div class="menu" id="menu" aria-hidden="true">
+  <img class="mmodel" src="../img/i-model.webp" alt="">
+  <nav class="mlist" aria-label="الأقسام">
+    <a href="#flow"><small>01</small>كيف يعمل</a>
+    <a href="#model"><small>02</small>النموذج أثناء العمل</a>
+    <a href="#voice"><small>03</small>جولة مع تعليق صوتي</a>
+    <a href="#why"><small>04</small>لوحة التحكم الخاصة بكم</a>
+    <a href="#feats"><small>05</small>كل المزايا</a>
+    <a href="#how2" class="hw"><small>06</small>كيف نعمل معكم</a>
+    <a href="#pricing"><small>07</small>الأسعار</a>
+    <a href="#faq"><small>08</small>الأسئلة الشائعة</a>
+  </nav>
+  <div class="mfoot"><a class="slide" href="#contact"><span class="knob"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span><b>احجزوا عرضًا توضيحيًا</b><em>‹‹‹</em></a><p>دفعة واحدة · بلا اشتراك · الاستضافة مشمولة</p></div>
+</div>
+
+  <!-- 1 · hero -->
+  <section class="hero" id="top">
+    <picture><img class="photo" src="../img/hero-wide.webp" alt="مبنى سكني حديث وقت الغروب، بنوافذ مضاءة"></picture>
+    <svg class="apts" id="apts" viewBox="0 0 2688 1520" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g><path class="ap av" data-n="9" data-f="5" data-cx="789" data-cy="407" d="M635,270 L943,342 L943,536 L635,481Z"/><path class="ap av" data-n="10" data-f="5" data-cx="1097" data-cy="471" d="M943,342 L1251,414 L1251,591 L943,536Z"/><path class="ap av" data-n="7" data-f="4" data-cx="789" data-cy="606" d="M635,481 L943,536 L943,722 L635,684Z"/><path class="ap av" data-n="8" data-f="4" data-cx="1097" data-cy="652" d="M943,536 L1251,591 L1251,760 L943,722Z"/><path class="ap av" data-n="5" data-f="3" data-cx="789" data-cy="787" d="M635,684 L943,722 L943,889 L635,853Z"/><path class="ap av" data-n="6" data-f="3" data-cx="1097" data-cy="824" d="M943,722 L1251,760 L1251,926 L943,889Z"/><path class="ap av" data-n="3" data-f="2" data-cx="789" data-cy="971" d="M635,853 L943,889 L943,1077 L635,1064Z"/><path class="ap av" data-n="4" data-f="2" data-cx="1097" data-cy="996" d="M943,889 L1251,926 L1251,1090 L943,1077Z"/></g><g id="apin" class="apin"><line id="apl" x1="0" y1="0" x2="0" y2="0"/><circle id="apc" r="9"/></g></svg>
+    <div class="aptag" id="aptag"><div class="atop"><span class="av2" id="apav">أ</span><div><b id="aptb">أحمد من دبي</b><small id="aptk">شاهد الشقة 7</small></div></div><span class="st" id="apts"><i></i>الآن</span></div>
+        <div class="htxt">
+      <p class="for" id="forLine" hidden></p>
+      <h1>التجربة المثالية<br>لعملائكم.</h1>
+      <p class="lead">نموذج ثلاثي الأبعاد لكل شقة في المشروع. يفهم المشترون ويتجولون ويصلون إلى الاجتماع وقد اتخذوا قرارهم.</p>
+      <a class="slide" href="#flow"><span class="knob"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><b>اكتشفوا التجربة</b><em>‹‹‹</em></a>
+    </div>
+  </section>
+
+  <!-- the problem today -->
+  <section class="story pain-s" id="pain">
+    <div class="sin">
+      <header class="shd"><h2>أكبر قرار في الحياة.<br>أمام مخطط مسطّح.</h2><p>يحصل مشترو الشقق على ملف PDF وبضع صور تصورية وجملة واحدة عن كل غرفة. ومن هذا يُفترض أن يفهموا كيف سيكون العيش هناك.</p></header>
+      <div class="pgrid">
+        <article class="pp">
+          <div class="pg pg1" aria-hidden="true">
+            <svg class="fp" viewBox="0 0 200 140"><rect x="4" y="4" width="192" height="132" rx="2"/><path d="M114 4v132M4 84h110M114 54h82M64 84v52"/><path class="door" d="M40 84a14 14 0 0 1 14-14"/></svg>
+            <span class="dim"><i></i><b>5.60</b></span>
+            <span class="qm q1">?</span><span class="qm q2">?</span><span class="qm q3">?</span>
+          </div>
+          <h3>ليس الجميع يجيد قراءة المخططات</h3><p>الخطوط والمقاسات لا تتحول إلى غرفة أو مساحة أو إحساس.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg2" aria-hidden="true">
+            <div class="docs"><div class="doc"><i></i><s></s><s></s><small>مشروع أ</small></div><div class="doc"><i></i><s></s><s></s><small>مشروع ب</small></div><div class="doc"><i></i><s></s><s></s><small>مشروع ج</small></div><div class="doc"><i></i><s></s><s></s><small>مشروع د</small></div></div>
+            <span class="stamp">الشيء نفسه</span>
+          </div>
+          <h3>كل المشاريع تبدو متشابهة</h3><p>مخطط وصورة تصورية ونص قصير. ينتقل المشتري من مشروع إلى آخر دون أن يفهم أي شقة.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg3" aria-hidden="true">
+            <div class="cal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="prog"><span>إنتاج جولة افتراضية</span><b class="pct"></b><div><i></i></div></div>
+            <div class="cost"><span>الميزانية</span><div><i></i></div></div>
+          </div>
+          <h3>جولة افتراضية كاملة؟ مكلفة وبطيئة</h3><p>ميزانية مرتفعة وأسابيع من الإنتاج، فقط لضبط الكنبة والرخام.</p>
+        </article>
+      </div>
+      <p class="pq"><b>«ولكن كيف سيكون الإحساس؟»</b><span>السؤال الذي تكرر في محادثاتنا مع آلاف المشترين على مر السنين</span></p>
+      <p class="bridge">ما ينقص المشتري ليس صورة تصورية أخرى، بل من يرافقه داخل الشقة.</p>
+    </div>
+  </section>
+
+  <!-- what changes: one band per audience, three explained feature cards each -->
+  <section class="story sol-s" id="solve">
+    <div class="sin">
+      <header class="shd"><h2>تجربة تشرح الشقة.<br>في أيام، لا في أشهر.</h2><p>يحوّل WalkMeIn مخطط البيع إلى جولة يفهمها المشتري، وينجزها المطوّر بسرعة، ويعرف مندوب المبيعات بالضبط مع من يتحدث.</p></header>
+
+      <div class="band b-buy">
+        <div class="bhd"><span class="bno">01</span><div><span class="who">للمشتري</span><h3>يفهم الشقة، لا يكتفي برؤيتها</h3><p>بدل التخمين من ملف PDF، يتجول المشتري في الشقة ويسمع شرحًا عن كل غرفة ويرى كيف ستبدو.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-model" aria-hidden="true"><span class="ring"></span><img src="../img/i-model.webp" alt=""><span class="drag">↔ اسحبوا للتدوير</span></div>
+            <div class="ftx"><b>أديروا الشقة 360°</b><p>نموذج ثلاثي الأبعاد للشقة. ترون اتجاه كل غرفة، وموقع الشرفة، وحجم الصالة مقارنة بالباقي.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-route" aria-hidden="true"><img src="../img/f-plan.webp" alt="">
+              <svg viewBox="0 0 960 720" preserveAspectRatio="xMidYMid slice"><path class="route" d="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/><circle class="vdot2" r="16"><animateMotion dur="10s" repeatCount="indefinite" path="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/></circle></svg>
+              <div class="vcap"><span class="pl">▶</span><div class="vtx"><i>«هذه الشرفة، 14 م² مطلة على المنظر…»</i><i>«الصالة مضاءة من جهتين…»</i><i>«المطبخ مفتوح على ركن الطعام…»</i><i>«وهنا الجناح الرئيسي…»</i></div><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+            <div class="ftx"><b>جولة صوتية ترشده</b><p>تعليق صوتي هادئ يرافقه من غرفة إلى أخرى ويشرح ما يراه، كوكيل عقاري يتجول معه في الشقة.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-gal" aria-hidden="true"><img src="../img/f-rooms.webp" alt=""><img src="../img/f-tour.webp" alt=""><img src="../img/f-orbit.webp" alt=""><span class="glab"><i>الصالة</i><i>المطبخ</i><i>غرفة نوم</i></span></div>
+            <div class="ftx"><b>صورة تصورية لكل غرفة</b><p>انقروا على غرفة لتظهر صورتها الواقعية، دون أن يضطر المطوّر لإنتاج جولة ثلاثية الأبعاد كاملة.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-dev">
+        <div class="bhd"><span class="bno">02</span><div><span class="who">للمطوّر</span><h3>جاهز خلال أيام، لا أشهر</h3><p>لا نتوقف عند لون الرخام أو طراز الكنبة. نركز على ما يحتاجه المشتري: المساحة والنِّسب وانسيابية الحركة.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-gantt" aria-hidden="true"><div class="gw"><span>أسبوع</span><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></div>
+              <div class="gr"><span>جولة افتراضية</span><div><b class="slow"></b></div></div>
+              <div class="gr me"><span>WalkMeIn</span><div><b class="fast"></b><em>✓ جاهز</em></div></div></div>
+            <div class="ftx"><b>إنتاج في أيام</b><p>الجولة الافتراضية الكاملة تستغرق شهرين. أما WalkMeIn فجاهز خلال أيام من إرسالكم المخططات.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-race" aria-hidden="true"><div class="lane"><span>منافس</span><div><i class="car them"></i></div></div><div class="lane me"><span>أنتم</span><div><i class="car us"></i></div></div><span class="flag">🏁 جاهز</span></div>
+            <div class="ftx"><b>تسبقون المنافسين</b><p>تعرضون تجربة كاملة على المشترين، بينما المشاريع الأخرى لا تزال في الإنتاج أو عالقة مع ملف PDF.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-time" aria-hidden="true"><span class="tl">متوسط الوقت في صفحة المخططات</span><b class="tnum" data-to="252">0:00</b><div class="tb2"><div><i class="b1"></i><small>PDF عادي</small></div><div><i class="b2"></i><small>مع WalkMeIn</small></div></div></div>
+            <div class="ftx"><b>المشترون يبقون أطول</b><p>بدل إلقاء نظرة على PDF والخروج، يتجول المشتري وينقر ويقارن بين الشقق. وقت أطول، اهتمام أكبر.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-sale">
+        <div class="bhd"><span class="bno">03</span><div><span class="who">لمندوب المبيعات</span><h3>يعرف ما شاهده المشتري قبل أن يتصل به</h3><p>كل زيارة مُقاسة. يصل العميل المحتمل بالصورة الكاملة، ويدخل مندوب المبيعات المكالمة مستعدًا.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-heat" aria-hidden="true"><img src="../img/f-plan.webp" alt="">
+              <span class="blob bl1"></span><span class="blob bl2"></span><span class="blob bl3"></span>
+              <span class="hl hl1"><i></i>الصالة · 3:40 د</span><span class="hl hl2"><i></i>الغرفة الرئيسية · 2:05</span><span class="hl hl3"><i></i>المطبخ · 1:12</span></div>
+            <div class="ftx"><b>خريطة حرارية لكل زيارة</b><p>ترون الغرف التي قضى فيها المشتري أطول وقت وما الذي لفت انتباهه. هكذا تعرفون عمّا تتحدثون.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-link" aria-hidden="true"><div class="url"><span class="typ">walkmein.com/p/dani</span><i class="caret"></i></div><div class="wmsg"><span class="wi">✆</span><div><b>أُرسل إلى أحمد</b><small>مرحبًا أحمد، هذه شقتك بتقنية ثلاثية الأبعاد</small></div><span class="ticks">✓✓</span></div></div>
+            <div class="ftx"><b>رابط خاص لكل عميل</b><p>أرسلوا للمشتري رابطه الخاص عبر واتساب، واعرفوا متى فتحه وكم شاهد وما الذي عاد لمشاهدته.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-lead" aria-hidden="true"><div class="nt"><span class="lav">أ</span><div><b>عميل محتمل جديد · أحمد الحسن</b><small>مهتم بشقة 4 غرف طراز C</small></div></div>
+              <p class="ll"><span>الغرف التي زارها</span><b>6 من 8</b></p><p class="ll"><span>الأطول وقتًا</span><b>الصالة</b></p><p class="ll"><span>الزيارات</span><b>3</b></p><p class="ll"><span>المصدر</span><b>فيسبوك</b></p></div>
+            <div class="ftx"><b>عميل محتمل يصل بسجلّه الكامل</b><p>من يترك بياناته على الموقع يصل إلى الـCRM مع كل ما شاهده. بلا أسئلة تمهيدية زائدة.</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · flow dashboard -->
+  <section class="sheet" id="flow">
+    <h2 class="sh big">من مخطط البيع<em>إلى تجربة لا ينساها المشتري</em></h2>
+    <p class="intro">ترسلون المخطط، ونبني منه نموذجًا ثلاثي الأبعاد، ويحصل المشتري على رابط واحد: يدير ويتجول ويفهم الشقة.</p>
+    <div class="flow"><span class="track" aria-hidden="true"><i></i></span>
+      <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M27 24 C27 34 40 36 44 40"/><path d="M73 24 C73 34 60 36 56 40"/>
+        <path d="M44 62 C40 66 27 68 27 76"/><path d="M56 62 C60 66 73 68 73 76"/>
+      </svg>
+      <div class="node n1"><span class="sn">1</span><img src="../img/i-plan.webp" alt=""><small>أرسلوا</small><b>مخطط PDF</b></div>
+      <div class="node n2"><span class="sn">2</span><img src="../img/i-building.webp" alt=""><small>لكل أنواع</small><b>الشقق</b></div>
+      <div class="node big n3"><span class="sn">3</span><img src="../img/i-model.webp" alt=""><small>واحصلوا على نموذج</small><b>360°</b></div>
+      <div class="node n4"><span class="sn">4</span><img src="../img/i-tour.webp" alt=""><small>مع</small><b>جولة مرشدة</b></div>
+      <div class="node n5"><span class="sn">5</span><img src="../img/i-phone.webp" alt=""><small>عبر رابط</small><b>على واتساب</b></div>
+    </div>
+  </section>
+
+  <!-- 3 · pinned 3D: the model stays, the feature cards swap under it -->
+  <section class="pin" id="model" data-pin>
+    <div class="stick">
+      <div class="phead"><div><h2 class="sh big">أديروا. افحصوا. ادخلوا.<em>خمس طرق يتعرف بها المشتري على الشقة</em></h2></div><p class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></p></div>
+      <div class="live card">
+        <canvas id="gl" aria-label="نموذج حي ثلاثي الأبعاد للشقة"></canvas>
+        <p class="tag t1">الصالة والمطبخ<b>28 م²</b></p>
+        <p class="tag t2">الشرفة<b>18 م²</b></p>
+        <p class="tag t3">الجناح الرئيسي<b>14 م²</b></p>
+        <p class="hint" id="hint"><svg viewBox="0 0 24 24"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3"/></svg>اسحبوا للتدوير</p>
+      </div>
+      <div class="deck" id="deck"><article class="dcard" data-i="0"><span class="di"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><div><small>1 / 5</small><b>تدوير حر 360°</b><p>اسحبوا وأديروا. كل زاوية في الشقة، ومن كل اتجاه.</p></div></article><article class="dcard" data-i="1"><span class="di"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><div><small>2 / 5</small><b>المخطط والأبعاد الثلاثية</b><p>منظر علوي كما في مخطط البيع، وبنقرة تعودون إلى النموذج.</p></div></article><article class="dcard" data-i="2"><span class="di"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><div><small>3 / 5</small><b>الغرف والمقاسات</b><p>النقر على غرفة يبرزها ويعرض مساحتها.</p></div></article><article class="dcard" data-i="3"><span class="di"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><div><small>4 / 5</small><b>عرض بالطبقات</b><p>الأرضية والجدران والأثاث. ترون كيف بُنيت الشقة.</p></div></article><article class="dcard" data-i="4"><span class="di"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><small>5 / 5</small><b>بمستوى النظر</b><p>ادخلوا إلى الصالة وانظروا إلى الخارج، باتجاه الشرفة.</p></div></article></div>
+    </div>
+  </section>
+
+  <!-- 4 · narrated walk-through on the realistic model -->
+  <section class="sheet" id="voice">
+    <h2 class="sh big">جولة مرشدة في الشقة<em>يتجول المشتري داخل الشقة، وصوت احترافي يشرح كل غرفة</em></h2>
+    <p class="vp">يتجول المشتري داخل الشقة من غرفة إلى أخرى، وصوت احترافي يشرح ما يراه. هكذا تبدو في مشروع «مارك شاغال».</p>
+    <div class="player card" id="player">
+      <video id="tourVid" src="../media/tour.mp4" poster="../media/tour.jpg" muted loop playsinline preload="metadata" aria-label="جولة مرشدة في صالة بنتهاوس مشروع «مارك شاغال»"></video>
+      <div class="ptop"><span class="lv"><i></i>جولة مرشدة</span><span class="stop">المحطة 2 من 10 · الصالة وركن الطعام</span></div>
+      <div class="pbot">
+        <p class="sub2" id="sub2"><span>هذا</span> <span>قلب</span> <span>البيت:</span> <span>مساحة</span> <span>مفتوحة</span> <span>من</span> <span>72</span> <span>مترًا</span> <span>مربعًا،</span> <span>تجمع بين</span> <span>الصالة،</span> <span>وركن</span> <span>الطعام</span> <span>والمطبخ.</span> <span>سقف</span> <span>بارتفاع</span> <span>ثلاثة</span> <span>أمتار،</span> <span>نوافذ</span> <span>ألمنيوم</span> <span>بزجاج</span> <span>مزدوج</span> <span>وتظليل</span> <span>كهربائي،</span> <span>ونظام</span> <span>منزل</span> <span>ذكي</span> <span>يتحكم</span> <span>بالتكييف،</span> <span>والستائر</span> <span>والإضاءة.</span></p>
+        <div class="prow">
+          <button class="snd" id="snd" aria-pressed="false" aria-label="تشغيل التعليق الصوتي"><svg class="on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 10l4 4M21 10l-4 4"/></svg></button>
+          <canvas class="vwave" id="vwave" aria-hidden="true"></canvas>
+          <span class="vt" id="vt">0:00</span>
+        </div>
+        <p class="tapme" id="tapme">شغّلوا الصوت لسماع التعليق</p>
+      </div>
+    </div>
+    <div class="stops"><span class="done">المدخل</span><span class="cur">الصالة</span><span>المطبخ</span><span>شرفة غربية</span><span>غرف</span><span>الجناح الرئيسي</span></div>
+  </section>
+
+  <!-- 4b · why it sells -->
+  <section class="sheet" id="why">
+    <h2 class="sh big">ما الذي ترونه بعد دخول المشترين<em>لوحة تحكم المشروع: من شاهد، وكم من الوقت، وأي شقة</em></h2>
+    <div class="dash" id="dash">
+      <div class="dtop">
+        <div class="card kpi"><small>مشاهدات النموذج هذا الأسبوع</small><b data-n="1284">0</b><span class="up">+32% عن الأسبوع الماضي</span></div>
+        <div class="card kpi"><small>متوسط مدة المشاهدة</small><b data-n="4.6" data-d="1" data-s=" د">0</b><span class="up">3 أضعاف صفحة PDF</span></div>
+        <div class="card kpi"><small>مشاركات عبر واتساب</small><b data-n="217">0</b><span class="up">الرابط يصل إلى أفراد العائلة</span></div>
+        <div class="card kpi y"><small>تركوا بياناتهم لحجز موعد</small><b data-n="64">0</b><span class="up">من داخل الجولة المرشدة</span></div>
+      </div>
+      <div class="card dmodel"><div class="dmh"><b>الشقق الأكثر مشاهدة</b><span class="live2"><i></i>مباشر</span></div><img src="../img/f-rooms.webp" alt=""><p class="hot h1"><b>شقة 8</b>412 مشاهدة</p><p class="hot h2"><b>شقة 12</b>356 مشاهدة</p><p class="hot h3"><b>بنتهاوس</b>298 مشاهدة</p></div>
+      <div class="card chartc" id="chartc">
+        <div class="chd"><div><small>المشاهدات والطلبات يوميًا</small><b>آخر 14 يومًا</b></div></div>
+        <svg class="bars" id="bars" viewBox="0 0 280 120" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <p class="legend"><span class="ly"></span>مشاهدات<span class="lg2"></span>طلبات</p>
+      </div>
+      <div class="card src"><b>من أين يأتي المشترون</b>
+        <div class="donut"><svg viewBox="0 0 42 42" aria-hidden="true"><circle class="dbg" cx="21" cy="21" r="15.9"/><circle class="seg s1" cx="21" cy="21" r="15.9" style="--v:46;--o:0"/><circle class="seg s2" cx="21" cy="21" r="15.9" style="--v:27;--o:46"/><circle class="seg s3" cx="21" cy="21" r="15.9" style="--v:17;--o:73"/><circle class="seg s4" cx="21" cy="21" r="15.9" style="--v:10;--o:90"/></svg><p><b>46%</b><small>واتساب</small></p></div>
+        <ul class="dl"><li><i class="c1"></i>واتساب<em>46%</em></li><li><i class="c2"></i>حملة ممولة<em>27%</em></li><li><i class="c3"></i>موقع المشروع<em>17%</em></li><li><i class="c4"></i>مكتب المبيعات<em>10%</em></li></ul>
+      </div>
+      <div class="card rooms2"><b>أين يتوقف المشترون</b>
+        <p><span>الصالة والمطبخ</span><i style="--w:86%"></i><em>1:48</em></p>
+        <p><span>الشرفة</span><i style="--w:64%"></i><em>1:12</em></p>
+        <p><span>الجناح الرئيسي</span><i style="--w:52%"></i><em>0:58</em></p>
+        <p><span>غرفة إضافية</span><i style="--w:30%"></i><em>0:34</em></p>
+      </div>
+      <div class="card feed"><b>آخر نشاط</b>
+        <p><i class="g"></i>مشترٍ من الرياض أنهى جولة في الشقة 8<small>قبل دقيقتين</small></p>
+        <p><i></i>تمت مشاركة رابط الشقة 12 عبر واتساب<small>قبل 6 د</small></p>
+        <p><i class="y"></i>طلب جديد: بنتهاوس، الطابق 7<small>قبل 11 د</small></p>
+      </div>
+    </div>
+    <p class="note2">البيانات في لوحة التحكم للتوضيح فقط.</p>
+  </section>
+
+  <!-- 4c · all features, dark -->
+  <section class="feats2" id="feats">
+    <h2 class="sh big">كل ما في النظام<em>كل شيء مشمول في رابط واحد</em></h2>
+    <div class="fwrap">
+      <div class="fvis"><span class="ring"></span><img class="fimg" id="fimg" src="../img/f-orbit.webp" alt=""><img class="ffloat" src="../img/i-model.webp" alt=""><p class="fcount"><b>11</b>مزايا في تجربة واحدة</p></div>
+      <div class="flist">
+        <div class="acc" id="acc"><details class="fi" open data-img="img/f-orbit.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><b>تدوير حر 360°</b><i class="pm"></i></summary><p>اسحبوا وأديروا واقتربوا من كل زاوية في الشقة. يعمل باللمس على الهاتف وبالفأرة على الكمبيوتر.</p></details><details class="fi" data-img="img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><b>المخطط والأبعاد الثلاثية</b><i class="pm"></i></summary><p>انتقال بنقرة بين مخطط البيع الأصلي والنموذج، لربط الرسم بالواقع.</p></details><details class="fi" data-img="img/f-rooms.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><b>الغرف والمقاسات</b><i class="pm"></i></summary><p>قائمة بالغرف مع المساحات والمقاسات. النقر على غرفة يبرزها في النموذج.</p></details><details class="fi" data-img="img/f-explode.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><b>عرض بالطبقات</b><i class="pm"></i></summary><p>الأرضية والجدران والأثاث منفصلة عن بعضها، لفهم كيف بُنيت الشقة.</p></details><details class="fi" data-img="media/tour.jpg"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><b>تجوّل بمستوى النظر</b><i class="pm"></i></summary><p>ادخلوا الشقة وانظروا حولكم، كأنكم في زيارة لشقة نموذجية.</p></details><details class="fi" data-img="img/f-tour.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>جولة مرشدة مع تعليق صوتي</b><i class="pm"></i></summary><p>مسار جاهز بين الغرف، بصوت احترافي بالعربية يشرح كل مساحة.</p></details><details class="fi" data-img="img/i-building.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><b>اختيار الطابق والشقة</b><i class="pm"></i></summary><p>صورة تصورية للمبنى بطوابقه وشققه. اختاروا شقة وادخلوا مباشرة إلى نموذجها ثلاثي الأبعاد.</p></details><details class="fi" data-img="img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><b>نموذج تواصل في كل شقة</b><i class="pm"></i></summary><p>يترك المشتري بياناته من داخل الشقة التي تهمه، ويصل العميل المحتمل مع اسم الشقة.</p></details><details class="fi" data-img="img/i-phone.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg></span><b>رابط لواتساب والموقع</b><i class="pm"></i></summary><p>رابط واحد للإرسال عبر واتساب، وللتضمين في موقع المشروع، ولشاشة مكتب المبيعات.</p></details><details class="fi" data-img="img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><b>لغات إضافية</b><i class="pm"></i></summary><p>التجربة نفسها بالإنجليزية أو الروسية أو الفرنسية، للمشترين من الخارج.</p></details><details class="fi" data-img="img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><b>الربط مع الـCRM</b><i class="pm"></i></summary><p>تدخل الطلبات مباشرة إلى نظامكم، مع الشقة التي شاهدها المشتري.</p></details></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · how it works, simulated step by step -->
+  <section class="pin" id="how" data-pin>
+    <div class="stick">
+      <h2 class="sh">كيف يعمل<em>من المخطط إلى النموذج، في أيام</em></h2>
+      <div class="hstage card" id="hstage">
+        <div class="hs s1"><div class="drop"><img src="../img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>شقة_12.pdf<span class="pbar"><i></i></span></p></div></div>
+        <div class="hs s2"><div class="build"><img class="ghost" src="../img/i-model.webp" alt=""><img class="solid" src="../img/i-model.webp" alt=""><span class="scan"></span></div><p class="cap">نبني النموذج وفق المقاسات</p></div>
+        <div class="hs s3"><div class="review"><img src="../img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>تحريك باب المطبخ</p><p class="pinx p2 done"><b>✓</b>تم التحديث</p></div></div>
+        <div class="hs s4"><div class="live2"><img src="../img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>أُرسل عبر واتساب ✓✓</small></p></div></div>
+      </div>
+      <ol class="hsteps" id="hsteps">
+        <li><i>1</i><b>أرسلوا المخططات</b><p>PDF أو DWG لأنواع الشقق.</p></li>
+        <li><i>2</i><b>نبني النموذج</b><p>مقاسات وفق المخطط، وأثاث أنيق.</p></li>
+        <li><i>3</i><b>جولة ملاحظات</b><p>رابط للمراجعة، ونحن نحدّث.</p></li>
+        <li><i>4</i><b>الإطلاق</b><p>رابط للمشترين، وتضمين في الموقع.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5b · how it works, desktop bento -->
+  <section class="sheet bento-sec" id="how2">
+    <h2 class="sh big">كيف يعمل<em>من مخطط PDF إلى نموذج حي، في أيام</em></h2>
+    <div class="bento">
+      <article class="bx b1"><span class="bn">1</span><div class="bt"><b>أرسلوا المخططات</b><p>PDF أو DWG لأنواع الشقق. هذا كل ما نحتاجه منكم.</p></div><div class="bv"><img class="fly" src="../img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>شقة_12.pdf<span class="pbar"><i class="loop"></i></span></p></div></article>
+      <article class="bx b2"><span class="bn">2</span><div class="bt"><b>نبني النموذج</b><p>مقاسات وفق المخطط، وأثاث أنيق، وطابع يناسب المشروع.</p></div><div class="bv build2"><img class="ghost" src="../img/i-model.webp" alt=""><img class="solid" src="../img/i-model.webp" alt=""><span class="scan"></span></div></article>
+      <article class="bx b3"><span class="bn">3</span><div class="bt"><b>جولة ملاحظات</b><p>تحصلون على رابط للمراجعة، تبدون ملاحظاتكم، ونحن نحدّث.</p></div><div class="bv rev2"><img src="../img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>تحريك باب المطبخ</p><p class="pinx p2"><b>✓</b>تم التحديث</p></div></article>
+      <article class="bx b4"><span class="bn">4</span><div class="bt"><b>الإطلاق</b><p>رابط للمشترين، وتضمين في الموقع، وتحديثات طوال فترة التسويق.</p></div><div class="bv"><img class="ph2" src="../img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>أُرسل عبر واتساب ✓✓</small></p></div></article>
+      <article class="bx b5"><img src="../img/i-key.webp" alt=""><div><small>من المخطط إلى نموذج منشور</small><b>أيام، لا أشهر</b></div><a class="cta2" href="#contact">احجزوا عرضًا توضيحيًا</a></article>
+    </div>
+  </section>
+
+  <section class="sheet" id="meter">
+    <div class="card meter">
+      <div class="mh"><img src="../img/i-key.webp" alt=""><div><small>من المخطط إلى نموذج جاهز</small><b>أيام <sup>لا أشهر</sup></b></div><a class="arrow" href="#contact" aria-label="احجزوا عرضًا توضيحيًا"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M8 7h9v9"/></svg></a></div>
+      <div class="bar2"><i></i></div>
+      <p class="mf"><span>أرسلوا المخطط</span><span>نموذج منشور</span></p>
+    </div>
+  </section>
+
+  <!-- 6 · pricing -->
+  <section class="sheet" id="pricing">
+    <h2 class="sh big">صمّموا باقتكم<em>تدفعون مرة واحدة. وكلما زادت الشقق، انخفضت تكلفة كل واحدة</em></h2>
+    <div class="calc" id="calc">
+      <div class="cfg">
+        <div class="card base"><span class="bi2"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg></span><div><b>أساس المشروع · ₪1,490</b><p>نوع الشقة الأول، رابط للمشاركة، تضمين في الموقع، نموذج تواصل، واستضافة حتى نهاية التسويق.</p></div></div>
+        <div class="card types"><div class="th"><div><b>كم نوعًا من الشقق؟</b><p>كل نوع إضافي أرخص من سابقه</p></div><div class="step"><button type="button" id="minus" aria-label="أقل">−</button><output id="nTypes">4</output><button type="button" id="plus" aria-label="أكثر">+</button></div></div>
+          <input type="range" id="range" min="1" max="20" value="4" aria-label="عدد أنواع الشقق">
+          <div class="tiers"><span data-t="1"><b>2–3</b>₪890 للنوع</span><span data-t="2"><b>4–8</b>₪690 للنوع</span><span data-t="3"><b>9 فأكثر</b>₪490 للنوع</span></div>
+        </div>
+        <div class="adds" id="adds">
+          <label class="card add"><input type="checkbox" data-k="real" data-per="400"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg></span><span class="at"><b>صورة تصورية واقعية</b><small>خامات وإضاءة وإطلالة من النوافذ</small><button type="button" class="peek" data-peek="real">كيف يبدو<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪400 للنوع</em></label>
+          <label class="card add"><input type="checkbox" data-k="tour" data-fix="1200"><span class="ai"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="at"><b>جولة مرشدة مع تعليق صوتي</b><small>نص وصوت للمشروع بأكمله</small><button type="button" class="peek" data-peek="tour">كيف يبدو<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,200</em></label>
+          <label class="card add"><input type="checkbox" data-k="bld" data-fix="1900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><span class="at"><b>اختيار الشقة على المبنى</b><small>الطوابق والشقق وحالة التوفر</small><button type="button" class="peek" data-peek="bld">كيف يبدو<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,900</em></label>
+          <label class="card add"><input type="checkbox" data-k="lang" data-fix="600"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="at"><b>لغة إضافية</b><small>الإنجليزية أو الروسية أو الفرنسية</small><button type="button" class="peek" data-peek="lang">كيف يبدو<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪600</em></label>
+          <label class="card add"><input type="checkbox" data-k="crm" data-fix="900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><span class="at"><b>الربط مع الـCRM</b><small>تدخل الطلبات مباشرة إلى نظامكم</small><button type="button" class="peek" data-peek="crm">كيف يبدو<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪900</em></label>
+        </div>
+      </div>
+      <aside class="card sum" id="sum">
+        <p class="sk">باقتكم</p>
+        <p class="tot"><span id="total">₪0</span><small>دفعة واحدة، قبل ضريبة القيمة المضافة</small></p>
+        <p class="per">نحو <b id="per">₪0</b> لكل نوع شقة</p>
+        <div class="perbar"><i id="perbar"></i></div>
+        <ul id="lines"></ul>
+        <ul class="incl"><li>استضافة وصيانة حتى نهاية التسويق</li><li>تحديثات المخططات مشمولة</li><li>بلا اشتراك وبلا تكلفة شهرية</li></ul>
+        <a class="slide" href="#contact" id="sumcta" role="button"><span class="knob"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span><b>لحجز مكالمة عرض توضيحي</b><em>‹‹‹</em></a>
+        <p class="pil">تريدون البدء بخطوة صغيرة؟ تجربة أولية لنوع شقة واحد بـ₪990، تُخصم إذا واصلتم.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 7 · faq -->
+  <section class="sheet" id="faq">
+    <h2 class="sh big">الأسئلة الشائعة<em>كل ما يسألنا عنه المطوّرون</em></h2>
+    <div class="qtabs" role="tablist"><button role="tab" data-g="0" aria-selected="true">السعر والدفع<i>3</i></button><button role="tab" data-g="1" aria-selected="false">آلية العمل<i>4</i></button><button role="tab" data-g="2" aria-selected="false">تجربة المشتري<i>4</i></button><button role="tab" data-g="3" aria-selected="false">التسويق والعملاء المحتملون<i>3</i></button></div>
+    <div class="qstage" id="qstage"><div class="qdeck" data-g="0"><article class="qc" data-i="0"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>هل هناك تكلفة شهرية أو رسوم استضافة؟</h3><p>لا. الاستضافة والصيانة والتحديثات مشمولة في الدفعة الواحدة حتى نهاية تسويق المشروع. وبعد بيع المشروع، لا حاجة للاستمرار.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>هل يمكن البدء بشقة واحدة؟</h3><p>نعم. التجربة الأولية بـ₪990 تشمل نوع شقة واحدًا، وإذا انتقلتم إلى باقة يُخصم المبلغ بالكامل.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-key.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>لمن يعود النموذج؟</h3><p>يُبنى النموذج لمشروعكم، ويمكنكم استخدامه في جميع قنوات التسويق حتى نهاية المبيعات.</p></div></article></div><div class="qdeck" data-g="1" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>ماذا تحتاجون منا؟</h3><p>مخططات البيع لأنواع الشقق، بصيغة PDF أو DWG. وإذا توفرت صور تصورية وشعار وهوية بصرية، نكيّف النموذج وفقها.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>كم يستغرق ذلك؟</h3><p>يكون نوع الشقة الأول جاهزًا عادةً خلال أيام عمل قليلة من استلام المخططات. أما المشروع الكامل فيعتمد على عدد أنواع الشقق.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>ماذا لو تغيّر المخطط؟</h3><p>نحدّث النموذج. التعديلات على المخططات وتحديثات التوفر خلال التسويق مشمولة.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="../img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>هل يمكن اختيار الأثاث والطراز؟</h3><p>نعم. الأثاث مصمم ليناسب جمهور المشروع وهويتكم البصرية.</p></div></article></div><div class="qdeck" data-g="2" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>هل هي صورة تصورية واقعية؟</h3><p>النموذج الأساسي نموذج معماري أنيق يشرح الشقة: المقاسات والتقسيم والانسيابية. وفي باقة «سيغنتشر» يتوفر أيضًا وضع واقعي بالخامات والإضاءة، كما في مشروع «مارك شاغال».</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>هل يعمل على الهاتف؟</h3><p>نعم. صُممت التجربة للجوال أولًا وتعمل على أي متصفح حديث، دون تثبيت أي شيء.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>هل يلزم تنزيل تطبيق؟</h3><p>لا. إنه رابط عادي يُفتح في المتصفح، من واتساب أو البريد الإلكتروني أو الموقع.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="../img/i-model.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>من يسجّل التعليق الصوتي؟</h3><p>معلّق صوتي محترف بالعربية، وفق نص نكتبه من مواصفات المشروع وتعتمدونه أنتم.</p></div></article></div><div class="qdeck" data-g="3" hidden><article class="qc" data-i="0"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>أين يُعرض؟</h3><p>عبر رابط مخصص، وبالتضمين في موقع المشروع، وفي صفحات الهبوط والحملات، وعلى شاشة مكتب المبيعات.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>هل يمكن تضمينه في موقعنا؟</h3><p>نعم. تحصلون على كود تضمين بسيط، ويُفتح النموذج داخل صفحة المشروع.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="../img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>كيف تصلنا الطلبات؟</h3><p>من نموذج داخل كل شقة، إلى واتساب أو البريد الإلكتروني أو مباشرة إلى الـCRM لديكم، مع اسم الشقة التي شاهدها المشتري.</p></div></article></div></div>
+    <div class="qnav"><button id="qprev" aria-label="السابق"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><span id="qcount">1 / 3</span><button id="qnext" aria-label="التالي"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button></div>
+  </section>
+
+  <!-- 8 · contact -->
+  <section class="sheet dark" id="contact">
+    <div class="ctx">
+      <span class="ceb">مكالمة عرض توضيحي · 20 دقيقة</span>
+      <h2 class="ch">شاهدوا مشروعكم<br><em>بعيون المشتري.</em></h2>
+      <p class="cl">في مكالمة قصيرة نعرض لكم التجربة أثناء العمل، ونريكم المعلومات التي يحصل عليها مندوب المبيعات عن كل عميل محتمل، ونضع معًا خطة لمشروعكم.</p>
+      <ul class="cpts"><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>عرض مباشر: النموذج والجولة الصوتية ولوحة التحكم</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>خطة عمل وجدول زمني لمشروعكم</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>عرض سعر مفصّل حسب أنواع الشقق</li></ul>
+    </div>
+    <form id="form" class="lform" novalidate>
+      <div class="lfh"><b>حجز مكالمة عرض توضيحي</b><span>اتركوا بياناتكم وسنتواصل معكم لتحديد موعد يناسبكم</span></div>
+      <label class="fld"><span>الاسم الكامل</span><input name="name" required autocomplete="name" placeholder="محمد أحمد"></label>
+      <label class="fld"><span>الشركة / المشروع</span><input name="company" autocomplete="organization" placeholder="اسم الشركة أو المشروع"></label>
+      <label class="fld"><span>الهاتف</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+971 50 000 0000" dir="ltr"></label>
+      <label class="fld"><span>البريد الإلكتروني</span><input name="email" type="email" autocomplete="email" placeholder="name@company.com" dir="ltr"></label>
+      <button class="lbtn" type="submit">احجزوا لي مكالمة عرض توضيحي<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <p class="msg" id="msg" role="status"></p>
+      <p class="lsafe"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>بياناتكم محفوظة لدينا فقط</p>
+    </form>
+    <div class="fmodel"><p class="word">WALKMEIN</p><canvas id="gl2" aria-hidden="true"></canvas><p class="fnote">شقتكم، قبل أن تُبنى.</p></div>
+    <footer class="foot">
+      <div class="fbrand"><b>WalkMeIn</b><p>تجربة شقة ثلاثية الأبعاد تبيع: نموذج وجولة صوتية وبيانات عن كل مشترٍ.</p><a class="fcta" href="#contact">لحجز مكالمة عرض توضيحي</a></div>
+      <nav class="fcol" aria-label="المنتج"><h3>المنتج</h3><a href="#pain">لماذا WalkMeIn</a><a href="#flow">كيف يعمل</a><a href="#model">النموذج أثناء العمل</a><a href="#voice">جولة مع تعليق صوتي</a><a href="#why">لوحة التحكم الخاصة بكم</a><a href="#feats">كل المزايا</a></nav>
+      <nav class="fcol" aria-label="العمل معنا"><h3>العمل معنا</h3><a href="#how2">كيف نعمل معكم</a><a href="#pricing">الأسعار</a><a href="#faq">الأسئلة الشائعة</a><a href="#contact">ترك البيانات</a></nav>
+      <div class="fbot"><span>WalkMeIn by Elevate Digital Studio</span><a href="#top">العودة للأعلى ↑</a></div>
+    </footer>
+  </section>
+
+  <!-- floating tab bar -->
+  <nav class="tabs" id="tabs" aria-label="التنقل">
+    <a href="#top" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg><span>الرئيسية</span></a>
+    <a href="#model"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><span>النموذج</span></a>
+    <a href="#contact" class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>عرض توضيحي</span></a>
+    <a href="#pricing"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg><span>الأسعار</span></a>
+    <a href="#faq"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.2v.1"/></svg><span>أسئلة</span></a>
+  </nav>
+</div>
+<script type="module" src="../app.ar.js"></script>
+
+<!-- add-on preview -->
+<div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-labelledby="pvT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox">
+    <button class="pvx" data-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="pvvis" id="pvVis"></div>
+    <div class="pvtx"><span class="pvtag" id="pvTag"></span><h3 id="pvT"></h3><p id="pvD"></p><ul id="pvL"></ul>
+      <div class="pvact"><button class="pvadd" id="pvAdd"></button><span class="pvprice" id="pvP"></span></div></div>
+  </div>
+</div>
+
+<!-- lead form with the chosen package -->
+<div class="pv ldm" id="leadM" hidden role="dialog" aria-modal="true" aria-labelledby="ldT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox ldbox">
+    <button class="pvx" data-close aria-label="إغلاق"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="ldsum"><span class="pvtag">الباقة التي اخترتموها</span><p class="ldtot" id="ldTot"></p><small>دفعة واحدة، قبل ضريبة القيمة المضافة</small><ul id="ldLines"></ul></div>
+    <form class="lform ldform" id="ldForm" novalidate>
+      <div class="lfh"><b id="ldT">لنحدد مكالمة عرض توضيحي</b><span>نراجع معًا الباقة التي اخترتموها ونراها أثناء العمل</span></div>
+      <label class="fld"><span>الاسم الكامل</span><input name="name" required autocomplete="name" placeholder="محمد أحمد"></label>
+      <label class="fld"><span>الشركة / المشروع</span><input name="company" autocomplete="organization" placeholder="اسم الشركة أو المشروع"></label>
+      <label class="fld"><span>الهاتف</span><input name="phone" type="tel" required autocomplete="tel" placeholder="+971 50 000 0000" dir="ltr"></label>
+      <label class="fld"><span>البريد الإلكتروني</span><input name="email" type="email" autocomplete="email" placeholder="name@company.com" dir="ltr"></label>
+      <button class="lbtn" type="submit">حجز مكالمة عرض توضيحي<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <p class="msg" id="ldMsg" role="status"></p>
+    </form>
+  </div>
+</div>
+</body>
+</html>
