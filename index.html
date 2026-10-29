@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WalkMeIn · החוויה האולטימטיבית ללקוחות שלכם</title>
+<meta name="description" content="מודל תלת־ממד לכל דירה בפרויקט: הקונים מבינים את החלוקה, מסיירים בדירה ומגיעים למשרד המכירות עם החלטה. תשלום אחד, בלי מנוי.">
+<meta name="theme-color" content="#1d2621">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600&family=Sora:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
+</head>
+<body>
+<aside class="side" aria-hidden="true">
+  <p class="big">Plan<br>3D</p>
+  <p class="cap">REAL ESTATE<br><span>Apartment experience</span></p>
+</aside>
+
+<div class="app" id="app">
+    <header class="bar" id="bar">
+      <a class="logo" href="./">WalkMeIn</a>
+      <nav class="dnav" aria-label="ניווט"><a href="#flow">איך זה בנוי</a><a href="#model">המודל</a><a href="#voice">סיור קולי</a><a href="#why">דאשבורד</a><a href="#pricing">מחירים</a></nav>
+      <div class="bends"><a class="dcta" href="#contact">לתיאום הדגמה</a><button class="burger" id="burger" aria-label="תפריט" aria-expanded="false"><i></i><i></i></button></div>
+    </header>
+<div class="menu" id="menu" aria-hidden="true">
+  <img class="mmodel" src="img/i-model.webp" alt="">
+  <nav class="mlist" aria-label="סקשנים">
+    <a href="#flow"><small>01</small>איך זה בנוי</a>
+    <a href="#model"><small>02</small>המודל בפעולה</a>
+    <a href="#voice"><small>03</small>סיור עם קריינות</a>
+    <a href="#why"><small>04</small>הדאשבורד שלכם</a>
+    <a href="#feats"><small>05</small>כל היכולות</a>
+    <a href="#how2" class="hw"><small>06</small>איך עובדים איתנו</a>
+    <a href="#pricing"><small>07</small>מחירים</a>
+    <a href="#faq"><small>08</small>שאלות נפוצות</a>
+  </nav>
+  <div class="mfoot"><a class="slide" href="#contact"><span class="knob"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span><b>לתיאום הדגמה</b><em>‹‹‹</em></a><p>תשלום אחד · בלי מנוי · אחסון כלול</p></div>
+</div>
+
+  <!-- 1 · hero -->
+  <section class="hero" id="top">
+    <picture><img class="photo" src="img/hero-wide.webp" alt="בניין מגורים מודרני בשעת דמדומים, חלונות מוארים"></picture>
+    <svg class="apts" id="apts" viewBox="0 0 2688 1520" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g><path class="ap av" data-n="9" data-f="5" data-cx="789" data-cy="407" d="M635,270 L943,342 L943,536 L635,481Z"/><path class="ap av" data-n="10" data-f="5" data-cx="1097" data-cy="471" d="M943,342 L1251,414 L1251,591 L943,536Z"/><path class="ap av" data-n="7" data-f="4" data-cx="789" data-cy="606" d="M635,481 L943,536 L943,722 L635,684Z"/><path class="ap av" data-n="8" data-f="4" data-cx="1097" data-cy="652" d="M943,536 L1251,591 L1251,760 L943,722Z"/><path class="ap av" data-n="5" data-f="3" data-cx="789" data-cy="787" d="M635,684 L943,722 L943,889 L635,853Z"/><path class="ap av" data-n="6" data-f="3" data-cx="1097" data-cy="824" d="M943,722 L1251,760 L1251,926 L943,889Z"/><path class="ap av" data-n="3" data-f="2" data-cx="789" data-cy="971" d="M635,853 L943,889 L943,1077 L635,1064Z"/><path class="ap av" data-n="4" data-f="2" data-cx="1097" data-cy="996" d="M943,889 L1251,926 L1251,1090 L943,1077Z"/></g><g id="apin" class="apin"><line id="apl" x1="0" y1="0" x2="0" y2="0"/><circle id="apc" r="9"/></g></svg>
+    <div class="aptag" id="aptag"><div class="atop"><span class="av2" id="apav">ד</span><div><b id="aptb">דני מפתח תקווה</b><small id="aptk">צפה בדירה 7</small></div></div><span class="st" id="apts"><i></i>עכשיו</span></div>
+        <div class="htxt">
+      <p class="for" id="forLine" hidden></p>
+      <h1>החוויה האולטימטיבית<br>ללקוחות שלכם.</h1>
+      <p class="lead">מודל תלת־ממד לכל דירה בפרויקט. הקונים מבינים, מסיירים ומגיעים לפגישה עם החלטה.</p>
+      <a class="slide" href="#flow"><span class="knob"><svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span><b>גלו את החוויה</b><em>‹‹‹</em></a>
+    </div>
+  </section>
+
+  <!-- the problem today -->
+  <section class="story pain-s" id="pain">
+    <div class="sin">
+      <header class="shd"><h2>ההחלטה הכי גדולה בחיים.<br>מול תוכנית שטוחה.</h2><p>רוכשי דירות מקבלים PDF, כמה הדמיות ומשפט אחד על כל חדר. מזה הם אמורים להבין איך ירגיש לגור שם.</p></header>
+      <div class="pgrid">
+        <article class="pp">
+          <div class="pg pg1" aria-hidden="true">
+            <svg class="fp" viewBox="0 0 200 140"><rect x="4" y="4" width="192" height="132" rx="2"/><path d="M114 4v132M4 84h110M114 54h82M64 84v52"/><path class="door" d="M40 84a14 14 0 0 1 14-14"/></svg>
+            <span class="dim"><i></i><b>5.60</b></span>
+            <span class="qm q1">?</span><span class="qm q2">?</span><span class="qm q3">?</span>
+          </div>
+          <h3>לא כולם יודעים לקרוא תוכנית</h3><p>קווים ומידות לא הופכים לחדר, למרווח או לתחושה.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg2" aria-hidden="true">
+            <div class="docs"><div class="doc"><i></i><s></s><s></s><small>פרויקט א</small></div><div class="doc"><i></i><s></s><s></s><small>פרויקט ב</small></div><div class="doc"><i></i><s></s><s></s><small>פרויקט ג</small></div><div class="doc"><i></i><s></s><s></s><small>פרויקט ד</small></div></div>
+            <span class="stamp">אותו דבר</span>
+          </div>
+          <h3>כל הפרויקטים נראים אותו דבר</h3><p>תוכנית, הדמיה וטקסט קצר. הקונה עובר מפרויקט לפרויקט ולא מבין אף דירה.</p>
+        </article>
+        <article class="pp">
+          <div class="pg pg3" aria-hidden="true">
+            <div class="cal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="prog"><span>הפקת סיור וירטואלי</span><b class="pct"></b><div><i></i></div></div>
+            <div class="cost"><span>תקציב</span><div><i></i></div></div>
+          </div>
+          <h3>סיור וירטואלי מלא? יקר ואיטי</h3><p>תקציב גבוה ושבועות של הפקה, בשביל לדייק את הספה והשיש.</p>
+        </article>
+      </div>
+      <p class="pq"><b>״אבל איך זה ירגיש?״</b><span>השאלה שחזרה בשיחות עם אלפי רוכשים לאורך השנים</span></p>
+      <p class="bridge">מה שחסר לקונה הוא לא עוד הדמיה. חסר לו מישהו שיוביל אותו בתוך הדירה.</p>
+    </div>
+  </section>
+
+  <!-- what changes: one band per audience, three explained feature cards each -->
+  <section class="story sol-s" id="solve">
+    <div class="sin">
+      <header class="shd"><h2>חוויה שמסבירה את הדירה.<br>בימים, לא בחודשים.</h2><p>WalkMeIn הופך תוכנית מכר לסיור שהקונה מבין, ליזם זה נגמר מהר, ואיש המכירות יודע בדיוק עם מי הוא מדבר.</p></header>
+
+      <div class="band b-buy">
+        <div class="bhd"><span class="bno">01</span><div><span class="who">לקונה</span><h3>מבין את הדירה, לא רק רואה אותה</h3><p>במקום לנחש מתוך PDF, הקונה מסתובב בדירה, שומע הסבר על כל חדר ורואה איך הוא ייראה.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-model" aria-hidden="true"><span class="ring"></span><img src="img/i-model.webp" alt=""><span class="drag">↔ גררו לסיבוב</span></div>
+            <div class="ftx"><b>מסובבים את הדירה ב־360°</b><p>מודל תלת־ממד של הדירה. רואים מאיזה צד כל חדר, איפה המרפסת ומה גודל הסלון ביחס לשאר.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-route" aria-hidden="true"><img src="img/f-plan.webp" alt="">
+              <svg viewBox="0 0 960 720" preserveAspectRatio="xMidYMid slice"><path class="route" d="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/><circle class="vdot2" r="16"><animateMotion dur="10s" repeatCount="indefinite" path="M380 530 L350 430 L355 335 L470 300 L560 320 L610 420"/></circle></svg>
+              <div class="vcap"><span class="pl">▶</span><div class="vtx"><i>״זו המרפסת, 14 מ״ר לנוף…״</i><i>״הסלון מואר משני כיוונים…״</i><i>״המטבח פתוח לפינת האוכל…״</i><i>״וכאן יחידת ההורים…״</i></div><span class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div></div>
+            <div class="ftx"><b>סיור קולי מוביל אותו</b><p>קריינות נעימה עוברת איתו מחדר לחדר ומסבירה מה רואים, כמו סוכן שמסייר איתו בדירה.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-gal" aria-hidden="true"><img src="img/f-rooms.webp" alt=""><img src="img/f-tour.webp" alt=""><img src="img/f-orbit.webp" alt=""><span class="glab"><i>סלון</i><i>מטבח</i><i>חדר שינה</i></span></div>
+            <div class="ftx"><b>הדמיה לכל חדר</b><p>לוחצים על חדר ומקבלים הדמיה ריאליסטית שלו, בלי שהיזם צריך להפיק סיור תלת־ממד מלא.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-dev">
+        <div class="bhd"><span class="bno">02</span><div><span class="who">ליזם</span><h3>באוויר תוך ימים, לא חודשים</h3><p>לא מתעכבים על גוון השיש או דגם הספה. מתמקדים במה שהקונה צריך: מרחב, פרופורציות וזרימה.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-gantt" aria-hidden="true"><div class="gw"><span>שבוע</span><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i></div>
+              <div class="gr"><span>סיור וירטואלי</span><div><b class="slow"></b></div></div>
+              <div class="gr me"><span>WalkMeIn</span><div><b class="fast"></b><em>✓ באוויר</em></div></div></div>
+            <div class="ftx"><b>הפקה של ימים</b><p>סיור וירטואלי מלא לוקח חודשיים. WalkMeIn מוכן תוך ימים מהרגע ששלחתם את התוכניות.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-race" aria-hidden="true"><div class="lane"><span>מתחרה</span><div><i class="car them"></i></div></div><div class="lane me"><span>אתם</span><div><i class="car us"></i></div></div><span class="flag">🏁 באוויר</span></div>
+            <div class="ftx"><b>מקדימים את המתחרים</b><p>אתם כבר מציגים חוויה מלאה לקונים, כשפרויקטים אחרים עדיין בהפקה או נשארו עם PDF.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-time" aria-hidden="true"><span class="tl">זמן ממוצע בעמוד התוכניות</span><b class="tnum" data-to="252">0:00</b><div class="tb2"><div><i class="b1"></i><small>PDF רגיל</small></div><div><i class="b2"></i><small>עם WalkMeIn</small></div></div></div>
+            <div class="ftx"><b>קונים נשארים יותר</b><p>במקום להציץ ב־PDF ולצאת, הקונה מסייר, לוחץ ומשווה בין דירות. יותר זמן, יותר עניין.</p></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="band b-sale">
+        <div class="bhd"><span class="bno">03</span><div><span class="who">לאיש המכירות</span><h3>יודע מה הקונה ראה, לפני שהוא מרים טלפון</h3><p>כל ביקור נמדד. הליד מגיע עם התמונה המלאה, ואיש המכירות מגיע לשיחה מוכן.</p></div></div>
+        <div class="fgrid brow">
+          <article class="fc">
+            <div class="sbx t-heat" aria-hidden="true"><img src="img/f-plan.webp" alt="">
+              <span class="blob bl1"></span><span class="blob bl2"></span><span class="blob bl3"></span>
+              <span class="hl hl1"><i></i>סלון · 3:40 דק׳</span><span class="hl hl2"><i></i>חדר הורים · 2:05</span><span class="hl hl3"><i></i>מטבח · 1:12</span></div>
+            <div class="ftx"><b>מפת חום של כל ביקור</b><p>רואים באילו חדרים הקונה בילה הכי הרבה זמן ומה עניין אותו. ככה יודעים על מה לדבר.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-link" aria-hidden="true"><div class="url"><span class="typ">walkmein.com/p/dani</span><i class="caret"></i></div><div class="wmsg"><span class="wi">✆</span><div><b>נשלח לדני</b><small>היי דני, הנה הדירה שלך בתלת־ממד</small></div><span class="ticks">✓✓</span></div></div>
+            <div class="ftx"><b>לינק אישי לכל לקוח</b><p>שולחים לקונה קישור משלו בוואטסאפ, ויודעים מתי פתח, כמה זמן צפה ומה חזר לראות.</p></div>
+          </article>
+          <article class="fc">
+            <div class="sbx t-lead" aria-hidden="true"><div class="nt"><span class="lav">ד</span><div><b>ליד חדש · דני כהן</b><small>מתעניין ב־4 חד׳ טיפוס C</small></div></div>
+              <p class="ll"><span>חדרים שביקר</span><b>6 מתוך 8</b></p><p class="ll"><span>הכי הרבה זמן</span><b>סלון</b></p><p class="ll"><span>ביקורים</span><b>3</b></p><p class="ll"><span>הגיע מ</span><b>פייסבוק</b></p></div>
+            <div class="ftx"><b>ליד שמגיע עם היסטוריה</b><p>מי שמשאיר פרטים באתר מגיע ל־CRM עם כל מה שצפה בו. בלי שאלות פתיחה מיותרות.</p></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · flow dashboard -->
+  <section class="sheet" id="flow">
+    <h2 class="sh big">מתוכנית מכר<em>לחוויה שהקונה לא שוכח</em></h2>
+    <p class="intro">אתם שולחים את התוכנית. אנחנו בונים ממנה מודל תלת־ממד, והקונה מקבל קישור אחד: לסובב, לסייר ולהבין את הדירה.</p>
+    <div class="flow"><span class="track" aria-hidden="true"><i></i></span>
+      <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M27 24 C27 34 40 36 44 40"/><path d="M73 24 C73 34 60 36 56 40"/>
+        <path d="M44 62 C40 66 27 68 27 76"/><path d="M56 62 C60 66 73 68 73 76"/>
+      </svg>
+      <div class="node n1"><span class="sn">1</span><img src="img/i-plan.webp" alt=""><small>שולחים</small><b>תוכנית PDF</b></div>
+      <div class="node n2"><span class="sn">2</span><img src="img/i-building.webp" alt=""><small>לכל סוגי</small><b>הדירות</b></div>
+      <div class="node big n3"><span class="sn">3</span><img src="img/i-model.webp" alt=""><small>מקבלים מודל</small><b>360°</b></div>
+      <div class="node n4"><span class="sn">4</span><img src="img/i-tour.webp" alt=""><small>עם</small><b>סיור מודרך</b></div>
+      <div class="node n5"><span class="sn">5</span><img src="img/i-phone.webp" alt=""><small>בקישור</small><b>לוואטסאפ</b></div>
+    </div>
+  </section>
+
+  <!-- 3 · pinned 3D: the model stays, the feature cards swap under it -->
+  <section class="pin" id="model" data-pin>
+    <div class="stick">
+      <div class="phead"><div><h2 class="sh big">סובבו. בדקו. היכנסו פנימה.<em>חמש דרכים שבהן הקונה פוגש את הדירה</em></h2></div><p class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></p></div>
+      <div class="live card">
+        <canvas id="gl" aria-label="מודל תלת־ממד חי של הדירה"></canvas>
+        <p class="tag t1">סלון ומטבח<b>28 מ״ר</b></p>
+        <p class="tag t2">מרפסת<b>18 מ״ר</b></p>
+        <p class="tag t3">יחידת הורים<b>14 מ״ר</b></p>
+        <p class="hint" id="hint"><svg viewBox="0 0 24 24"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3"/></svg>גררו כדי לסובב</p>
+      </div>
+      <div class="deck" id="deck"><article class="dcard" data-i="0"><span class="di"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><div><small>1 / 5</small><b>סיבוב חופשי 360°</b><p>גוררים ומסובבים. כל פינה בדירה, מכל כיוון.</p></div></article><article class="dcard" data-i="1"><span class="di"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><div><small>2 / 5</small><b>תוכנית ותלת־ממד</b><p>מבט מלמעלה כמו בתוכנית המכר, ובלחיצה חוזרים למודל.</p></div></article><article class="dcard" data-i="2"><span class="di"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><div><small>3 / 5</small><b>חדרים ומידות</b><p>לחיצה על חדר מדגישה אותו ומציגה את השטח.</p></div></article><article class="dcard" data-i="3"><span class="di"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><div><small>4 / 5</small><b>תצוגה בשכבות</b><p>רצפה, קירות וריהוט. רואים איך הדירה בנויה.</p></div></article><article class="dcard" data-i="4"><span class="di"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><small>5 / 5</small><b>בגובה העיניים</b><p>נכנסים לסלון ומסתכלים החוצה, לכיוון המרפסת.</p></div></article></div>
+    </div>
+  </section>
+
+  <!-- 4 · narrated walk-through on the realistic model -->
+  <section class="sheet" id="voice">
+    <h2 class="sh big">סיור מודרך בדירה<em>הקונה הולך בתוך הדירה, וקול מקצועי מסביר כל חדר</em></h2>
+    <p class="vp">הקונה הולך בתוך הדירה, מחדר לחדר, וקול מקצועי מסביר מה רואים. כך זה נראה בפרויקט מארק שאגאל של גיא ודורון לוי.</p>
+    <div class="player card" id="player">
+      <video id="tourVid" src="media/tour.mp4" poster="media/tour.jpg" muted loop playsinline preload="metadata" aria-label="סיור מודרך בסלון של פנטהאוז במארק שאגאל"></video>
+      <div class="ptop"><span class="lv"><i></i>סיור מודרך</span><span class="stop">עצירה 2 מתוך 10 · סלון ופינת אוכל</span></div>
+      <div class="pbot">
+        <p class="sub2" id="sub2"><span>זה</span> <span>לב</span> <span>הבית:</span> <span>חלל</span> <span>פתוח</span> <span>של</span> <span>72</span> <span>מטרים</span> <span>רבועים,</span> <span>שמחבר</span> <span>סלון,</span> <span>פינת</span> <span>אוכל</span> <span>ומטבח.</span> <span>תקרה</span> <span>בגובה</span> <span>שלושה</span> <span>מטרים,</span> <span>חלונות</span> <span>אלומיניום</span> <span>עם</span> <span>זיגוג</span> <span>כפול</span> <span>והצללה</span> <span>חשמלית,</span> <span>ומערכת</span> <span>בית</span> <span>חכם</span> <span>ששולטת</span> <span>במיזוג,</span> <span>בתריסים</span> <span>ובתאורה.</span></p>
+        <div class="prow">
+          <button class="snd" id="snd" aria-pressed="false" aria-label="הפעלת הקריינות"><svg class="on" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><svg class="off" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 10l4 4M21 10l-4 4"/></svg></button>
+          <canvas class="vwave" id="vwave" aria-hidden="true"></canvas>
+          <span class="vt" id="vt">0:00</span>
+        </div>
+        <p class="tapme" id="tapme">הפעילו קול כדי לשמוע את הקריינות</p>
+      </div>
+    </div>
+    <div class="stops"><span class="done">כניסה</span><span class="cur">סלון</span><span>מטבח</span><span>מרפסת מערבית</span><span>חדרים</span><span>יחידת הורים</span></div>
+  </section>
+
+  <!-- 4b · why it sells -->
+  <section class="sheet" id="why">
+    <h2 class="sh big">מה רואים אחרי שהקונים נכנסים<em>דאשבורד הפרויקט: מי צפה, כמה זמן, ובאיזו דירה</em></h2>
+    <div class="dash" id="dash">
+      <div class="dtop">
+        <div class="card kpi"><small>צפיות במודל השבוע</small><b data-n="1284">0</b><span class="up">+32% משבוע שעבר</span></div>
+        <div class="card kpi"><small>זמן צפייה ממוצע</small><b data-n="4.6" data-d="1" data-s=" דק׳">0</b><span class="up">פי 3 מעמוד PDF</span></div>
+        <div class="card kpi"><small>שיתופים בוואטסאפ</small><b data-n="217">0</b><span class="up">הקישור עובר לבני הזוג</span></div>
+        <div class="card kpi y"><small>השאירו פרטים לפגישה</small><b data-n="64">0</b><span class="up">מתוך הסיור המודרך</span></div>
+      </div>
+      <div class="card dmodel"><div class="dmh"><b>הדירות הנצפות ביותר</b><span class="live2"><i></i>חי</span></div><img src="img/f-rooms.webp" alt=""><p class="hot h1"><b>דירה 8</b>412 צפיות</p><p class="hot h2"><b>דירה 12</b>356 צפיות</p><p class="hot h3"><b>פנטהאוז</b>298 צפיות</p></div>
+      <div class="card chartc" id="chartc">
+        <div class="chd"><div><small>צפיות ופניות לפי יום</small><b>14 הימים האחרונים</b></div></div>
+        <svg class="bars" id="bars" viewBox="0 0 280 120" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <p class="legend"><span class="ly"></span>צפיות<span class="lg2"></span>פניות</p>
+      </div>
+      <div class="card src"><b>מאיפה הקונים מגיעים</b>
+        <div class="donut"><svg viewBox="0 0 42 42" aria-hidden="true"><circle class="dbg" cx="21" cy="21" r="15.9"/><circle class="seg s1" cx="21" cy="21" r="15.9" style="--v:46;--o:0"/><circle class="seg s2" cx="21" cy="21" r="15.9" style="--v:27;--o:46"/><circle class="seg s3" cx="21" cy="21" r="15.9" style="--v:17;--o:73"/><circle class="seg s4" cx="21" cy="21" r="15.9" style="--v:10;--o:90"/></svg><p><b>46%</b><small>וואטסאפ</small></p></div>
+        <ul class="dl"><li><i class="c1"></i>וואטסאפ<em>46%</em></li><li><i class="c2"></i>קמפיין ממומן<em>27%</em></li><li><i class="c3"></i>אתר הפרויקט<em>17%</em></li><li><i class="c4"></i>משרד המכירות<em>10%</em></li></ul>
+      </div>
+      <div class="card rooms2"><b>איפה הקונים מתעכבים</b>
+        <p><span>סלון ומטבח</span><i style="--w:86%"></i><em>1:48</em></p>
+        <p><span>מרפסת</span><i style="--w:64%"></i><em>1:12</em></p>
+        <p><span>יחידת הורים</span><i style="--w:52%"></i><em>0:58</em></p>
+        <p><span>ממ״ד</span><i style="--w:30%"></i><em>0:34</em></p>
+      </div>
+      <div class="card feed"><b>פעילות אחרונה</b>
+        <p><i class="g"></i>קונה מתל אביב סיים סיור בדירה 8<small>לפני 2 דק׳</small></p>
+        <p><i></i>הקישור לדירה 12 שותף בוואטסאפ<small>לפני 6 דק׳</small></p>
+        <p><i class="y"></i>פנייה חדשה: פנטהאוז, קומה 7<small>לפני 11 דק׳</small></p>
+      </div>
+    </div>
+    <p class="note2">הנתונים בדאשבורד להמחשה.</p>
+  </section>
+
+  <!-- 4c · all features, dark -->
+  <section class="feats2" id="feats">
+    <h2 class="sh big">כל מה שיש במערכת<em>הכול כלול בקישור אחד</em></h2>
+    <div class="fwrap">
+      <div class="fvis"><span class="ring"></span><img class="fimg" id="fimg" src="img/f-orbit.webp" alt=""><img class="ffloat" src="img/i-model.webp" alt=""><p class="fcount"><b>11</b>יכולות בחוויה אחת</p></div>
+      <div class="flist">
+        <div class="acc" id="acc"><details class="fi" open data-img="img/f-orbit.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M21 12a9 4 0 1 1-18 0 9 4 0 0 1 18 0z"/><path d="M12 3v18"/></svg></span><b>סיבוב חופשי 360°</b><i class="pm"></i></summary><p>גוררים, מסובבים ומתקרבים לכל פינה בדירה. עובד באצבע בטלפון ובעכבר במחשב.</p></details><details class="fi" data-img="img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h9V3M12 12v9"/></svg></span><b>תוכנית ותלת־ממד</b><i class="pm"></i></summary><p>מעבר בלחיצה בין תוכנית המכר המקורית לבין המודל, כדי לקשר בין השרטוט למציאות.</p></details><details class="fi" data-img="img/f-rooms.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 9h3M4 14h3M9 4v3M14 4v3"/></svg></span><b>חדרים ומידות</b><i class="pm"></i></summary><p>רשימת חדרים עם שטחים ומידות. לחיצה על חדר מדגישה אותו במודל.</p></details><details class="fi" data-img="img/f-explode.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4M3 17l9 4 9-4"/></svg></span><b>תצוגה בשכבות</b><i class="pm"></i></summary><p>רצפה, קירות וריהוט נפרדים זה מזה, כדי להבין איך הדירה בנויה.</p></details><details class="fi" data-img="media/tour.jpg"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><b>הליכה בגובה העיניים</b><i class="pm"></i></summary><p>נכנסים לדירה ומסתכלים סביב, כמו בביקור בדירה לדוגמה.</p></details><details class="fi" data-img="img/f-tour.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><b>סיור מודרך עם קריינות</b><i class="pm"></i></summary><p>מסלול מוכן בין החדרים, עם קול מקצועי בעברית שמסביר כל חלל.</p></details><details class="fi" data-img="img/i-building.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><b>בחירת קומה ודירה</b><i class="pm"></i></summary><p>הדמיית הבניין עם הקומות והדירות. בוחרים דירה ונכנסים ישר לתלת־ממד שלה.</p></details><details class="fi" data-img="img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><b>טופס פנייה בכל דירה</b><i class="pm"></i></summary><p>הקונה משאיר פרטים מתוך הדירה שמעניינת אותו, והליד מגיע עם שם הדירה.</p></details><details class="fi" data-img="img/i-phone.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg></span><b>קישור לוואטסאפ ולאתר</b><i class="pm"></i></summary><p>קישור אחד לשליחה בוואטסאפ, להטמעה באתר הפרויקט ולמסך במשרד המכירות.</p></details><details class="fi" data-img="img/f-plan.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><b>שפות נוספות</b><i class="pm"></i></summary><p>אותה חוויה באנגלית, ברוסית או בצרפתית, לקונים מחו״ל.</p></details><details class="fi" data-img="img/i-key.webp"><summary><span class="fic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><b>חיבור ל־CRM</b><i class="pm"></i></summary><p>הפניות נכנסות ישר למערכת שלכם, עם הדירה שהקונה ראה.</p></details></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · how it works, simulated step by step -->
+  <section class="pin" id="how" data-pin>
+    <div class="stick">
+      <h2 class="sh">איך זה עובד<em>מתוכנית למודל, בתוך ימים</em></h2>
+      <div class="hstage card" id="hstage">
+        <div class="hs s1"><div class="drop"><img src="img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>דירה_12.pdf<span class="pbar"><i></i></span></p></div></div>
+        <div class="hs s2"><div class="build"><img class="ghost" src="img/i-model.webp" alt=""><img class="solid" src="img/i-model.webp" alt=""><span class="scan"></span></div><p class="cap">בונים את המודל לפי המידות</p></div>
+        <div class="hs s3"><div class="review"><img src="img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>להזיז את דלת המטבח</p><p class="pinx p2 done"><b>✓</b>עודכן</p></div></div>
+        <div class="hs s4"><div class="live2"><img src="img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>נשלח בוואטסאפ ✓✓</small></p></div></div>
+      </div>
+      <ol class="hsteps" id="hsteps">
+        <li><i>1</i><b>שולחים תוכניות</b><p>PDF או DWG של סוגי הדירות.</p></li>
+        <li><i>2</i><b>בונים את המודל</b><p>מידות לפי התוכנית, ריהוט נקי.</p></li>
+        <li><i>3</i><b>סבב הערות</b><p>קישור לבדיקה, ואנחנו מעדכנים.</p></li>
+        <li><i>4</i><b>עולים לאוויר</b><p>קישור לקונים, הטמעה באתר.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5b · how it works, desktop bento -->
+  <section class="sheet bento-sec" id="how2">
+    <h2 class="sh big">איך זה עובד<em>מתוכנית PDF למודל חי, בתוך ימים</em></h2>
+    <div class="bento">
+      <article class="bx b1"><span class="bn">1</span><div class="bt"><b>שולחים תוכניות</b><p>PDF או DWG של סוגי הדירות. זה כל מה שצריך מכם.</p></div><div class="bv"><img class="fly" src="img/i-plan.webp" alt=""><p class="file"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg>דירה_12.pdf<span class="pbar"><i class="loop"></i></span></p></div></article>
+      <article class="bx b2"><span class="bn">2</span><div class="bt"><b>בונים את המודל</b><p>מידות לפי התוכנית, ריהוט נקי ושפה שמתאימה לפרויקט.</p></div><div class="bv build2"><img class="ghost" src="img/i-model.webp" alt=""><img class="solid" src="img/i-model.webp" alt=""><span class="scan"></span></div></article>
+      <article class="bx b3"><span class="bn">3</span><div class="bt"><b>סבב הערות</b><p>מקבלים קישור לבדיקה, מעירים, ואנחנו מעדכנים.</p></div><div class="bv rev2"><img src="img/f-rooms.webp" alt=""><p class="pinx p1"><b>1</b>להזיז את דלת המטבח</p><p class="pinx p2"><b>✓</b>עודכן</p></div></article>
+      <article class="bx b4"><span class="bn">4</span><div class="bt"><b>עולים לאוויר</b><p>קישור לקונים, הטמעה באתר ועדכונים לאורך כל השיווק.</p></div><div class="bv"><img class="ph2" src="img/i-phone.webp" alt=""><p class="wa"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z"/></svg>walkmein.com/dira12<small>נשלח בוואטסאפ ✓✓</small></p></div></article>
+      <article class="bx b5"><img src="img/i-key.webp" alt=""><div><small>מהתוכנית למודל באוויר</small><b>ימים, לא חודשים</b></div><a class="cta2" href="#contact">לתיאום הדגמה</a></article>
+    </div>
+  </section>
+
+  <section class="sheet" id="meter">
+    <div class="card meter">
+      <div class="mh"><img src="img/i-key.webp" alt=""><div><small>מהתוכנית למודל מוכן</small><b>ימים <sup>לא חודשים</sup></b></div><a class="arrow" href="#contact" aria-label="לתיאום הדגמה"><svg viewBox="0 0 24 24"><path d="M17 7L7 17M8 7h9v9"/></svg></a></div>
+      <div class="bar2"><i></i></div>
+      <p class="mf"><span>שולחים תוכנית</span><span>מודל באוויר</span></p>
+    </div>
+  </section>
+
+  <!-- 6 · pricing -->
+  <section class="sheet" id="pricing">
+    <h2 class="sh big">בנו את החבילה שלכם<em>משלמים פעם אחת. ככל שיש יותר דירות, כל אחת זולה יותר</em></h2>
+    <div class="calc" id="calc">
+      <div class="cfg">
+        <div class="card base"><span class="bi2"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg></span><div><b>בסיס לפרויקט · ₪1,490</b><p>סוג הדירה הראשון, קישור לשיתוף, הטמעה באתר, טופס פנייה, ואחסון עד סוף השיווק.</p></div></div>
+        <div class="card types"><div class="th"><div><b>כמה סוגי דירות?</b><p>כל סוג נוסף זול יותר מהקודם</p></div><div class="step"><button type="button" id="minus" aria-label="פחות">−</button><output id="nTypes">4</output><button type="button" id="plus" aria-label="יותר">+</button></div></div>
+          <input type="range" id="range" min="1" max="20" value="4" aria-label="מספר סוגי דירות">
+          <div class="tiers"><span data-t="1"><b>2–3</b>₪890 לסוג</span><span data-t="2"><b>4–8</b>₪690 לסוג</span><span data-t="3"><b>9 ומעלה</b>₪490 לסוג</span></div>
+        </div>
+        <div class="adds" id="adds">
+          <label class="card add"><input type="checkbox" data-k="real" data-per="400"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5"/></svg></span><span class="at"><b>הדמיה ריאליסטית</b><small>חומרים, אור ונוף בחלונות</small><button type="button" class="peek" data-peek="real">איך זה נראה<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪400 לסוג</em></label>
+          <label class="card add"><input type="checkbox" data-k="tour" data-fix="1200"><span class="ai"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></span><span class="at"><b>סיור מודרך עם קריינות</b><small>תסריט וקול לכל הפרויקט</small><button type="button" class="peek" data-peek="tour">איך זה נראה<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,200</em></label>
+          <label class="card add"><input type="checkbox" data-k="bld" data-fix="1900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M5 21V4h10v17M15 9h4v12M3 21h18M8 8h4M8 12h4M8 16h4"/></svg></span><span class="at"><b>בחירת דירה על הבניין</b><small>קומות, דירות וסטטוס זמינות</small><button type="button" class="peek" data-peek="bld">איך זה נראה<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪1,900</em></label>
+          <label class="card add"><input type="checkbox" data-k="lang" data-fix="600"><span class="ai"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><span class="at"><b>שפה נוספת</b><small>אנגלית, רוסית או צרפתית</small><button type="button" class="peek" data-peek="lang">איך זה נראה<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪600</em></label>
+          <label class="card add"><input type="checkbox" data-k="crm" data-fix="900"><span class="ai"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></span><span class="at"><b>חיבור ל־CRM</b><small>הפניות נכנסות ישר למערכת שלכם</small><button type="button" class="peek" data-peek="crm">איך זה נראה<svg viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></span><em>₪900</em></label>
+        </div>
+      </div>
+      <aside class="card sum" id="sum">
+        <p class="sk">החבילה שלכם</p>
+        <p class="tot"><span id="total">₪0</span><small>תשלום אחד, לפני מע״מ</small></p>
+        <p class="per">כ־<b id="per">₪0</b> לכל סוג דירה</p>
+        <div class="perbar"><i id="perbar"></i></div>
+        <ul id="lines"></ul>
+        <ul class="incl"><li>אחסון ותחזוקה עד סוף השיווק</li><li>עדכונים לתוכניות כלולים</li><li>בלי מנוי ובלי עלות חודשית</li></ul>
+        <a class="slide" href="#contact" id="sumcta" role="button"><span class="knob"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></span><b>לתיאום שיחת הדגמה</b><em>‹‹‹</em></a>
+        <p class="pil">רוצים להתחיל בקטן? פיילוט של סוג דירה אחד ב־₪990, מקוזז אם ממשיכים.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 7 · faq -->
+  <section class="sheet" id="faq">
+    <h2 class="sh big">שאלות נפוצות<em>כל מה שיזמים שואלים אותנו</em></h2>
+    <div class="qtabs" role="tablist"><button role="tab" data-g="0" aria-selected="true">מחיר ותשלום<i>3</i></button><button role="tab" data-g="1" aria-selected="false">התהליך<i>4</i></button><button role="tab" data-g="2" aria-selected="false">החוויה לקונה<i>4</i></button><button role="tab" data-g="3" aria-selected="false">שיווק ולידים<i>3</i></button></div>
+    <div class="qstage" id="qstage"><div class="qdeck" data-g="0"><article class="qc" data-i="0"><div class="qv"><img src="img/i-key.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>יש עלות חודשית או דמי אחסון?</h3><p>לא. אחסון, תחזוקה ועדכונים כלולים בתשלום החד־פעמי עד סוף שיווק הפרויקט. אחרי שהפרויקט נמכר, אין צורך להמשיך.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="img/i-key.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>אפשר להתחיל מדירה אחת?</h3><p>כן. הפיילוט ב־₪990 כולל סוג דירה אחד, ואם ממשיכים לחבילה הסכום מקוזז במלואו.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="img/i-key.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>למי שייך המודל?</h3><p>המודל נבנה עבור הפרויקט שלכם, ואפשר להשתמש בו בכל ערוצי השיווק עד סוף המכירות.</p></div></article></div><div class="qdeck" data-g="1" hidden><article class="qc" data-i="0"><div class="qv"><img src="img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>מה אתם צריכים מאיתנו?</h3><p>תוכניות המכר של סוגי הדירות, ב־PDF או DWG. אם יש הדמיות, לוגו ושפה עיצובית, נתאים את המודל אליהם.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>כמה זמן זה לוקח?</h3><p>סוג דירה ראשון מוכן בדרך כלל תוך כמה ימי עבודה מקבלת התוכניות. פרויקט שלם תלוי במספר סוגי הדירות.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>מה קורה אם התוכנית משתנה?</h3><p>מעדכנים את המודל. שינויים בתוכניות ועדכוני זמינות במהלך השיווק כלולים.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="img/i-plan.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>אפשר לבחור ריהוט וסגנון?</h3><p>כן. הריהוט מותאם לקהל של הפרויקט ולשפה העיצובית שלכם.</p></div></article></div><div class="qdeck" data-g="2" hidden><article class="qc" data-i="0"><div class="qv"><img src="img/i-model.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>זו הדמיה ריאליסטית?</h3><p>המודל הבסיסי הוא מודל אדריכלי נקי שמסביר את הדירה: מידות, חלוקה וזרימה. בחבילת סיגנצ׳ר יש גם מצב ריאליסטי עם חומרים ואור, כמו בפרויקט מארק שאגאל.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="img/i-model.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>זה עובד בטלפון?</h3><p>כן. החוויה נבנתה קודם כל לנייד ועובדת בכל דפדפן מודרני, בלי להתקין כלום.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="img/i-model.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>צריך להוריד אפליקציה?</h3><p>לא. זה קישור רגיל שנפתח בדפדפן, מוואטסאפ, ממייל או מהאתר.</p></div></article><article class="qc" data-i="3"><div class="qv"><img src="img/i-model.webp" alt=""></div><div class="qb"><span class="qn">04.</span><h3>מי מקליט את הקריינות?</h3><p>קריין מקצועי בעברית, לפי תסריט שאנחנו כותבים מתוך מפרט הפרויקט ומאושר על ידכם.</p></div></article></div><div class="qdeck" data-g="3" hidden><article class="qc" data-i="0"><div class="qv"><img src="img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">01.</span><h3>איפה זה מוצג?</h3><p>בקישור ייעודי, בהטמעה באתר הפרויקט, בדפי נחיתה ובקמפיינים, ובמסך במשרד המכירות.</p></div></article><article class="qc" data-i="1"><div class="qv"><img src="img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">02.</span><h3>אפשר להטמיע באתר שלנו?</h3><p>כן. מקבלים קוד הטמעה פשוט, והמודל נפתח בתוך העמוד של הפרויקט.</p></div></article><article class="qc" data-i="2"><div class="qv"><img src="img/i-phone.webp" alt=""></div><div class="qb"><span class="qn">03.</span><h3>איך הפניות מגיעות אלינו?</h3><p>מטופס בתוך כל דירה, לוואטסאפ, למייל או ישר ל־CRM שלכם, עם שם הדירה שהקונה ראה.</p></div></article></div></div>
+    <div class="qnav"><button id="qprev" aria-label="הקודמת"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button><span id="qcount">1 / 3</span><button id="qnext" aria-label="הבאה"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button></div>
+  </section>
+
+  <!-- 8 · contact -->
+  <section class="sheet dark" id="contact">
+    <div class="ctx">
+      <span class="ceb">שיחת הדגמה · 20 דקות</span>
+      <h2 class="ch">תראו את הפרויקט שלכם<br><em>דרך העיניים של הקונה.</em></h2>
+      <p class="cl">בשיחה קצרה נציג לכם את החוויה בפעולה, נראה איזה מידע איש המכירות מקבל על כל ליד, ונבנה יחד תוכנית לפרויקט שלכם.</p>
+      <ul class="cpts"><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>הדגמה חיה: מודל, סיור קולי ודאשבורד</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>תוכנית עבודה ולוח זמנים לפרויקט שלכם</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg>הצעת מחיר מסודרת לפי סוגי הדירות</li></ul>
+    </div>
+    <form id="form" class="lform" novalidate>
+      <div class="lfh"><b>תיאום שיחת הדגמה</b><span>השאירו פרטים ונחזור אליכם לקבוע מועד שנוח לכם</span></div>
+      <label class="fld"><span>שם מלא</span><input name="name" required autocomplete="name" placeholder="ישראל ישראלי"></label>
+      <label class="fld"><span>חברה / פרויקט</span><input name="company" autocomplete="organization" placeholder="שם החברה או הפרויקט"></label>
+      <label class="fld"><span>טלפון</span><input name="phone" type="tel" required autocomplete="tel" placeholder="050-0000000" dir="ltr"></label>
+      <label class="fld"><span>אימייל</span><input name="email" type="email" autocomplete="email" placeholder="name@company.co.il" dir="ltr"></label>
+      <button class="lbtn" type="submit">תאמו לי שיחת הדגמה<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <p class="msg" id="msg" role="status"></p>
+      <p class="lsafe"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>הפרטים נשמרים אצלנו בלבד</p>
+    </form>
+    <div class="fmodel"><p class="word">WALKMEIN</p><canvas id="gl2" aria-hidden="true"></canvas><p class="fnote">הדירה שלכם, לפני שנבנתה.</p></div>
+    <footer class="foot">
+      <div class="fbrand"><b>WalkMeIn</b><p>חוויית דירה בתלת־ממד שמוכרת: מודל, סיור קולי ונתונים על כל קונה.</p><a class="fcta" href="#contact">לתיאום שיחת הדגמה</a></div>
+      <nav class="fcol" aria-label="המוצר"><h3>המוצר</h3><a href="#pain">למה WalkMeIn</a><a href="#flow">איך זה בנוי</a><a href="#model">המודל בפעולה</a><a href="#voice">סיור עם קריינות</a><a href="#why">הדאשבורד שלכם</a><a href="#feats">כל היכולות</a></nav>
+      <nav class="fcol" aria-label="עבודה איתנו"><h3>עבודה איתנו</h3><a href="#how2">איך עובדים איתנו</a><a href="#pricing">מחירים</a><a href="#faq">שאלות נפוצות</a><a href="#contact">השארת פרטים</a></nav>
+      <div class="fbot"><span>WalkMeIn by Elevate Digital Studio</span><a href="#top">חזרה למעלה ↑</a></div>
+    </footer>
+  </section>
+
+  <!-- floating tab bar -->
+  <nav class="tabs" id="tabs" aria-label="ניווט">
+    <a href="#top" class="on"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9H4z"/></svg><span>ראשי</span></a>
+    <a href="#model"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><span>המודל</span></a>
+    <a href="#contact" class="plus"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>הדגמה</span></a>
+    <a href="#pricing"><svg viewBox="0 0 24 24"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg><span>מחירים</span></a>
+    <a href="#faq"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.2v.1"/></svg><span>שאלות</span></a>
+  </nav>
+</div>
+<script type="module" src="app.js"></script>
+
+<!-- add-on preview -->
+<div class="pv" id="pv" hidden role="dialog" aria-modal="true" aria-labelledby="pvT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox">
+    <button class="pvx" data-close aria-label="סגירה"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="pvvis" id="pvVis"></div>
+    <div class="pvtx"><span class="pvtag" id="pvTag"></span><h3 id="pvT"></h3><p id="pvD"></p><ul id="pvL"></ul>
+      <div class="pvact"><button class="pvadd" id="pvAdd"></button><span class="pvprice" id="pvP"></span></div></div>
+  </div>
+</div>
+
+<!-- lead form with the chosen package -->
+<div class="pv ldm" id="leadM" hidden role="dialog" aria-modal="true" aria-labelledby="ldT">
+  <div class="pvbg" data-close></div>
+  <div class="pvbox ldbox">
+    <button class="pvx" data-close aria-label="סגירה"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="ldsum"><span class="pvtag">החבילה שבחרתם</span><p class="ldtot" id="ldTot"></p><small>תשלום אחד, לפני מע״מ</small><ul id="ldLines"></ul></div>
+    <form class="lform ldform" id="ldForm" novalidate>
+      <div class="lfh"><b id="ldT">בואו נקבע שיחת הדגמה</b><span>נעבור יחד על החבילה שבחרתם ונראה אותה בפעולה</span></div>
+      <label class="fld"><span>שם מלא</span><input name="name" required autocomplete="name" placeholder="ישראל ישראלי"></label>
+      <label class="fld"><span>חברה / פרויקט</span><input name="company" autocomplete="organization" placeholder="שם החברה או הפרויקט"></label>
+      <label class="fld"><span>טלפון</span><input name="phone" type="tel" required autocomplete="tel" placeholder="050-0000000" dir="ltr"></label>
+      <label class="fld"><span>אימייל</span><input name="email" type="email" autocomplete="email" placeholder="name@company.co.il" dir="ltr"></label>
+      <button class="lbtn" type="submit">תיאום שיחת הדגמה<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <p class="msg" id="ldMsg" role="status"></p>
+    </form>
+  </div>
+</div>
+</body>
+</html>
