@@ -331,8 +331,11 @@ function sendLead(fd, msg, extra = '', pkg = null) {
   if (fd.get('email')) data.replyto = fd.get('email');
   if (!CONFIG.web3forms) { msg.textContent = 'הטופס עוד לא מחובר. בינתיים, דברו איתנו ישירות.'; msg.classList.add('err'); return false; }
   btn.disabled = true; btn.textContent = 'שולח…'; msg.textContent = '';
-  fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
-    .then(r => r.json()).then(r => { console.info('[lead]', r); if (!r.success) throw r;
+  // own endpoint first (branded Hebrew email); Web3Forms as a fallback when it is not deployed/configured
+  const own = { name: fd.get('name'), company: fd.get('company') || '', phone: fd.get('phone'), email: fd.get('email') || '', pkg, botcheck: '' };
+  const w3f = () => fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) }).then(r => r.json());
+  fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(own) })
+    .then(r => r.ok ? r.json() : w3f(), w3f).then(r => { console.info('[lead]', r); if (!r.success) throw r;
       msg.textContent = 'תודה! קיבלנו את הפרטים ונחזור אליכם בהקדם לתיאום השיחה.'; msg.classList.add('ok'); msg.closest('form').reset(); })
     .catch(err => { console.warn('[lead] failed', err); msg.textContent = 'משהו השתבש בשליחה. נסו שוב בעוד רגע.'; msg.classList.add('err'); })
     .finally(() => { btn.disabled = false; btn.innerHTML = label; });
