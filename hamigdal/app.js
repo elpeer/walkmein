@@ -109,8 +109,8 @@ addEventListener('pointermove', e => { if (isPhone()) return; const dx = (e.clie
 { let y0 = null; const d = $('#drawer'); d.addEventListener('touchstart', e => { if (e.target.closest('.list')) return; y0 = e.touches[0].clientY; }, { passive: true }); d.addEventListener('touchend', e => { if (y0 !== null && e.changedTouches[0].clientY - y0 > 70) go({}); y0 = null; }, { passive: true }); }
 
 // ================================================================ routing – every screen has a URL so Back always works
-function parse() { const p = new URLSearchParams(location.hash.slice(1)); return { floor: p.has('floor') ? +p.get('floor') : null, apt: p.get('apt') }; }
-function hashOf(s) { const p = new URLSearchParams(); if (s.floor !== null && s.floor !== undefined) p.set('floor', s.floor); if (s.apt) p.set('apt', s.apt); const h = p.toString(); return h ? '#' + h : location.pathname + location.search; }
+function parse() { const p = new URLSearchParams(location.hash.slice(1)); return { floor: p.has('floor') ? +p.get('floor') : null, apt: p.get('apt'), tour: p.get('tour') }; }
+function hashOf(s) { const p = new URLSearchParams(); if (s.floor !== null && s.floor !== undefined) p.set('floor', s.floor); if (s.apt) p.set('apt', s.apt); if (s.apt && s.tour) p.set('tour', s.tour); const h = p.toString(); return h ? '#' + h : location.pathname + location.search; }
 let inApp = false;
 function go(s, replace) { const h = hashOf(s); if (!replace) inApp = true; if ((location.hash || '') === (h.startsWith('#') ? h : '')) return render(); replace ? history.replaceState(null, '', h) : history.pushState(null, '', h); render(); }
 let cur = { floor: null, apt: null };
@@ -142,6 +142,7 @@ async function openPlan(id) {
   if (!A) { const { createApt } = await import('./apt.js'); A = await createApt($('#gl'), { base: './', onFrame: paintHots, capture: !!window.__capture, onGoal: () => leaveNode() }); window.__A = A; buildRooms(); }
   if (!planOpen) return;
   $('#loading').classList.add('done'); A.start(); A.replayIntro();
+  const want = parse().tour; if (want === 'pov' || want === 'top') offerTour(want);
   // realistic mode is the default: switch it on as soon as the model is up (the button shows the loading progress)
   if (!A.realistic && !openPlan.auto) { openPlan.auto = true; $('#realBtn').dataset.told = 1; $('#realBtn').click(); }
 }
@@ -240,16 +241,44 @@ function loopNarr() {
 function paintPlay() { const b = $('#tplay'); b.innerHTML = T.playing ? ICON.pause : ICON.play; b.setAttribute('aria-label', T.playing ? 'השהיה' : 'המשך'); }
 function paintMode() { $$('#tmode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.m === T.mode)); }
 
+// ---------- room renderings beside the eye-level tour (what the narrator is talking about)
+const TSIDE = { entry: [['r_entry', 'כניסה']], living: [['living_kitchen', 'סלון ומטבח'], ['living_balcony', 'סלון ויציאה למרפסת']], kitchen: [['living_kitchen', 'מטבח']], balcony: [['living_balcony', 'מרפסת']], wing: [['r_tub', 'חדר אמבטיה'], ['r_laundry', 'מרפסת שירות']], kids: [['r_bed2', 'חדר שינה'], ['r_mamad', 'חדר שינה / ממ״ד']], mbed: [['r_mbed', 'חדר שינה הורים'], ['r_bath', 'חדר רחצה הורים']] };
+const SD = { list: [], k: -1 };
+function sideShow(s) {
+  const box = $('#tside'); SD.list = T.on && T.mode === 'pov' ? (TSIDE[s.id] || []) : []; SD.k = -1;
+  if (!SD.list.length) { box.hidden = true; return; }
+  box.querySelector('.tsd').innerHTML = SD.list.length > 1 ? SD.list.map(() => '<i></i>').join('') : '';
+  box.hidden = false; sideImg(0);
+}
+function sideImg(k) {
+  if (k === SD.k || !SD.list[k]) return; SD.k = k; const box = $('#tside'), [f, cap] = SD.list[k];
+  const img = new Image(); img.alt = cap; img.src = `img/${f}.webp`; img.className = 'in';
+  const old = box.querySelector('.tsimg img'); box.querySelector('.tsimg').append(img); if (old) { old.classList.add('out'); setTimeout(() => old.remove(), 700); }
+  box.querySelector('figcaption b').textContent = cap; box.dataset.f = f;
+  box.querySelectorAll('.tsd i').forEach((d, j) => d.classList.toggle('on', j === k));
+}
+T.aud.addEventListener('timeupdate', () => { if (SD.list.length > 1 && T.aud.duration) sideImg(T.aud.currentTime / T.aud.duration >= 0.5 ? 1 : 0); });
+$('#tside').onclick = () => { const f = $('#tside').dataset.f; if (f) lightbox(`img/${f}.webp`, $('#tside figcaption b').textContent); };
+// a shared link with &tour=pov opens the unit and offers the narrated eye-level tour (audio needs one tap)
+function offerTour(mode) {
+  if (T.on || $('#tstart')) return;
+  const b = document.createElement('button'); b.id = 'tstart'; b.className = 'tstart';
+  b.innerHTML = `<i>${ICON.play}</i><span><b>${mode === 'pov' ? 'סיור מודרך בגובה העיניים' : 'סיור מודרך בדירה'}</b><small>כ־3 דקות · עם קריינות · הקישו כדי להתחיל</small></span>`;
+  b.onclick = () => { b.remove(); tourStart(mode); };
+  $('#plan').append(b);
+}
+
 // ---------- guided tour
 function tourStart(mode) {
+  $('#tstart') && $('#tstart').remove();
   if (!A || !planOpen) return; if (view !== '3d') setView('3d'); if (E.on) walkStop(true);
   $('.rcard') && $('.rcard').remove(); selectRoomUI(null);
-  T.on = true; T.playing = true; T.mode = mode; T.i = -1; uiMode('tour'); paintMode();
+  T.on = true; T.playing = true; T.mode = mode; document.body.classList.add('touring'); T.i = -1; uiMode('tour'); paintMode();
   $('#tsegs').innerHTML = TOUR.map((s, i) => `<button data-i="${i}" aria-label="${s.title}"><i></i></button>`).join('');
   unlockAudio(); tourGo(0); loopNarr();
 }
 function tourStop(silent) {
-  if (!T.on) return; T.on = false; T.playing = false; clearTimeout(T.timer); cancelAnimationFrame(T.raf); T.aud.pause(); T.fake = null; uiMode(null);
+  if (!T.on) return; T.on = false; T.playing = false; clearTimeout(T.timer); cancelAnimationFrame(T.raf); T.aud.pause(); T.fake = null; uiMode(null); document.body.classList.remove('touring'); $('#tside').hidden = true; SD.list = [];
   if (A) { A.highlight(selRoom); if (A.pov) A.povExit(silent ? 1.2 : 2.4); else if (!silent) A.home(1.8); else A.setDrift(0); }
 }
 function stageStop(s, prev) {
@@ -269,14 +298,14 @@ function tourGo(i) {
   const c = $('#tcard'); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in'); c.classList.toggle('end', last);
   $('#tn').innerHTML = `<b>${String(i + 1).padStart(2, '0')}</b> / ${TOUR.length}`; $('#ttitle').textContent = s.title;
   const im = $('#timg'); if (TIMG[s.id] && T.mode === 'top') { im.src = `img/${TIMG[s.id]}.webp`; im.alt = s.title; im.hidden = false; } else im.hidden = true;
-  setNarr(s.text); $('#tprev').disabled = i === 0; $('#tnext').disabled = last;
+  sideShow(s); setNarr(s.text); $('#tprev').disabled = i === 0; $('#tnext').disabled = last;
   $$('#tsegs button').forEach((b, k) => { b.classList.toggle('done', k < i); b.classList.toggle('cur', k === i); b.firstChild.style.width = k < i ? '100%' : '0%'; });
   loadClip(i); T.timer = setTimeout(() => T.playing && playClip(), i === 0 ? 1300 : T.mode === 'pov' ? 1100 : 1500); paintPlay();
 }
 function tourMode(m) {
   if (!T.on || m === T.mode) return; T.mode = m; paintMode(); uiMode('tour');
   const s = TOUR[T.i]; $('#timg').hidden = !(TIMG[s.id] && m === 'top'); if (TIMG[s.id] && m === 'top') $('#timg').src = `img/${TIMG[s.id]}.webp`;
-  stageStop(s, -9);
+  sideShow(s); stageStop(s, -9);
 }
 function tourToggle() {
   T.playing = !T.playing;
