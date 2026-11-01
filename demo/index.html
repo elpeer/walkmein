@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WalkMeIn Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600&display=swap">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
+<style>
+/* Layout: right rail nav (RTL) + top bar + routed pages; overview opens on a hero card with the live 3D apartment, floating KPI cards around it. */
+:root{
+  --bg:#efeee7; --card:#ffffff; --card2:#f7f6f1; --ink:#1c1f1b; --mute:#6d716a; --soft:#a3a69e; --line:rgba(28,31,27,.08);
+  --y1:#fff27a; --y2:#f3dc2d; --green:#5f9a49; --green2:#7fb069; --deep:#1d2621; --deep2:#26302a; --hot:#e8673a; --warm:#f0a02e; --cold:#7e97ad;
+  --f:'Heebo',system-ui,Arial,sans-serif; --d:'Sora','Heebo',system-ui,Arial,sans-serif;
+  --r:22px; --rs:14px; --sh:0 1px 0 rgba(255,255,255,.8) inset,0 18px 40px -26px rgba(30,40,25,.35);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 14px/1.45 var(--f);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:8px}
+.num{font-family:var(--d);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.mute{color:var(--mute)} .soft{color:var(--soft)}
+h1,h2,h3{margin:0;font-weight:500;text-wrap:balance}
+
+/* ---------- shell */
+.app{display:grid;grid-template-columns:236px 1fr;min-height:100%}
+.rail{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:18px;padding:22px 16px 18px;padding-right:max(16px,env(safe-area-inset-right,0px));background:var(--deep);color:#e9ece4}
+.logo{display:flex;align-items:center;gap:10px;font:600 19px var(--d);letter-spacing:-.03em;padding:2px 8px}
+.logo i{width:30px;height:30px;border-radius:10px;background:var(--y2);display:grid;place-items:center;color:var(--deep)}
+.logo i svg{width:17px;height:17px}
+.proj{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;display:grid;gap:2px}
+.proj small{font-size:11.5px;color:#9fa89b}
+.proj b{font-weight:500;font-size:15px}
+.proj span{font-size:12.5px;color:#b9c1b4}
+.nav{display:grid;gap:3px}
+.nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:12px;text-decoration:none;color:#c9d0c4;font-size:14.5px;transition:background .2s,color .2s}
+.nav a svg{width:18px;height:18px;flex:none;opacity:.85}
+.nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav a.on{background:var(--y2);color:var(--deep);font-weight:500}
+.nav a.on svg{opacity:1}
+.nav .lb{margin-inline-start:auto;display:inline-flex;align-items:center;gap:5px;font:500 11.5px var(--d);padding:2px 8px;border-radius:20px;background:rgba(127,176,105,.22);color:#bfe3ad}
+.nav a.on .lb{background:var(--deep);color:var(--y1)}
+.dot{width:7px;height:7px;border-radius:50%;background:#7fdc5a;box-shadow:0 0 0 0 rgba(127,220,90,.6);animation:ping 1.8s infinite;flex:none}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(127,220,90,.55)}80%,100%{box-shadow:0 0 0 7px rgba(127,220,90,0)}}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border-radius:14px;background:rgba(255,255,255,.05)}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:13.5px;flex:none;background:var(--y1);color:var(--deep)}
+.me b{display:block;font-weight:500;font-size:13.5px}.me small{font-size:11.5px;color:#9fa89b}
+.demo-tag{font-size:11px;color:#9fa89b;padding:0 8px;line-height:1.4}
+
+.main{min-width:0;padding:18px 26px 40px;padding-left:max(26px,env(safe-area-inset-left,0px))}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.top h1{font:500 26px/1.15 var(--d);letter-spacing:-.03em}
+.top .sub{color:var(--mute);font-size:13.5px}
+.top .grow{flex:1}
+.pill{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border-radius:30px;background:var(--card);box-shadow:var(--sh);font-size:13.5px;white-space:nowrap}
+.pill.live{background:var(--deep);color:#fff;font-weight:500}
+.pill.live b{font:600 15px var(--d);color:var(--y1)}
+.seg{display:inline-flex;padding:4px;border-radius:30px;background:var(--card);box-shadow:var(--sh)}
+.seg button{height:32px;padding:0 13px;border-radius:20px;font-size:13px;color:var(--mute)}
+.seg button.on{background:var(--ink);color:#fff}
+.ibtn{width:40px;height:40px;border-radius:50%;background:var(--card);box-shadow:var(--sh);display:grid;place-items:center;position:relative}
+.ibtn svg{width:18px;height:18px}
+.ibtn .badge{position:absolute;top:8px;left:9px;width:8px;height:8px;border-radius:50%;background:var(--hot);border:2px solid #fff}
+
+.page{display:none}
+.page.on{display:block;animation:pin .35s ease}
+@keyframes pin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- cards */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px;min-width:0}
+.card h3{font:500 15px var(--f);display:flex;align-items:center;gap:8px}
+.card .hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card .hd .grow{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:20px;background:var(--card2);font-size:12.5px;color:var(--mute);white-space:nowrap}
+.chip.y{background:var(--y2);color:var(--deep);font-weight:500}
+.chip.dk{background:var(--deep);color:#fff}
+.chip.g{background:#e3f0da;color:#3f6f2c}
+.chip.h{background:#fde3d6;color:#b44a20}
+.chip.w{background:#fdf0cf;color:#97650f}
+.chip.c{background:#e4ebf2;color:#4c6378}
+.up{color:#3f8a2c;font-weight:500}.dn{color:#c0461d;font-weight:500}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g2{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.mt{margin-top:16px}
+.kpi small{display:block;color:var(--mute);font-size:12.5px}
+.kpi .v{font:400 30px/1.1 var(--d);letter-spacing:-.03em;margin:6px 0 4px}
+.kpi .d{font-size:12px}
+
+/* ---------- overview hero */
+.hero{position:relative;height:clamp(460px,62vh,600px);border-radius:28px;overflow:hidden;background:radial-gradient(70% 80% at 50% 55%,#fbfaf6 0%,#ecebe3 70%,#e4e2d8 100%);box-shadow:var(--sh)}
+.hero .stage{position:absolute;inset:0}
+.hero canvas,.vw canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.hero .ttl{position:absolute;top:22px;right:26px;z-index:3;max-width:min(420px,60%)}
+.hero .ttl small{display:flex;align-items:center;gap:6px;color:var(--mute);font-size:13px}
+.hero .ttl h2{font:500 34px/1.1 var(--d);letter-spacing:-.035em;margin:4px 0 8px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.hero .ttl p{margin:0;color:var(--mute);font-size:13.5px;display:flex;align-items:center;gap:6px}
+.fl{position:absolute;z-index:3;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-radius:20px;padding:14px 16px;box-shadow:0 22px 44px -26px rgba(30,40,25,.45),0 0 0 1px rgba(255,255,255,.7) inset}
+.fl small{display:block;font-size:12.5px;color:var(--mute)}
+.fl .v{font:400 30px/1.05 var(--d);letter-spacing:-.03em}
+.fl .row{display:flex;align-items:flex-end;gap:12px}
+.f1{right:26px;top:150px;width:236px}
+.f2{right:26px;top:292px;width:236px}
+.f3{left:26px;top:26px;width:220px;text-align:center}
+.f4{left:26px;bottom:26px;width:250px}
+.f5{right:50%;bottom:24px;transform:translateX(50%);display:flex;align-items:center;gap:10px;padding:9px 14px 9px 10px;border-radius:30px}
+.spark{display:flex;align-items:flex-end;gap:2px;height:34px;flex:1}
+.spark i{flex:1;border-radius:2px;background:linear-gradient(var(--y2),#f6e98f);min-height:3px}
+.spark.g i{background:linear-gradient(#9ccc84,#d5e9c8)}
+.gauge{width:150px;height:84px;margin:6px auto 0;display:block}
+.stack{display:flex}
+.stack .av{width:28px;height:28px;font-size:11.5px;border:2px solid #fff;margin-inline-start:-8px}
+.stack .av:first-child{margin-inline-start:0}
+.tag3{position:absolute;z-index:2;transform:translate(-50%,-100%);pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:4px;transition:opacity .3s}
+.tag3 span{white-space:nowrap;font-size:12px;padding:4px 9px;border-radius:14px;background:rgba(255,255,255,.92);box-shadow:0 8px 18px -10px rgba(0,0,0,.35)}
+.tag3 span b{font:500 12px var(--d)}
+.tag3 i{width:2px;height:16px;background:rgba(28,31,27,.35)}
+.vis{position:absolute;z-index:2;transform:translate(-50%,-50%);pointer-events:none}
+.vis .av{width:26px;height:26px;font-size:11px;border:2px solid #fff;box-shadow:0 6px 14px -6px rgba(0,0,0,.45)}
+.vis::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(243,220,45,.7);animation:ring 1.8s infinite}
+@keyframes ring{from{transform:scale(.7);opacity:1}to{transform:scale(1.5);opacity:0}}
+.hint3{position:absolute;z-index:3;bottom:84px;right:50%;transform:translateX(50%);font-size:12px;color:var(--mute);background:rgba(255,255,255,.7);padding:5px 11px;border-radius:14px;transition:opacity .4s}
+
+/* ---------- charts */
+.bars{display:flex;align-items:flex-end;gap:5px;height:150px;padding-top:6px}
+.bars .b{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;height:100%;position:relative}
+.bars .b i{display:block;border-radius:5px 5px 2px 2px}
+.bars .b .v1{background:var(--deep)}
+.bars .b .v2{background:var(--y2)}
+.bars .b:hover::after{content:attr(data-t);position:absolute;bottom:calc(100% + 4px);right:50%;transform:translateX(50%);background:var(--ink);color:#fff;font-size:11.5px;padding:4px 8px;border-radius:8px;white-space:nowrap;z-index:2}
+.xax{display:flex;gap:5px;margin-top:6px;font-size:11px;color:var(--soft)}
+.xax span{flex:1;text-align:center}
+.leg{display:flex;gap:14px;font-size:12px;color:var(--mute);margin-top:10px}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.donut{display:flex;align-items:center;gap:18px}
+.donut svg{width:132px;height:132px;flex:none}
+.donut ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;flex:1;font-size:13px}
+.donut li{display:flex;align-items:center;gap:8px}
+.donut li b{margin-inline-start:auto;font:500 13px var(--d)}
+.donut li i{width:10px;height:10px;border-radius:3px;flex:none}
+.hb{display:grid;gap:11px}
+.hb .r{display:grid;grid-template-columns:110px 1fr 46px;align-items:center;gap:10px;font-size:13px}
+.hb .t{height:8px;border-radius:6px;background:var(--card2);overflow:hidden}
+.hb .t i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--y2),var(--warm))}
+.hb .r b{font:500 12.5px var(--d);text-align:left}
+.feed{list-style:none;margin:0;padding:0;display:grid}
+.feed li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-size:13.5px}
+.feed li:first-child{border-top:0}
+.feed .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none;background:var(--card2)}
+.feed .ic svg{width:15px;height:15px}
+.feed small{display:block;color:var(--soft);font-size:12px}
+.feed li.new{animation:flash 1.6s ease}
+@keyframes flash{from{background:rgba(243,220,45,.35)}to{background:transparent}}
+.toplist{display:grid;gap:4px}
+.toplist .r{display:grid;grid-template-columns:28px 1fr auto auto;gap:12px;align-items:center;padding:9px 10px;border-radius:12px;font-size:13.5px}
+.toplist .r:hover{background:var(--card2)}
+.toplist .n{font:500 13px var(--d);color:var(--soft)}
+
+/* ---------- live */
+.lv{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:start}
+.sess{display:grid;gap:8px}
+.srow{display:grid;grid-template-columns:minmax(140px,1.3fr) minmax(100px,.9fr) minmax(170px,1.5fr) 52px 74px auto;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--card);box-shadow:var(--sh);cursor:pointer;transition:box-shadow .2s,transform .2s}
+.srow:hover{transform:translateY(-1px)}
+.srow.on{box-shadow:0 0 0 2px var(--ink),var(--sh)}
+.srow .who{display:flex;align-items:center;gap:10px;min-width:0}
+.srow .who b{display:block;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srow .who small{display:block;color:var(--soft);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.srow .room{min-width:0;overflow:hidden}.srow .room svg{flex:none}.srow .room .chip{flex:none}.srow .room em{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.srow .room{display:flex;align-items:center;gap:7px;font-size:13px;white-space:nowrap}
+.srow .room em{font-style:normal;transition:background .6s;padding:2px 6px;border-radius:8px}
+.srow .room em.chg{background:var(--y1)}
+.heat{display:flex;gap:2px}
+.heat i{width:7px;height:16px;border-radius:2px;background:var(--card2)}
+.heat i.on{background:var(--hot)}
+.heat.w i.on{background:var(--warm)}
+.heat.c i.on{background:var(--cold)}
+.sh{display:grid;grid-template-columns:minmax(140px,1.3fr) minmax(100px,.9fr) minmax(170px,1.5fr) 52px 74px auto;gap:12px;padding:0 14px 4px;font-size:12px;color:var(--soft)}
+.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 15px;border-radius:30px;background:var(--ink);color:#fff;font-weight:500;font-size:13.5px;white-space:nowrap;transition:transform .15s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn svg{width:16px;height:16px}
+.btn.y{background:var(--y2);color:var(--deep)}
+.btn.g{background:#25d366;color:#fff}
+.btn.o{background:var(--card2);color:var(--ink)}
+.btn.sm{height:32px;padding:0 12px;font-size:12.5px}
+.panel{position:sticky;top:18px;display:grid;gap:14px}
+.vh{display:flex;align-items:center;gap:12px}
+.vh .av{width:46px;height:46px;font-size:16px}
+.vh b{font-size:17px;font-weight:500}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.kv div{background:var(--card2);border-radius:12px;padding:9px 10px}
+.kv small{display:block;font-size:11.5px;color:var(--mute)}
+.kv b{font:500 15px var(--d)}
+.plan{width:100%;height:auto;display:block;margin-top:10px}
+.plan rect.rm{fill:#f7f5ef;stroke:#cfccc2;stroke-width:.06}
+.plan rect.rm.cur{fill:#fff1a1;stroke:var(--ink)}
+.plan rect.rm.seen{fill:#efe9d6}
+.plan text{font-size:.42px;fill:#6d716a;font-family:Heebo,Arial}
+.plan .me3{fill:var(--hot)}
+.plan .me3r{fill:none;stroke:var(--hot);stroke-width:.08;animation:pr 1.6s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pr{from{transform:scale(.6);opacity:1}to{transform:scale(2.4);opacity:0}}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tpl{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tpl button{font-size:12.5px;padding:6px 10px;border-radius:14px;background:var(--card2);text-align:start}
+.tpl button:hover{background:var(--y1)}
+.compose{display:flex;gap:8px}
+.compose input{flex:1;min-width:0;height:40px;border-radius:20px;border:1px solid var(--line);background:var(--card2);padding:0 14px}
+.thread{display:grid;gap:6px;max-height:190px;overflow:auto;margin-top:8px;align-content:start}
+.msg{max-width:85%;padding:8px 12px;border-radius:14px;font-size:13px;line-height:1.4}
+.msg.me{justify-self:start;background:var(--deep);color:#fff;border-bottom-right-radius:4px}
+.msg.them{justify-self:end;background:var(--card2);border-bottom-left-radius:4px}
+.msg small{display:block;font-size:10.5px;opacity:.6;margin-top:2px}
+.typing{justify-self:end;font-size:12px;color:var(--soft)}
+.phone{width:200px;margin:0 auto;border-radius:30px;background:#111;padding:8px;box-shadow:0 30px 50px -30px rgba(0,0,0,.6)}
+.phone .scr{position:relative;border-radius:23px;overflow:hidden;aspect-ratio:9/17;background:#e7e5dd url(img/f-rooms.webp) 55% 50%/250% auto no-repeat}
+.phone .bar{position:absolute;top:0;inset-inline:0;padding:9px 12px;display:flex;justify-content:space-between;font-size:10px;background:linear-gradient(rgba(255,255,255,.95),rgba(255,255,255,0))}
+.phone .bar b{font-family:var(--d)}
+.phone .rm{position:absolute;bottom:12px;inset-inline:10px;background:rgba(255,255,255,.93);border-radius:14px;padding:8px 10px;font-size:11px}
+.phone .rm b{display:block;font-size:12.5px}
+.pop{position:absolute;inset-inline:10px;top:38px;background:#fff;border-radius:16px;padding:10px 11px;font-size:11.5px;line-height:1.4;box-shadow:0 18px 30px -12px rgba(0,0,0,.45);transform:translateY(-130%);opacity:0;transition:transform .5s cubic-bezier(.3,1.4,.5,1),opacity .3s}
+.pop.on{transform:none;opacity:1}
+.pop .ph{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.pop .ph .av{width:24px;height:24px;font-size:10.5px}
+.pop .ph b{font-size:11.5px}
+.pop .pa{display:flex;gap:6px;margin-top:8px}
+.pop .pa span{flex:1;text-align:center;padding:6px;border-radius:10px;background:var(--card2);font-size:11px}
+.pop .pa span.y{background:var(--y2);font-weight:600}
+.pop .pa span.hit{animation:tap .5s}
+@keyframes tap{50%{transform:scale(.92);background:var(--y1)}}
+.cap{font-size:12px;color:var(--soft);text-align:center;margin-top:8px}
+.empty{padding:30px 10px;text-align:center;color:var(--mute)}
+
+/* ---------- building */
+.bwrap{position:relative;border-radius:24px;overflow:hidden;box-shadow:var(--sh);aspect-ratio:2240/1267;background:#2a312b}
+.bwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bwrap svg{position:absolute;inset:0;width:100%;height:100%}
+.bwrap path{stroke:#fff;stroke-width:2.5;cursor:pointer;transition:fill-opacity .2s}
+.bwrap path.av_{fill:#7fdc5a;fill-opacity:.32}
+.bwrap path.rs{fill:#f3dc2d;fill-opacity:.42}
+.bwrap path.sd{fill:#3a3f3a;fill-opacity:.55}
+.bwrap path:hover,.bwrap path.sel{fill-opacity:.75;stroke-width:5}
+.blab{position:absolute;transform:translate(-50%,-50%);pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:3px}
+.blab b{font:600 13px var(--d);color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.blab span{font-size:11px;padding:2px 7px;border-radius:10px;background:rgba(255,255,255,.92)}
+.blab span.lv{background:var(--deep);color:var(--y1);display:inline-flex;align-items:center;gap:4px}
+.blegend{position:absolute;bottom:14px;right:14px;display:flex;gap:12px;padding:8px 14px;border-radius:20px;background:rgba(20,26,22,.55);backdrop-filter:blur(10px);color:#fff;font-size:12px}
+.blegend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:-1px}
+.tip{position:absolute;z-index:4;min-width:210px;background:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 20px 40px -18px rgba(0,0,0,.5);font-size:13px;pointer-events:none;opacity:0;transition:opacity .2s}
+.tip.on{opacity:1}
+.tip b{font-size:15px;font-weight:500}
+.tip .kv{grid-template-columns:repeat(3,1fr);margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{font-weight:400;color:var(--soft);font-size:12px;text-align:start;padding:0 10px 8px}
+td{padding:11px 10px;border-top:1px solid var(--line);white-space:nowrap}
+td .num{font-size:13.5px}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--card2)}
+.tw{overflow-x:auto}
+.minibar{display:inline-block;width:60px;height:6px;border-radius:4px;background:var(--card2);vertical-align:middle;margin-inline-start:6px;overflow:hidden}
+.minibar i{display:block;height:100%;background:var(--green2)}
+.stat3{display:flex;gap:10px;flex-wrap:wrap}
+.stat3 div{flex:1;min-width:110px;background:var(--card2);border-radius:14px;padding:11px 13px}
+.stat3 small{display:block;color:var(--mute);font-size:12px}
+.stat3 b{font:400 24px var(--d);letter-spacing:-.03em}
+
+/* ---------- apartment */
+.ap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.vw{position:relative;height:520px;border-radius:24px;overflow:hidden;background:radial-gradient(70% 80% at 50% 55%,#fbfaf6,#e9e7de);box-shadow:var(--sh)}
+.hlg{position:absolute;bottom:14px;right:14px;z-index:3;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:16px;background:rgba(255,255,255,.88);font-size:12px}
+.hlg i{width:110px;height:8px;border-radius:5px;background:linear-gradient(90deg,#fff6b0,#f3c22d,#f0862e,#e0502a)}
+.vtb{position:absolute;top:14px;right:14px;z-index:3;display:flex;gap:6px;flex-wrap:wrap}
+.funnel{display:grid;gap:8px}
+.funnel .r{display:grid;grid-template-columns:120px 1fr 66px;gap:10px;align-items:center;font-size:13px}
+.funnel .t{height:26px;border-radius:8px;background:var(--card2);overflow:hidden}
+.funnel .t i{display:flex;align-items:center;height:100%;border-radius:8px;background:var(--deep);color:#fff;font:500 11.5px var(--d);padding-inline-start:8px}
+.funnel .r:nth-child(2) .t i{background:#33463a}.funnel .r:nth-child(3) .t i{background:#4f6a48}.funnel .r:nth-child(4) .t i{background:#7fb069}.funnel .r:nth-child(5) .t i{background:var(--y2);color:var(--deep)}
+.funnel b{font:500 12.5px var(--d);text-align:left}
+.stops{display:flex;align-items:flex-end;gap:6px;height:120px}
+.stops .s{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.stops .s i{width:100%;border-radius:6px 6px 2px 2px;background:linear-gradient(var(--green2),#cfe3c3)}
+.stops .s.drop i{background:linear-gradient(var(--hot),#f6c2aa)}
+.stops .s small{font-size:10.5px;color:var(--soft)}
+.feat{display:grid;gap:9px}
+.feat .r{display:grid;grid-template-columns:1fr auto;gap:8px;font-size:13px}
+.feat .t{grid-column:1/-1;height:6px;border-radius:4px;background:var(--card2);overflow:hidden}
+.feat .t i{display:block;height:100%;background:var(--ink)}
+
+/* ---------- leads */
+.ld{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:16px;align-items:start}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tabs button{height:34px;padding:0 13px;border-radius:20px;background:var(--card);box-shadow:var(--sh);font-size:13px}
+.tabs button.on{background:var(--ink);color:#fff}
+.tabs button b{font:500 12px var(--d);margin-inline-start:4px;opacity:.7}
+.lrow{display:grid;grid-template-columns:minmax(150px,1.4fr) minmax(110px,1fr) 80px 70px 90px;gap:12px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--card);box-shadow:var(--sh);cursor:pointer;margin-bottom:8px}
+.lrow.on{box-shadow:0 0 0 2px var(--ink),var(--sh)}
+.tl{list-style:none;margin:10px 0 0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;right:5px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{position:relative;padding:0 22px 14px 0;font-size:13px}
+.tl li::before{content:"";position:absolute;right:0;top:5px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--ink)}
+.tl li.hot::before{background:var(--y2)}
+.tl small{display:block;color:var(--soft);font-size:12px}
+.rooms{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.rooms span{font-size:11.5px;padding:3px 8px;border-radius:10px;background:var(--card2)}
+.rooms span b{font:500 11px var(--d)}
+
+/* ---------- links + settings */
+.form{display:grid;gap:10px}
+.form label{display:grid;gap:5px;font-size:12.5px;color:var(--mute)}
+.form input,.form select{height:42px;border-radius:12px;border:1px solid var(--line);background:var(--card2);padding:0 12px;font-size:14px}
+.wa{background:#e7f5dc;border-radius:16px 16px 4px 16px;padding:12px 14px;font-size:13.5px;line-height:1.5}
+.wa a{color:#1a6fb5;word-break:break-all}
+.code{direction:ltr;text-align:left;background:var(--deep);color:#e4ead9;border-radius:14px;padding:14px;font:12.5px/1.6 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre}
+.tg{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.tg:first-of-type{border-top:0}
+.tg b{font-weight:500}.tg small{display:block;color:var(--mute);font-size:12.5px}
+.sw{position:relative;width:44px;height:26px;border-radius:20px;background:#d9d8d0;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.2);transition:transform .2s}
+.sw[aria-checked=true]{background:var(--green)}
+.sw[aria-checked=true]::after{transform:translateX(-18px)}
+.crm{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.crm div{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px}
+.crm div b{font-weight:500;flex:1}
+.team{display:grid;gap:8px}
+.team div{display:flex;align-items:center;gap:10px}
+.team div b{font-weight:500;display:block}.team small{color:var(--mute);font-size:12px}
+
+/* ---------- call modal + toast */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(15,19,16,.62);backdrop-filter:blur(6px);display:grid;place-items:center;padding:20px}
+.modal[hidden]{display:none}
+.call{width:min(1100px,100%);height:min(680px,calc(100vh - 40px));background:#141915;border-radius:28px;display:grid;grid-template-columns:minmax(0,1fr) 300px;overflow:hidden;color:#fff}
+.cstage{position:relative;min-width:0;background:radial-gradient(70% 80% at 50% 55%,#fbfaf6,#dcdad0)}
+.cstage .vw{height:100%;border-radius:0;box-shadow:none;background:transparent}
+.ctop{position:absolute;top:14px;right:16px;left:16px;z-index:4;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.ctop .chip{background:rgba(255,255,255,.9)}
+.rec{display:inline-flex;align-items:center;gap:6px;font:500 12.5px var(--d);background:rgba(20,25,21,.85);color:#fff;padding:5px 10px;border-radius:14px}
+.rec i{width:7px;height:7px;border-radius:50%;background:#ff5a4a}
+.tiles{position:absolute;left:16px;top:60px;z-index:4;display:grid;gap:10px;width:180px}
+.tile{position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:linear-gradient(140deg,#3c4a3f,#1f2822);display:grid;place-items:center;box-shadow:0 14px 30px -14px rgba(0,0,0,.6)}
+.tile .av{width:54px;height:54px;font-size:19px}
+.tile span:not(.av){position:absolute;bottom:7px;right:9px;font-size:11.5px;background:rgba(0,0,0,.45);padding:2px 7px;border-radius:8px}
+.tile.spk{box-shadow:0 0 0 3px var(--y2),0 14px 30px -14px rgba(0,0,0,.6)}
+.wave{position:absolute;top:8px;left:9px;display:flex;gap:2px;align-items:flex-end;height:14px}
+.wave i{width:3px;background:var(--y2);border-radius:2px;animation:wv .8s infinite ease-in-out}
+.wave i:nth-child(2){animation-delay:.15s}.wave i:nth-child(3){animation-delay:.3s}
+@keyframes wv{0%,100%{height:3px}50%{height:14px}}
+.croom{position:absolute;bottom:84px;right:50%;transform:translateX(50%);z-index:4;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.croom button{height:32px;padding:0 12px;border-radius:16px;background:rgba(255,255,255,.92);color:var(--ink);font-size:12.5px}
+.croom button.on{background:var(--y2);font-weight:600}
+.cbar{position:absolute;bottom:16px;right:50%;transform:translateX(50%);z-index:4;display:flex;gap:10px;padding:8px;border-radius:40px;background:rgba(20,25,21,.88)}
+.cbar button{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;color:#fff}
+.cbar button svg{width:20px;height:20px}
+.cbar button.off{background:#fff;color:var(--ink)}
+.cbar button.end{background:#e5483a;width:60px;border-radius:24px}
+.cside{display:flex;flex-direction:column;padding:16px;gap:12px;min-height:0;border-inline-start:1px solid rgba(255,255,255,.08)}
+.cside h3{font-size:15px;font-weight:500}
+.cside .info{background:rgba(255,255,255,.06);border-radius:14px;padding:12px;font-size:12.5px;color:#cfd6ca;display:grid;gap:4px}
+.cside .info b{color:#fff}
+.cside .thread{flex:1;max-height:none}
+.cside .msg.them{background:rgba(255,255,255,.1);color:#fff}
+.cside .msg.me{background:var(--y2);color:var(--deep)}
+.cside .compose input{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1);color:#fff}
+.ringing{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:rgba(20,25,21,.82);color:#fff;text-align:center}
+.ringing .av{width:84px;height:84px;font-size:28px;margin:0 auto 14px;animation:pulse 1.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(243,220,45,.6)}100%{box-shadow:0 0 0 26px rgba(243,220,45,0)}}
+.toasts{position:fixed;inset-inline-start:256px;bottom:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;display:grid;gap:8px;width:min(340px,calc(100vw - 40px))}
+.toast{display:flex;gap:10px;align-items:center;background:var(--deep);color:#fff;border-radius:16px;padding:11px 13px;box-shadow:0 20px 40px -18px rgba(0,0,0,.6);font-size:13px;animation:tin .4s cubic-bezier(.3,1.3,.5,1)}
+.toast .av{width:30px;height:30px;font-size:11.5px}
+.toast b{font-weight:500}
+.toast small{display:block;color:#a9b2a4;font-size:12px}
+.toast button{margin-inline-start:auto;font-size:12px;padding:6px 10px;border-radius:12px;background:var(--y2);color:var(--deep);font-weight:600;white-space:nowrap}
+@keyframes tin{from{opacity:0;transform:translateY(14px)}}
+.note{font-size:12px;color:var(--soft);margin-top:14px}
+
+/* ---------- responsive */
+@media (max-width:1280px){.lv,.ld{grid-template-columns:minmax(0,1fr) 360px}.f2{display:none}}
+@media (max-width:1100px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .lv,.ld,.ap,.g2{grid-template-columns:minmax(0,1fr)}
+  .panel{position:static}
+  .call{grid-template-columns:1fr}.cside{display:none}
+}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .rail{position:fixed;inset:auto 0 0 0;top:auto;height:auto;z-index:40;flex-direction:row;padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px));gap:0;border-radius:20px 20px 0 0}
+  .rail .logo,.rail .proj,.rail .me,.rail .demo-tag{display:none}
+  .nav{display:flex;width:100%;justify-content:space-between;gap:0}
+  .nav a{flex-direction:column;gap:3px;padding:7px 4px;font-size:10.5px;flex:1;text-align:center;border-radius:12px}
+  .nav a .lb{display:none}
+  .main{padding:14px max(16px,env(safe-area-inset-left,0px)) 110px max(16px,env(safe-area-inset-right,0px))}
+  .top h1{font-size:22px}
+  .g3{grid-template-columns:minmax(0,1fr)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .v{font-size:24px}
+  .hero{height:auto;display:flex;flex-direction:column;padding:18px}
+  .hero .ttl{position:static;max-width:none}
+  .hero .stage{position:relative;height:330px;margin:0 -18px}
+  .fl{position:static;transform:none;width:auto;margin-top:10px}
+  .f3,.f2,.hint3{display:none}
+  .f5{justify-content:center}
+  .srow,.sh{grid-template-columns:minmax(0,1fr) auto}
+  .srow>:nth-child(2),.srow>:nth-child(4),.srow>:nth-child(5),.sh{display:none}
+  .srow .room{grid-column:1/-1;order:3}
+  .lrow{grid-template-columns:minmax(0,1fr) auto}
+  .lrow>:nth-child(2),.lrow>:nth-child(4),.lrow>:nth-child(5){display:none}
+  .vw{height:380px}
+  .tiles{width:110px}
+  .crm{grid-template-columns:1fr}
+  .toasts{inset-inline-start:16px;bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+}
+/* ---------- LTR (English) */
+[dir=ltr] .hero .ttl{right:auto;left:26px}
+[dir=ltr] .f1,[dir=ltr] .f2{right:auto;left:26px}
+[dir=ltr] .f3,[dir=ltr] .f4{left:auto;right:26px}
+[dir=ltr] .f5,[dir=ltr] .hint3,[dir=ltr] .croom,[dir=ltr] .cbar{right:auto;left:50%;transform:translateX(-50%)}
+[dir=ltr] .hlg,[dir=ltr] .vtb,[dir=ltr] .blegend{right:auto;left:14px}
+[dir=ltr] .tiles{left:auto;right:16px}
+[dir=ltr] .ctop{flex-direction:row}
+[dir=ltr] .tl::before{right:auto;left:5px}
+[dir=ltr] .tl li{padding:0 0 14px 22px}
+[dir=ltr] .tl li::before{right:auto;left:0}
+[dir=ltr] .msg.me{border-bottom-right-radius:14px;border-bottom-left-radius:4px}
+[dir=ltr] .msg.them{border-bottom-left-radius:14px;border-bottom-right-radius:4px}
+[dir=ltr] .sw::after{right:auto;left:3px}
+[dir=ltr] .sw[aria-checked=true]::after{transform:translateX(18px)}
+[dir=ltr] .hb .r b,[dir=ltr] .funnel b{text-align:right}
+[dir=ltr] .bars .b:hover::after{right:auto;left:50%;transform:translateX(-50%)}
+[dir=ltr] .tile span:not(.av){right:auto;left:9px}[dir=ltr] .wave{left:auto;right:9px}
+[dir=ltr] .ibtn .badge{left:auto;right:9px}
+[dir=ltr] .wa{border-radius:16px 16px 16px 4px}
+@media (max-width:860px){[dir=ltr] .f5{transform:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="logo"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i>WalkMeIn</div>
+    <div class="proj"><small>פרויקט</small><b>נוף הכרמל</b><span>קריית ים · 36 דירות · 4 טיפוסים</span></div>
+    <nav class="nav" id="nav">
+      <a href="#overview" data-r="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>סקירה</a>
+      <a href="#live" data-r="live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4M17.7 6.3a8 8 0 0 1 0 11.4"/></svg>עכשיו באתר<span class="lb"><i class="dot"></i><span class="num" data-live-n>12</span></span></a>
+      <a href="#building" data-r="building"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/></svg>בניין ודירות</a>
+      <a href="#apartment" data-r="apartment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg>דירה בעומק</a>
+      <a href="#leads" data-r="leads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4-6"/></svg>לידים</a>
+      <a href="#links" data-r="links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>לינקים אישיים</a>
+      <a href="#settings" data-r="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>הגדרות</a>
+    </nav>
+    <div class="me"><span class="av">ר</span><div><b>רונית אלון</b><small>מנהלת מכירות</small></div></div>
+    <p class="demo-tag">גרסת הדגמה · הנתונים להמחשה</p>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <div><h1 id="ptitle">סקירת הפרויקט</h1><div class="sub" id="psub">נוף הכרמל · בניין A</div></div>
+      <span class="grow"></span>
+      <div class="seg" id="range"><button>היום</button><button class="on">7 ימים</button><button>30 יום</button></div>
+      <button class="pill" id="langBtn" aria-label="Switch language"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><b id="langLbl" style="font-weight:500">English</b></button>
+      <a class="pill live" href="#live"><i class="dot"></i><b class="num" data-live-n>12</b> גולשים עכשיו</a>
+      <button class="ibtn" aria-label="התראות"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><i class="badge"></i></button>
+    </header>
+
+    <!-- ============ overview -->
+    <section class="page" id="p-overview">
+      <div class="hero">
+        <div class="ttl">
+          <small><i class="dot"></i>דירת 4 חדרים · טיפוס B</small>
+          <h2>נוף הכרמל <span class="chip y">הכי נצפית השבוע</span></h2>
+          <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>שד׳ ירושלים, קריית ים · 104 מ״ר + מרפסת 18 מ״ר</p>
+        </div>
+        <div class="stage" id="heroStage"></div>
+        <div class="fl f1"><small>צפיות במודל השבוע</small><div class="row"><div><div class="v num" data-count="1284">0</div><span class="up">+32%</span> <span class="mute" style="font-size:12px">משבוע שעבר</span></div><div class="spark" id="sp1"></div></div></div>
+        <div class="fl f2"><small>זמן צפייה ממוצע</small><div class="row"><div><div class="v num">4:36</div><span class="up">פי 3.1</span> <span class="mute" style="font-size:12px">מעמוד PDF</span></div><div class="spark g" id="sp2"></div></div></div>
+        <div class="fl f3"><small>השאירו פרטים לפגישה</small>
+          <svg class="gauge" viewBox="0 0 160 90"><path d="M15 82a65 65 0 0 1 130 0" fill="none" stroke="#eeede6" stroke-width="12" stroke-linecap="round"/><path id="gArc" d="M15 82a65 65 0 0 1 130 0" fill="none" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="204" stroke-dashoffset="204"/><defs><linearGradient id="gg"><stop offset="0" stop-color="#f3dc2d"/><stop offset="1" stop-color="#f0862e"/></linearGradient></defs><text x="80" y="66" text-anchor="middle" font-family="Sora,Heebo" font-size="28" fill="#1c1f1b">64</text><text x="80" y="84" text-anchor="middle" font-family="Heebo" font-size="11" fill="#6d716a">5.0% מהצופים</text></svg>
+        </div>
+        <a class="fl f4" href="#live" style="text-decoration:none;display:block">
+          <small><i class="dot" style="display:inline-block;margin-inline-end:5px"></i>עכשיו באתר</small>
+          <div class="row" style="align-items:center;margin-top:4px"><div class="v num" data-live-n>12</div><div class="stack" id="ovStack"></div></div>
+          <div style="font-size:12.5px;margin-top:6px" class="mute">3 לידים מוכרים צופים כרגע · <b style="color:var(--ink);font-weight:500">להציע עזרה ←</b></div>
+        </a>
+        <div class="fl f5"><span class="stack" id="inAptStack"></span><span style="font-size:13px"><b class="num" id="inAptN">3</b> קונים בתוך הדירה הזו עכשיו</span></div>
+        <div class="hint3" id="hint3">גררו כדי לסובב · המספרים = זמן ממוצע בחדר</div>
+      </div>
+
+      <div class="grid g3 mt">
+        <div class="card"><div class="hd"><h3>צפיות ופניות</h3><span class="grow"></span><span class="chip">14 ימים</span></div><div class="bars" id="vbars"></div><div class="xax" id="vx"></div><div class="leg"><span><i style="background:var(--deep)"></i>צפיות</span><span><i style="background:var(--y2)"></i>פניות ×10</span></div></div>
+        <div class="card"><div class="hd"><h3>מאיפה הקונים מגיעים</h3></div><div class="donut" id="donut"></div></div>
+        <div class="card"><div class="hd"><h3>איפה הקונים מתעכבים</h3><span class="grow"></span><span class="chip">זמן ממוצע</span></div><div class="hb" id="roomBars"></div></div>
+      </div>
+      <div class="grid g2 mt">
+        <div class="card"><div class="hd"><h3>הדירות הנצפות ביותר</h3><span class="grow"></span><a class="chip" href="#building">לבניין</a></div><div class="toplist" id="topApts"></div></div>
+        <div class="card"><div class="hd"><h3>פעילות אחרונה</h3><span class="grow"></span><span class="chip g"><i class="dot"></i>חי</span></div><ul class="feed" id="feed"></ul></div>
+      </div>
+    </section>
+
+    <!-- ============ live -->
+    <section class="page" id="p-live">
+      <div class="grid g4">
+        <div class="card kpi"><small>גולשים באתר עכשיו</small><div class="v num" data-live-n>12</div><span class="d mute">בכל דירות הפרויקט</span></div>
+        <div class="card kpi"><small>בסיור המודרך כרגע</small><div class="v num" id="kTour">4</div><span class="d mute">שומעים את הקריינות</span></div>
+        <div class="card kpi"><small>לידים מוכרים באתר</small><div class="v num" id="kKnown">3</div><span class="d mute">נכנסו מלינק אישי</span></div>
+        <div class="card kpi" style="background:var(--deep);color:#fff"><small style="color:#b9c1b4">כדאי לפנות עכשיו</small><div class="v num" id="kHot" style="color:var(--y1)">2</div><span class="d" style="color:#b9c1b4">מעל 3 דקות בדירה אחת</span></div>
+      </div>
+      <div class="lv mt">
+        <div>
+          <div class="sh"><span>מבקר</span><span>דירה</span><span>איפה עכשיו</span><span>זמן</span><span>רמת עניין</span><span></span></div>
+          <div class="sess" id="sess"></div>
+        </div>
+        <aside class="panel" id="vpanel"></aside>
+      </div>
+    </section>
+
+    <!-- ============ building -->
+    <section class="page" id="p-building">
+      <div class="grid g4">
+        <div class="card kpi"><small>נמכרו</small><div class="v num">14<span class="soft" style="font-size:18px"> / 36</span></div><span class="d up">+3 החודש</span></div>
+        <div class="card kpi"><small>שמורות</small><div class="v num">6</div><span class="d mute">בתהליך חתימה</span></div>
+        <div class="card kpi"><small>פנויות</small><div class="v num">16</div><span class="d mute">מתוכן 9 עם פניות פתוחות</span></div>
+        <div class="card kpi"><small>יחס פנייה למכירה</small><div class="v num">1:11</div><span class="d up">טוב פי 2 מהממוצע בפרויקט הקודם</span></div>
+      </div>
+      <div class="grid g2 mt" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
+        <div style="position:relative">
+          <div class="bwrap" id="bwrap"><img src="img/hero-wide.webp" alt="הדמיית בניין A בפרויקט נוף הכרמל"></div>
+          <div class="tip" id="btip"></div>
+        </div>
+        <div class="card"><div class="hd"><h3 id="bSelTitle">בחרו דירה על הבניין</h3></div><div id="bSel" class="mute">מעבר עם העכבר מציג נתונים, לחיצה פותחת את פרטי הדירה.</div></div>
+      </div>
+      <div class="card mt"><div class="hd"><h3>טיפוסי הדירות</h3><span class="grow"></span><span class="chip">7 ימים אחרונים</span></div>
+        <div class="tw"><table><thead><tr><th>טיפוס</th><th>חדרים</th><th>שטח</th><th>מחיר מ־</th><th>צפיות</th><th>זמן ממוצע</th><th>פניות</th><th>המרה</th><th>פנויות</th></tr></thead><tbody id="typesT"></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- ============ apartment -->
+    <section class="page" id="p-apartment">
+      <div class="tabs" id="aTypes"></div>
+      <div class="ap">
+        <div class="vw" id="apStage">
+          <div class="vtb"><span class="chip dk">מפת חום · זמן ממוצע בחדר</span></div>
+          <div class="hlg">פחות<i></i>יותר</div>
+        </div>
+        <div class="grid">
+          <div class="card"><div class="hd"><h3>משפך הצפייה</h3><span class="grow"></span><span class="chip" id="aViews"></span></div><div class="funnel" id="funnel"></div></div>
+          <div class="card"><div class="hd"><h3>הסיור המודרך: איפה עוזבים</h3></div><div class="stops" id="stops"></div><p class="note" style="margin-top:8px" id="dropNote"></p></div>
+        </div>
+      </div>
+      <div class="grid g3 mt">
+        <div class="card"><div class="hd"><h3>חדרים</h3><span class="grow"></span><span class="chip">% ביקרו · זמן</span></div><div class="hb" id="aRooms"></div></div>
+        <div class="card"><div class="hd"><h3>שימוש ביכולות</h3></div><div class="feat" id="aFeat"></div></div>
+        <div class="card"><div class="hd"><h3>מה אומרים הנתונים</h3></div><ul class="feed" id="aInsights"></ul></div>
+      </div>
+    </section>
+
+    <!-- ============ leads -->
+    <section class="page" id="p-leads">
+      <div class="tabs" id="lTabs"></div>
+      <div class="ld">
+        <div id="lList"></div>
+        <aside class="panel" id="lCard"></aside>
+      </div>
+    </section>
+
+    <!-- ============ links -->
+    <section class="page" id="p-links">
+      <div class="grid g2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.5fr)">
+        <div class="card"><div class="hd"><h3>לינק אישי חדש</h3></div>
+          <form class="form" id="lnkForm">
+            <label for="lnName">שם הלקוח<input id="lnName" value="יעל ברק" required></label>
+            <label for="lnPhone">טלפון<input id="lnPhone" value="052-4418390" inputmode="tel"></label>
+            <label for="lnApt">דירה<select id="lnApt"></select></label>
+            <label for="lnFrom">נשלח מ<select id="lnFrom"><option>רונית אלון</option><option>אבי שושן</option><option>מאיה כץ</option></select></label>
+            <button class="btn y" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>יצירת לינק</button>
+          </form>
+          <div id="lnOut" class="mt"></div>
+        </div>
+        <div class="card"><div class="hd"><h3>לינקים שנשלחו</h3><span class="grow"></span><span class="chip" id="lnStat"></span></div>
+          <div class="tw"><table><thead><tr><th>לקוח</th><th>דירה</th><th>נשלח</th><th>נפתח</th><th>זמן צפייה</th><th>ביקורים</th><th>חזר לראות</th></tr></thead><tbody id="lnT"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ settings -->
+    <section class="page" id="p-settings">
+      <div class="grid g2" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+        <div class="card"><div class="hd"><h3>יכולות בחוויה</h3><span class="grow"></span><span class="chip">מה הקונה רואה</span></div><div id="feats"></div></div>
+        <div class="grid">
+          <div class="card"><div class="hd"><h3>עזרה בלייב</h3></div>
+            <div class="tg"><div><b>התראה על קונה חם</b><small>כשקונה נמצא מעל 3 דקות בדירה אחת</small></div><button class="sw" role="switch" aria-checked="true" aria-label="התראה על קונה חם"></button></div>
+            <div class="tg"><div><b>שיחת וידאו מתוך הדירה</b><small>הקונה מקבל הזמנה ומצטרף בלחיצה, בלי התקנה</small></div><button class="sw" role="switch" aria-checked="true" aria-label="שיחת וידאו"></button></div>
+            <div class="tg"><div><b>שעות זמינות</b><small>א׳–ה׳ 09:00–19:00 · ו׳ 09:00–13:00</small></div><span class="chip">עריכה</span></div>
+          </div>
+          <div class="card"><div class="hd"><h3>הטמעה באתר הפרויקט</h3><span class="grow"></span><button class="btn sm o" id="cpEmbed">העתקה</button></div>
+            <div class="code" id="embed">&lt;script src="https://walkmein.com/embed.js"
+  data-project="nof-hacarmel"
+  data-lang="he,en,ru"&gt;&lt;/script&gt;</div>
+          </div>
+          <div class="card"><div class="hd"><h3>חיבור ל־CRM</h3></div>
+            <div class="crm"><div><b>Salesforce</b><span class="chip g">מחובר</span></div><div><b>HubSpot</b><span class="chip">חיבור</span></div><div><b>monday CRM</b><span class="chip">חיבור</span></div><div><b>Webhook</b><span class="chip">חיבור</span></div></div>
+          </div>
+          <div class="card"><div class="hd"><h3>צוות</h3><span class="grow"></span><span class="chip">הוספה</span></div>
+            <div class="team"><div><span class="av">ר</span><div><b>רונית אלון</b><small>מנהלת מכירות · מנהלת</small></div></div><div><span class="av" style="background:#cfe3c3">א</span><div><b>אבי שושן</b><small>איש מכירות</small></div></div><div><span class="av" style="background:#e4ebf2">מ</span><div><b>מאיה כץ</b><small>משרד מכירות · צפייה בלבד</small></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="callM" hidden>
+  <div class="call" role="dialog" aria-modal="true" aria-label="שיחת וידאו עם קונה">
+    <div class="cstage">
+      <div class="vw" id="callStage"></div>
+      <div class="ctop"><span class="rec"><i></i><span id="cTime">00:00</span></span><span class="chip">סיור משותף · הקונה רואה את מה שאתם רואים</span></div>
+      <div class="tiles"><div class="tile spk" id="tThem"><span class="av" id="cAv">ד</span><span id="cName">דני כהן</span><div class="wave"><i></i><i></i><i></i></div></div><div class="tile"><span class="av" style="background:#cfe3c3">ר</span><span>אתם</span></div></div>
+      <div class="croom" id="croom"></div>
+      <div class="cbar"><button aria-label="מיקרופון" class="tgl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><button aria-label="מצלמה" class="tgl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></button><button aria-label="סיום שיחה" class="end" id="cEnd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 15c5-5 13-5 18 0l-2 3-4-1v-3c-2-.6-4-.6-6 0v3l-4 1z"/></svg></button></div>
+      <div class="ringing" id="ring"><div><span class="av" id="rAv">ד</span><b style="font-size:18px;font-weight:500" id="rName">מתקשרים לדני…</b><p style="color:#b9c1b4;margin:6px 0 0;font-size:13px">ההזמנה הופיעה על המסך של הקונה, בתוך הדירה</p></div></div>
+    </div>
+    <div class="cside">
+      <h3>פרטי השיחה</h3>
+      <div class="info" id="cInfo"></div>
+      <div class="thread" id="cThread"></div>
+      <form class="compose" id="cForm"><input id="cIn" placeholder="הודעה בצ׳אט…" autocomplete="off"><button class="btn y sm" type="submit">שליחה</button></form>
+    </div>
+  </div>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
