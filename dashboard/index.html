@@ -435,14 +435,107 @@ tr.click:hover td{background:var(--card2)}
 [dir=ltr] .ibtn .badge{left:auto;right:9px}
 [dir=ltr] .wa{border-radius:16px 16px 16px 4px}
 @media (max-width:860px){[dir=ltr] .f5{transform:none}}
+/* ---------- login + projects */
+.proj{text-decoration:none;color:inherit;position:relative;transition:background .2s}
+.proj:hover{background:rgba(255,255,255,.1)}
+.proj .sw2{position:absolute;top:12px;inset-inline-end:10px;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.08)}
+.proj .sw2 svg{width:14px;height:14px}
+.out{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:#c9d0c4;flex:none}
+.out:hover{background:rgba(255,255,255,.08);color:#fff}
+.out svg{width:17px;height:17px}
+[dir=rtl] .out svg{transform:scaleX(-1)}
+.login{position:fixed;inset:0;z-index:80;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(380px,.9fr);background:var(--bg)}
+.lg-art{position:relative;overflow:hidden;background:radial-gradient(80% 70% at 50% 60%,#2f3d33 0%,var(--deep) 70%);color:#fff;display:flex;flex-direction:column;padding:36px 40px}
+.lg-art .vw{position:absolute;inset:0;height:auto;border-radius:0;box-shadow:none;background:transparent}
+.lg-art .logo{position:relative;z-index:2;padding:0}
+.lg-art .cap{position:relative;z-index:2;margin-top:auto;max-width:440px}
+.lg-art .cap h2{font:400 clamp(30px,3.4vw,46px)/1.08 var(--d);letter-spacing:-.035em}
+.lg-art .cap h2 em{font-style:normal;color:var(--y1)}
+.lg-art .cap p{color:#b9c1b4;font-size:15px;margin:12px 0 0}
+.lg-live{position:absolute;z-index:2;top:110px;inset-inline-end:40px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);padding:10px 14px;border-radius:16px;font-size:13px}
+.lg-live b{font:500 20px var(--d);color:var(--y1)}
+.lg-form{display:grid;place-items:center;padding:32px max(24px,env(safe-area-inset-right,0px)) 32px max(24px,env(safe-area-inset-left,0px))}
+.lg-box{width:min(380px,100%);display:grid;gap:14px}
+.lg-box h1{font:500 30px/1.15 var(--d);letter-spacing:-.03em}
+.lg-box .sub{color:var(--mute);margin:-6px 0 6px}
+.lg-box label{display:grid;gap:6px;font-size:13px;color:var(--mute)}
+.lg-box input{height:48px;border-radius:14px;border:1px solid var(--line);background:var(--card);padding:0 14px;font-size:15px;box-shadow:0 1px 0 rgba(255,255,255,.8) inset}
+.lg-box input:focus{outline:2px solid var(--ink);outline-offset:0}
+.lg-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+.lg-row a{color:var(--ink)}
+.lg-row label{display:flex;align-items:center;gap:7px;color:var(--ink)}
+.lg-row input{height:auto;width:16px;height:16px;accent-color:var(--deep)}
+.lg-btn{height:50px;border-radius:30px;background:var(--deep);color:#fff;font-weight:500;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px}
+.lg-btn:hover{background:#2b372f}
+.lg-btn .spin{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.lg-or{display:flex;align-items:center;gap:10px;color:var(--soft);font-size:12px}
+.lg-or::before,.lg-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.lg-sso{height:48px;border-radius:30px;background:var(--card);box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;gap:9px;font-size:14px}
+.lg-sso svg{width:18px;height:18px}
+.lg-note{font-size:12px;color:var(--soft);text-align:center}
+.lg-lang{position:absolute;top:22px;inset-inline-end:22px}
+.lg-err{color:#b44a20;font-size:13px;margin:0}.lg-err:empty{display:none}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.pcard{background:var(--card);border-radius:24px;box-shadow:var(--sh);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;position:relative}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 30px 50px -30px rgba(30,40,25,.5)}
+.pcard.cur{box-shadow:0 0 0 2px var(--ink),var(--sh)}
+.pimg{position:relative;aspect-ratio:16/9;background:#2a312b var(--img) var(--pos,50% 50%)/var(--sz,cover) no-repeat;filter:var(--fx,none)}
+.pimg .chip{position:absolute;top:12px;inset-inline-start:12px}
+.pimg .lvb{position:absolute;bottom:12px;inset-inline-start:12px;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:14px;background:rgba(20,26,22,.7);backdrop-filter:blur(8px);color:#fff;font-size:12.5px}
+.pimg .lvb b{font:500 13px var(--d);color:var(--y1)}
+.pbody{padding:16px 18px 18px;display:grid;gap:10px}
+.pbody h3{font:500 20px var(--d);letter-spacing:-.02em}
+.pbody .mute{font-size:13px}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pstats div{background:var(--card2);border-radius:12px;padding:8px 10px}
+.pstats small{display:block;font-size:11.5px;color:var(--mute)}
+.pstats b{font:500 16px var(--d)}
+.sold{height:8px;border-radius:5px;background:var(--card2);overflow:hidden;display:flex}
+.sold i{display:block;height:100%}
+.pfoot{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute)}
+.co{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.co .lg{width:52px;height:52px;border-radius:16px;background:var(--deep);color:var(--y1);display:grid;place-items:center;font:600 20px var(--d)}
+.co h2{font:500 22px var(--d);letter-spacing:-.02em}
+.co .stat3{flex:1;min-width:280px}
+.addp{border:2px dashed rgba(28,31,27,.15);border-radius:24px;display:grid;place-items:center;text-align:center;color:var(--mute);min-height:300px;padding:20px}
+.addp b{display:block;color:var(--ink);font-weight:500;font-size:15px;margin-top:8px}
+@media (max-width:860px){
+  .login{grid-template-columns:1fr;grid-template-rows:240px 1fr;overflow:auto}
+  .lg-art{padding:22px}.lg-art .cap{display:none}.lg-live{top:auto;bottom:16px;inset-inline-end:16px}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+
+<div class="login" id="login" hidden>
+  <div class="lg-art">
+    <div class="vw" id="lgStage"></div>
+    <div class="logo"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i>WalkMeIn</div>
+    <div class="lg-live"><i class="dot"></i><span><b class="num">27</b> <span id="lgLive">קונים צופים עכשיו בפרויקטים שלכם</span></span></div>
+    <div class="cap"><h2 id="lgH">רואים כל קונה <em>בתוך הדירה.</em></h2><p id="lgP">מודל, סיור קולי ונתונים על כל ביקור. ואפשר להציע עזרה בדיוק ברגע הנכון.</p></div>
+  </div>
+  <div class="lg-form" style="position:relative">
+    <button class="pill lg-lang" id="lgLang"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><b id="lgLangLbl" style="font-weight:500">English</b></button>
+    <form class="lg-box" id="lgForm" novalidate>
+      <h1 id="lgT">ברוכים השבים</h1>
+      <p class="sub" id="lgS">התחברו לחשבון החברה כדי לראות את הפרויקטים שלכם</p>
+      <label for="lgMail"><span id="lgML">אימייל</span><input id="lgMail" type="email" autocomplete="username" dir="ltr" value="ronit@alon-nechasim.co.il"></label>
+      <label for="lgPass"><span id="lgPL">סיסמה</span><input id="lgPass" type="password" autocomplete="current-password" dir="ltr" value="demo-1234"></label>
+      <div class="lg-row"><label for="lgRem"><input type="checkbox" id="lgRem" checked><span id="lgRL">זכרו אותי</span></label><a href="#" id="lgForgot">שכחתי סיסמה</a></div>
+      <p class="lg-err" id="lgErr" aria-live="polite"></p>
+      <button class="lg-btn" type="submit" id="lgBtn">כניסה</button>
+      <div class="lg-or" id="lgOr">או</div>
+      <button class="lg-sso" type="button" id="lgSso"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h6a5 5 0 0 1-2.2 3.3v2.7h3.6c2-1.9 3.2-4.7 3.2-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.4-2.7l-3.6-2.8c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.4-2-6.3-4.7H2v2.9A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.7 13.9a6.6 6.6 0 0 1 0-4.2V6.8H2a11 11 0 0 0 0 9.9z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2 6.8l3.7 2.9C6.6 7.3 9.1 5.4 12 5.4z"/></svg><span id="lgSsoT">כניסה עם Google</span></button>
+      <p class="lg-note" id="lgNote">גרסת הדגמה · כל פרטים נכנסים, שום דבר לא נשלח</p>
+    </form>
+  </div>
+</div>
 <div class="app">
   <aside class="rail">
     <div class="logo"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></i>WalkMeIn</div>
-    <div class="proj"><small>פרויקט</small><b>נוף הכרמל</b><span>קריית ים · 36 דירות · 4 טיפוסים</span></div>
+    <a class="proj" href="#projects" title="החלפת פרויקט"><small id="rpCo">אלון נכסים · פרויקט</small><b id="rpName">נוף הכרמל</b><span id="rpMeta">קריית ים · 36 דירות · 4 טיפוסים</span><i class="sw2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15l5 5 5-5M7 9l5-5 5 5"/></svg></i></a>
     <nav class="nav" id="nav">
       <a href="#overview" data-r="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>סקירה</a>
       <a href="#live" data-r="live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a8 8 0 0 0 0 11.4M17.7 6.3a8 8 0 0 1 0 11.4"/></svg>עכשיו באתר<span class="lb"><i class="dot"></i><span class="num" data-live-n>12</span></span></a>
@@ -452,7 +545,7 @@ tr.click:hover td{background:var(--card2)}
       <a href="#links" data-r="links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>לינקים אישיים</a>
       <a href="#settings" data-r="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>הגדרות</a>
     </nav>
-    <div class="me"><span class="av">ר</span><div><b>רונית אלון</b><small>מנהלת מכירות</small></div></div>
+    <div class="me"><span class="av">ר</span><div style="flex:1;min-width:0"><b>רונית אלון</b><small>מנהלת מכירות</small></div><button class="out" id="logout" aria-label="התנתקות" title="התנתקות"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
     <p class="demo-tag">גרסת הדגמה · הנתונים להמחשה</p>
   </aside>
 
@@ -466,16 +559,22 @@ tr.click:hover td{background:var(--card2)}
       <button class="ibtn" aria-label="התראות"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><i class="badge"></i></button>
     </header>
 
+
+    <!-- ============ projects -->
+    <section class="page" id="p-projects">
+      <div class="co"><span class="lg">א</span><div><h2 id="coName">אלון נכסים</h2><div class="mute" id="coMeta">4 פרויקטים · 264 דירות</div></div><div class="stat3" id="coStats"></div></div>
+      <div class="pgrid" id="pgrid"></div>
+    </section>
     <!-- ============ overview -->
     <section class="page" id="p-overview">
       <div class="hero">
         <div class="ttl">
           <small><i class="dot"></i>דירת 4 חדרים · טיפוס B</small>
-          <h2>נוף הכרמל <span class="chip y">הכי נצפית השבוע</span></h2>
-          <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>שד׳ ירושלים, קריית ים · 104 מ״ר + מרפסת 18 מ״ר</p>
+          <h2><span data-p="name">נוף הכרמל</span> <span class="chip y">הכי נצפית השבוע</span></h2>
+          <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span id="hAddr">שד׳ ירושלים, קריית ים · 104 מ״ר + מרפסת 18 מ״ר</span></p>
         </div>
         <div class="stage" id="heroStage"></div>
-        <div class="fl f1"><small>צפיות במודל השבוע</small><div class="row"><div><div class="v num" data-count="1284">0</div><span class="up">+32%</span> <span class="mute" style="font-size:12px">משבוע שעבר</span></div><div class="spark" id="sp1"></div></div></div>
+        <div class="fl f1"><small>צפיות במודל השבוע</small><div class="row"><div><div class="v num" data-count="1284" id="cViews">0</div><span class="up">+32%</span> <span class="mute" style="font-size:12px">משבוע שעבר</span></div><div class="spark" id="sp1"></div></div></div>
         <div class="fl f2"><small>זמן צפייה ממוצע</small><div class="row"><div><div class="v num">4:36</div><span class="up">פי 3.1</span> <span class="mute" style="font-size:12px">מעמוד PDF</span></div><div class="spark g" id="sp2"></div></div></div>
         <div class="fl f3"><small>השאירו פרטים לפגישה</small>
           <svg class="gauge" viewBox="0 0 160 90"><path d="M15 82a65 65 0 0 1 130 0" fill="none" stroke="#eeede6" stroke-width="12" stroke-linecap="round"/><path id="gArc" d="M15 82a65 65 0 0 1 130 0" fill="none" stroke="url(#gg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="204" stroke-dashoffset="204"/><defs><linearGradient id="gg"><stop offset="0" stop-color="#f3dc2d"/><stop offset="1" stop-color="#f0862e"/></linearGradient></defs><text x="80" y="66" text-anchor="middle" font-family="Sora,Heebo" font-size="28" fill="#1c1f1b">64</text><text x="80" y="84" text-anchor="middle" font-family="Heebo" font-size="11" fill="#6d716a">5.0% מהצופים</text></svg>
@@ -483,7 +582,7 @@ tr.click:hover td{background:var(--card2)}
         <a class="fl f4" href="#live" style="text-decoration:none;display:block">
           <small><i class="dot" style="display:inline-block;margin-inline-end:5px"></i>עכשיו באתר</small>
           <div class="row" style="align-items:center;margin-top:4px"><div class="v num" data-live-n>12</div><div class="stack" id="ovStack"></div></div>
-          <div style="font-size:12.5px;margin-top:6px" class="mute">3 לידים מוכרים צופים כרגע · <b style="color:var(--ink);font-weight:500">להציע עזרה ←</b></div>
+          <div style="font-size:12.5px;margin-top:6px" class="mute"><span id="knownTxt">3 לידים מוכרים צופים כרגע</span> · <b style="color:var(--ink);font-weight:500">להציע עזרה ←</b></div>
         </a>
         <div class="fl f5"><span class="stack" id="inAptStack"></span><span style="font-size:13px"><b class="num" id="inAptN">3</b> קונים בתוך הדירה הזו עכשיו</span></div>
         <div class="hint3" id="hint3">גררו כדי לסובב · המספרים = זמן ממוצע בחדר</div>
@@ -520,10 +619,10 @@ tr.click:hover td{background:var(--card2)}
     <!-- ============ building -->
     <section class="page" id="p-building">
       <div class="grid g4">
-        <div class="card kpi"><small>נמכרו</small><div class="v num">14<span class="soft" style="font-size:18px"> / 36</span></div><span class="d up">+3 החודש</span></div>
-        <div class="card kpi"><small>שמורות</small><div class="v num">6</div><span class="d mute">בתהליך חתימה</span></div>
-        <div class="card kpi"><small>פנויות</small><div class="v num">16</div><span class="d mute">מתוכן 9 עם פניות פתוחות</span></div>
-        <div class="card kpi"><small>יחס פנייה למכירה</small><div class="v num">1:11</div><span class="d up">טוב פי 2 מהממוצע בפרויקט הקודם</span></div>
+        <div class="card kpi"><small>נמכרו</small><div class="v num"><span id="kSold">14</span><span class="soft" style="font-size:18px"> / <span id="kUnits">36</span></span></div><span class="d up">+3 החודש</span></div>
+        <div class="card kpi"><small>שמורות</small><div class="v num" id="kRes">6</div><span class="d mute">בתהליך חתימה</span></div>
+        <div class="card kpi"><small>פנויות</small><div class="v num" id="kFree">16</div><span class="d mute" id="kFreeTxt">מתוכן 9 עם פניות פתוחות</span></div>
+        <div class="card kpi"><small>יחס פנייה למכירה</small><div class="v num" id="kRatio">1:11</div><span class="d up">טוב פי 2 מהממוצע בפרויקט הקודם</span></div>
       </div>
       <div class="grid g2 mt" style="grid-template-columns:minmax(0,1.6fr) minmax(0,1fr)">
         <div style="position:relative">

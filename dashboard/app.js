@@ -49,6 +49,12 @@ const DICT = {
   'פרטי השיחה': 'Call details', 'שליחה': 'Send', 'התראות': 'Notifications', 'הדמיית בניין A בפרויקט נוף הכרמל': 'Building A rendering, Nof HaCarmel',
   'שיחת וידאו': 'Video call', 'שיחת וידאו עם קונה': 'Video call with a buyer', 'מיקרופון': 'Microphone', 'מצלמה': 'Camera', 'סיום שיחה': 'End call', 'הודעה בצ׳אט…': 'Chat message…',
   'סקירת הפרויקט': 'Project overview', 'נוף הכרמל · בניין A': 'Nof HaCarmel · Building A',
+  'קונים צופים עכשיו בפרויקטים שלכם': 'buyers viewing your projects right now', 'רואים כל קונה': 'See every buyer', 'בתוך הדירה.': 'inside the unit.',
+  'מודל, סיור קולי ונתונים על כל ביקור. ואפשר להציע עזרה בדיוק ברגע הנכון.': 'A 3D model, a narrated tour and data on every visit. And you can offer help at exactly the right moment.',
+  'ברוכים השבים': 'Welcome back', 'התחברו לחשבון החברה כדי לראות את הפרויקטים שלכם': 'Sign in to your company account to see your projects',
+  'אימייל': 'Email', 'סיסמה': 'Password', 'זכרו אותי': 'Remember me', 'שכחתי סיסמה': 'Forgot password?', 'כניסה': 'Sign in', 'או': 'or',
+  'כניסה עם Google': 'Sign in with Google', 'גרסת הדגמה · כל פרטים נכנסים, שום דבר לא נשלח': 'Demo version · any details work, nothing is sent',
+  'החלפת פרויקט': 'Switch project', 'התנתקות': 'Sign out', 'אלון נכסים · פרויקט': 'Alon Properties · project', 'אלון נכסים': 'Alon Properties',
 };
 const ORIG = new WeakMap();
 function translateStatic() {
@@ -68,9 +74,10 @@ function translateStatic() {
 }
 function applyLang() {
   document.documentElement.lang = EN ? 'en' : 'he'; document.documentElement.dir = EN ? 'ltr' : 'rtl';
-  $('#langLbl').textContent = EN ? 'עברית' : 'English';
+  $('#langLbl').textContent = $('#lgLangLbl').textContent = EN ? 'עברית' : 'English';
   translateStatic();
 }
+$('#lgLang').onclick = () => { EN = !EN; try { localStorage.setItem('wmi-lang', EN ? 'en' : 'he'); } catch (e) {} applyLang(); };
 $('#langBtn').onclick = () => { EN = !EN; try { localStorage.setItem('wmi-lang', EN ? 'en' : 'he'); } catch (e) {} applyLang(); route(); };
 
 // ------------------------------------------------------------------ data
@@ -100,6 +107,18 @@ const S = n => SRC[n];
 const CITIES = [['חיפה', 'Haifa'], ['קריית ים', 'Kiryat Yam'], ['קריית ביאליק', 'Kiryat Bialik'], ['עכו', 'Acre'], ['נשר', 'Nesher'], ['תל אביב', 'Tel Aviv'], ['קריית מוצקין', 'Kiryat Motzkin'], ['נהריה', 'Nahariya']];
 const DEV = [['נייד', 'Mobile'], ['מחשב', 'Desktop']];
 
+// company account → projects (all fictional)
+const CO = { name: ['אלון נכסים', 'Alon Properties'], init: ['א', 'A'] };
+const PROJECTS = [
+  { id: 'nof', name: ['נוף הכרמל', 'Nof HaCarmel'], city: ['קריית ים', 'Kiryat Yam'], addr: ['שד׳ ירושלים, קריית ים · 104 מ״ר + מרפסת 18 מ״ר', 'Yerushalayim Blvd, Kiryat Yam · 104 m² + 18 m² balcony'], units: 36, sold: 14, res: 6, m: 1, live: 12, ratio: '1:11', leads: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], hot: [1, 2, 5], pool: [3, 7, 9, 12], stage: ['בשיווק', 'Selling'], pos: '50% 50%', st: ['sd', 'av_', 'rs', 'av_', 'sd', 'av_', 'av_', 'rs'], seed: 42 },
+  { id: 'namal', name: ['מגדלי הנמל', 'HaNamal Towers'], city: ['חיפה', 'Haifa'], addr: ['דרך העצמאות, חיפה · 118 מ״ר + מרפסת 14 מ״ר', 'Ha’Atzmaut Rd, Haifa · 118 m² + 14 m² balcony'], units: 84, sold: 41, res: 9, m: 1.85, live: 19, ratio: '1:9', leads: [2, 3, 5, 6, 7, 8, 10, 11], hot: [7, 3, 2], pool: [5, 6, 8], stage: ['בשיווק', 'Selling'], pos: '30% 35%', sz: '210%', fx: 'saturate(.85) hue-rotate(-12deg)', st: ['sd', 'sd', 'av_', 'sd', 'rs', 'av_', 'sd', 'av_'], seed: 77 },
+  { id: 'zeitim', name: ['גבעת הזיתים', 'Olive Hill'], city: ['נשר', 'Nesher'], addr: ['רח׳ התאנה, נשר · 96 מ״ר + גינה 40 מ״ר', 'HaTe’ena St, Nesher · 96 m² + 40 m² garden'], units: 24, sold: 5, res: 3, m: .55, live: 6, ratio: '1:14', leads: [1, 4, 9, 12], hot: [1], pool: [4, 12], stage: ['שיווק מוקדם', 'Pre-sale'], pos: '40% 75%', sz: '260%', fx: 'brightness(1.05) saturate(1.1)', st: ['av_', 'av_', 'rs', 'av_', 'sd', 'av_', 'av_', 'av_'], seed: 13 },
+  { id: 'akko', name: ['פארק עכו', 'Akko Park'], city: ['עכו', 'Acre'], addr: ['שכונת צפון, עכו · 88 מ״ר + מרפסת 12 מ״ר', 'North quarter, Acre · 88 m² + 12 m² balcony'], units: 120, sold: 0, res: 0, m: .2, live: 3, ratio: '–', leads: [6, 12], hot: [], pool: [6], stage: ['השקה בקרוב', 'Launching soon'], pos: '50% 40%', sz: '150%', fx: 'grayscale(.75) brightness(.9)', st: ['av_', 'av_', 'av_', 'av_', 'av_', 'av_', 'av_', 'av_'], seed: 5 },
+];
+let PR = PROJECTS[0];
+try { PR = PROJECTS.find(p => p.id === sessionStorage.getItem('wmi-proj')) || PR; } catch (e) {}
+const sc = n => Math.round(n * PR.m);
+
 const LEADS = [
   { id: 1, name: ['דני כהן', 'Dani Cohen'], phone: '054-7712093', email: 'dani.cohen@gmail.com', apt: 8, src: S(6), score: 5, st: 'h', visits: 3, total: 860, date: ['היום, 10:12', 'Today, 10:12'], rooms: { living: 320, bal: 210, master: 150, bed3: 80, bed2: 60, bath: 40 } },
   { id: 2, name: ['מיכל לוי', 'Michal Levi'], phone: '052-3381772', email: 'michal.levi@walla.co.il', apt: 10, src: S(5), score: 5, st: 'h', visits: 4, total: 1240, date: ['היום, 09:40', 'Today, 09:40'], rooms: { living: 410, master: 300, bal: 260, bed2: 120, ensuite: 90, bed3: 60 } },
@@ -114,6 +133,7 @@ const LEADS = [
   { id: 11, name: ['אורית נחום', 'Orit Nahum'], phone: '053-3341290', email: 'orit.n@gmail.com', apt: 6, src: S(7), score: 2, st: 'c', visits: 1, total: 120, date: ['לפני 5 ימים', '5 days ago'], rooms: { living: 70, master: 50 } },
   { id: 12, name: ['בני סלאמה', 'Beni Salameh'], phone: '050-7713380', email: 'beni.s@gmail.com', apt: 4, src: S(5), score: 3, st: 'n', visits: 1, total: 260, date: ['היום, 11:02', 'Today, 11:02'], rooms: { living: 110, bal: 70, master: 50, bed2: 30 } },
 ];
+const ALL_LEADS = LEADS.splice(0);
 const LBL = { h: [['חם', 'Hot'], 'h'], w: [['פושר', 'Warm'], 'w'], c: [['קר', 'Cold'], 'c'], n: [['חדש', 'New'], 'y'] };
 const aptLabelL = (a, en) => en ? (a === 'P' ? 'Penthouse 21' : `unit ${a}`) : (a === 'P' ? 'פנטהאוז 21' : `דירה ${a}`);
 const aptLabel = a => a === 'P' ? tr('פנטהאוז 21', 'Penthouse 21') : tr(`דירה ${a}`, `Unit ${a}`);
@@ -133,16 +153,35 @@ function mkVisitor(o = {}) {
     score: known ? known.score : 1 + Math.floor(rnd() * 3), visit: known ? known.visits + 1 : 1, alerted: false,
   };
 }
-const VIS = [
-  mkVisitor({ lead: 1, apt: 8, room: 'bal', t: 412, aptT: 168, tour: true }),
-  mkVisitor({ lead: 2, apt: 10, room: 'master', t: 655, aptT: 248 }),
-  mkVisitor({ lead: 5, apt: 8, room: 'living', t: 133, aptT: 92 }),
-  mkVisitor({ apt: 8, room: 'master', tour: true }), mkVisitor({ apt: 6 }), mkVisitor({ apt: 9, tour: true }), mkVisitor({ apt: 4 }),
-  mkVisitor({ apt: 10 }), mkVisitor({ apt: 'P', tour: true }), mkVisitor({ apt: 5 }), mkVisitor({ apt: 8 }), mkVisitor({ apt: 6 }),
-];
-VIS.forEach(v => { v.path = [...new Set([pick(WALK), pick(WALK), v.room])]; });
-VIS[1].alerted = true; // already past the threshold when the demo opens
-const POOL = [3, 7, 9, 12];
+const VIS = [], POOL = [];
+const BT = JSON.parse(JSON.stringify(TYPES)), BA = JSON.parse(JSON.stringify(APTS));
+function setProject(p) {
+  PR = p; try { sessionStorage.setItem('wmi-proj', p.id); } catch (e) {}
+  seed = p.seed;
+  LEADS.length = 0; LEADS.push(...ALL_LEADS.filter(l => p.leads.includes(l.id)));
+  const free = p.units - p.sold - p.res, ks = Object.keys(TYPES);
+  ks.forEach((k, i) => { TYPES[k].views = sc(BT[k].views); TYPES[k].leads = Math.max(p.m < .3 ? 0 : 1, sc(BT[k].leads)); TYPES[k].avg = Math.round(BT[k].avg * (0.9 + rnd() * 0.25)); TYPES[k].free = Math.round(free * [0.35, 0.35, 0.2, 0.1][i]); });
+  Object.keys(APTS).forEach((n, i) => { APTS[n].views = sc(BA[n].views); APTS[n].leads = sc(BA[n].leads); APTS[n].st = p.st[i]; });
+  const apts = Object.keys(APTS).map(Number).filter(n => APTS[n].st !== 'sd');
+  VIS.length = 0; vid = 0;
+  p.hot.forEach((id, i) => { const L = ALL_LEADS.find(l => l.id === id); VIS.push(mkVisitor({ lead: id, apt: L.apt === 'P' || apts.includes(L.apt) ? L.apt : apts[0], room: ['bal', 'master', 'living'][i], t: 400 - i * 120, aptT: [168, 248, 92][i], tour: i === 0 })); });
+  while (VIS.length < p.live) VIS.push(mkVisitor({ apt: rnd() > .85 ? 'P' : pick(apts.length ? apts : [8]) }));
+  VIS.forEach(v => { v.path = [...new Set([pick(WALK), pick(WALK), v.room])]; v.alerted = v.aptT > 200; });
+  POOL.length = 0; POOL.push(...p.pool);
+  sel.live = VIS[0]?.id; sel.lead = LEADS[0]?.id; sel.apt = apts.includes(8) ? 8 : apts[0] || 8;
+}
+function projectTexts() {
+  const p = PR, nm = P(p.name), free = p.units - p.sold - p.res;
+  $('#rpCo').textContent = tr('אלון נכסים · פרויקט', 'Alon Properties · project');
+  $('#rpName').textContent = nm; $('#rpMeta').textContent = tr(`${P(p.city)} · ${p.units} דירות · 4 טיפוסים`, `${P(p.city)} · ${p.units} units · 4 types`);
+  $$('[data-p="name"]').forEach(e => e.textContent = nm); $('#hAddr').textContent = P(p.addr);
+  $('#cViews').dataset.count = Math.round(1284 * p.m);
+  $('#kSold').textContent = p.sold; $('#kUnits').textContent = p.units; $('#kRes').textContent = p.res; $('#kFree').textContent = free; $('#kRatio').textContent = p.ratio;
+  $('#kFreeTxt').textContent = tr(`מתוכן ${Math.round(free * .25)} עם פניות פתוחות`, `${Math.round(free * .25)} with open inquiries`);
+  $('#bwrap img').alt = tr(`הדמיית הבניין בפרויקט ${nm}`, `${nm} building rendering`);
+  $('#bwrap img').style.objectPosition = p.pos;
+  $('#embed').textContent = `<script src="https://walkmein.com/embed.js"\n  data-project="${p.id}"\n  data-lang="he,en,ru"></` + 'script>';
+}
 const vName = v => P(v.name), vInit = v => v.init || (v.lead ? P(v.name)[0] : '?');
 
 // ------------------------------------------------------------------ 3D viewer
@@ -236,6 +275,7 @@ function planSVG(cur, seen = [], heat = null) {
 
 // ------------------------------------------------------------------ router
 const PAGES = {
+  projects: [['הפרויקטים שלכם', 'Your projects'], ['בחרו פרויקט כדי לראות את הנתונים שלו', 'Pick a project to see its numbers']],
   overview: [['סקירת הפרויקט', 'Project overview'], ['נוף הכרמל · בניין A · מה קורה בחוויה השבוע', 'Nof HaCarmel · Building A · this week in the experience']],
   live: [['עכשיו באתר', 'Live now'], ['מי צופה כרגע, באיזו דירה ובאיזה חדר. אפשר להציע עזרה בצ׳אט או בשיחת וידאו', 'Who is viewing right now, in which unit and which room. Offer help by chat or video call']],
   building: [['בניין ודירות', 'Building & units'], ['זמינות, צפיות ופניות לכל דירה', 'Availability, views and inquiries for every unit']],
@@ -244,7 +284,7 @@ const PAGES = {
   links: [['לינקים אישיים', 'Personal links'], ['שולחים לקונה לינק משלו ויודעים מתי פתח ומה ראה', 'Send each buyer their own link and see when they opened it and what they saw']],
   settings: [['הגדרות', 'Settings'], ['מה הקונה רואה, הטמעה, CRM וצוות', 'What buyers see, embedding, CRM and team']],
 };
-let pageViewer = null, current = null; const sel = { live: VIS[0].id, lead: 1, apt: 8, type: 'B' };
+let pageViewer = null, current = null; const sel = { live: 1, lead: 1, apt: 8, type: 'B' };
 function route() {
   const r = (location.hash || '#overview').slice(1);
   const key = PAGES[r] ? r : 'overview';
@@ -252,8 +292,9 @@ function route() {
   current = key;
   $$('.page').forEach(p => p.classList.toggle('on', p.id === 'p-' + key));
   $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === key));
-  $('#ptitle').textContent = P(PAGES[key][0]); $('#psub').textContent = P(PAGES[key][1]);
-  ({ overview, live, building, apartment, leads, links, settings })[key]();
+  $('#ptitle').textContent = P(PAGES[key][0]); $('#psub').textContent = P(PAGES[key][1]).replace(/נוף הכרמל|Nof HaCarmel/, P(PR.name));
+  projectTexts(); $$('[data-live-n]').forEach(e => e.textContent = VIS.length);
+  ({ projects, overview, live, building, apartment, leads, links, settings })[key]();
   scrollTo({ top: 0 });
 }
 addEventListener('hashchange', route);
@@ -265,7 +306,7 @@ function overview() {
   syncHeroDots();
   $$('[data-count]').forEach(el => countUp(el, Math.round(+el.dataset.count * [0.16, 1, 4.1][range])));
   $('#gArc').animate([{ strokeDashoffset: 204 }, { strokeDashoffset: 204 * (1 - .64) }], { duration: 1200, easing: 'cubic-bezier(.3,.7,.3,1)', fill: 'forwards' });
-  $('#gArc').closest('svg').querySelectorAll('text')[1].textContent = tr('5.0% מהצופים', '5.0% of viewers');
+  $('#gArc').closest('svg').querySelectorAll('text')[0].textContent = sc(64); $('#gArc').closest('svg').querySelectorAll('text')[1].textContent = tr('5.0% מהצופים', '5.0% of viewers');
   const sp = (id, n, base) => { seed = base; $(id).innerHTML = Array.from({ length: n }, (_, i) => `<i style="height:${20 + rnd() * 60 + i * 2}%"></i>`).join(''); };
   sp('#sp1', 14, 7); sp('#sp2', 14, 19);
   seed = 11 + range; const days = 14, now = new Date();
@@ -284,14 +325,16 @@ function overview() {
   $$('#topApts [data-apt]').forEach(a => a.onclick = () => { sel.apt = +a.dataset.apt; });
   renderFeed();
 }
+const heroApt = () => +Object.entries(APTS).filter(([, a]) => a.st !== 'sd').sort((a, b) => b[1].views - a[1].views)[0][0];
 function syncHeroDots() {
   if (current !== 'overview' || !pageViewer) return;
-  const inApt = VIS.filter(v => v.apt === 8), ids = new Set(inApt.map(v => v.id));
+  const inApt = VIS.filter(v => v.apt === heroApt()), ids = new Set(inApt.map(v => v.id));
   for (const id of [...pageViewer.dots.keys()]) if (!ids.has(id)) pageViewer.dropDot(id);
   inApt.forEach(v => pageViewer.setDot(v.id, v.room, avatar(v)));
   $('#inAptN').textContent = inApt.length;
   $('#inAptStack').innerHTML = inApt.slice(0, 3).map(avatar).join('');
   $('#ovStack').innerHTML = VIS.slice(0, 5).map(avatar).join('');
+  const kn = VIS.filter(v => v.lead).length; $('#knownTxt').textContent = kn ? tr(`${kn} לידים מוכרים צופים כרגע`, `${kn} known leads viewing now`) : tr('אין כרגע לידים מוכרים באתר', 'No known leads online right now');
 }
 $$('#range button').forEach((b, i) => b.onclick = () => { $$('#range button').forEach(x => x.classList.toggle('on', x === b)); range = i; if (current === 'overview') route(); else toast({ title: tr('הטווח עודכן', 'Range updated'), sub: b.textContent }); });
 
@@ -530,8 +573,8 @@ function links() {
     e.preventDefault(); const name = $('#lnName').value.trim() || tr('לקוח', 'Client'), apt = $('#lnApt').value, fn = name.split(' ')[0];
     const url = `walkmein.com/p/${['dani', 'yael', 'noa', 'ron', 'maya', 'omer'][name.length % 6]}-${apt.toLowerCase()}`;
     const from = $('#lnFrom').selectedOptions[0].textContent;
-    const msg = tr(`היי ${fn}, כאן ${from} מנוף הכרמל 👋\nהכנתי לך את ${aptLabel(apt)} בתלת־ממד, אפשר לסובב, להיכנס פנימה ולשמוע הסבר על כל חדר:\nhttps://${url}`,
-      `Hi ${fn}, it's ${from} from Nof HaCarmel 👋\nI've set up ${aptLabel(apt)} in 3D for you. You can rotate it, step inside and hear about every room:\nhttps://${url}`);
+    const msg = tr(`היי ${fn}, כאן ${from} מ${P(PR.name)} 👋\nהכנתי לך את ${aptLabel(apt)} בתלת־ממד, אפשר לסובב, להיכנס פנימה ולשמוע הסבר על כל חדר:\nhttps://${url}`,
+      `Hi ${fn}, it's ${from} from ${P(PR.name)} 👋\nI've set up ${aptLabel(apt)} in 3D for you. You can rotate it, step inside and hear about every room:\nhttps://${url}`);
     $('#lnOut').innerHTML = `<div class="hd"><h3>${tr('הלינק מוכן', 'Your link is ready')}</h3></div><div class="wa">${esc(msg).replace(/\n/g, '<br>').replace(/https:\/\/\S+/, m => `<a href="${m}" target="_blank" rel="noopener">${m}</a>`)}</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap" class="mt"><button class="btn o sm" id="lnCopy">${tr('העתקת הודעה', 'Copy message')}</button><a class="btn g sm" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(msg)}">${tr('פתיחה בוואטסאפ', 'Open in WhatsApp')}</a></div>`;
     $('#lnCopy').onclick = () => { navigator.clipboard?.writeText(msg).then(() => toast({ title: tr('ההודעה הועתקה', 'Message copied') }), () => toast({ title: tr('סמנו והעתיקו את ההודעה', 'Select and copy the message') })); };
@@ -570,7 +613,7 @@ setInterval(() => {
   $$(`[data-room="${v.id}"]`).forEach(e => { e.textContent = RN(next); e.classList.add('chg'); setTimeout(() => e.classList.remove('chg'), 900); });
   $$(`[data-room2="${v.id}"],[data-room3="${v.id}"]`).forEach(e => e.textContent = RN(next));
   const pl = $(`[data-plan="${v.id}"]`); if (pl) pl.innerHTML = planSVG(next, v.path);
-  if (current === 'overview' && v.apt === 8) syncHeroDots();
+  if (current === 'overview' && v.apt === heroApt()) syncHeroDots();
   if (rnd() > .65) { const c = pick(CITIES); const r = rnd();
     pushFeed(r > .66 ? 'eye' : r > .33 ? 'tour' : 'wa', r > .66 ? [`${v.name[0]} נכנס ל${RNP[next][0]} ב${aptLabelL(v.apt, 0)}`, `${v.name[1]} entered the ${RNP[next][1].toLowerCase()} in ${aptLabelL(v.apt, 1)}`]
       : r > .33 ? [`קונה מ${c[0]} התחיל סיור מודרך ב${aptLabelL(v.apt, 0)}`, `A buyer from ${c[1]} started the guided tour of ${aptLabelL(v.apt, 1)}`] : [`הלינק ל${aptLabelL(v.apt, 0)} שותף בוואטסאפ`, `The ${aptLabelL(v.apt, 1)} link was shared on WhatsApp`]); }
@@ -583,5 +626,43 @@ setInterval(() => {
   if (current === 'overview') syncHeroDots();
 }, 9000);
 
+// ------------------------------------------------------------------ projects + login
+function projects() {
+  const tot = PROJECTS.reduce((a, p) => a + p.units, 0), sold = PROJECTS.reduce((a, p) => a + p.sold, 0), lv = PROJECTS.reduce((a, p) => a + (p === PR ? VIS.length : p.live), 0);
+  $('#coName').textContent = P(CO.name); $('#coMeta').textContent = tr(`${PROJECTS.length} פרויקטים · ${tot} דירות`, `${PROJECTS.length} projects · ${tot} units`);
+  $('#coStats').innerHTML = `<div><small>${tr('נמכרו', 'Sold')}</small><b>${sold}</b></div><div><small>${tr('צפיות השבוע', 'Views this week')}</small><b>${nf(PROJECTS.reduce((a, p) => a + Math.round(1284 * p.m), 0))}</b></div><div><small>${tr('גולשים עכשיו', 'Online now')}</small><b>${lv}</b></div>`;
+  $('#pgrid').innerHTML = PROJECTS.map(p => { const free = p.units - p.sold - p.res, live = p === PR ? VIS.length : p.live;
+    return `<a class="pcard ${p === PR ? 'cur' : ''}" href="#overview" data-p="${p.id}"><div class="pimg" style="--img:url(img/hero-wide.webp);--pos:${p.pos};--sz:${p.sz || 'cover'};--fx:${p.fx || 'none'}"><span class="chip ${p.sold ? 'g' : 'y'}">${P(p.stage)}</span>${live ? `<span class="lvb"><i class="dot"></i><b>${live}</b> ${tr('צופים עכשיו', 'viewing now')}</span>` : ''}</div>
+    <div class="pbody"><div><h3>${P(p.name)}</h3><div class="mute">${P(p.city)} · ${p.units} ${tr('דירות', 'units')} · 4 ${tr('טיפוסים', 'types')}</div></div>
+    <div class="pstats"><div><small>${tr('צפיות השבוע', 'Views / week')}</small><b>${nf(Math.round(1284 * p.m))}</b></div><div><small>${tr('לידים', 'Leads')}</small><b>${Math.round(64 * p.m)}</b></div><div><small>${tr('זמן ממוצע', 'Avg. time')}</small><b>${mmss(Math.round(276 * (0.85 + p.m * .1)))}</b></div></div>
+    <div class="sold"><i style="width:${p.sold / p.units * 100}%;background:var(--deep)"></i><i style="width:${p.res / p.units * 100}%;background:var(--y2)"></i></div>
+    <div class="pfoot"><span>${tr(`${p.sold} נמכרו · ${p.res} שמורות`, `${p.sold} sold · ${p.res} reserved`)}</span><span>${tr(`${free} פנויות`, `${free} available`)}</span></div></div></a>`; }).join('') +
+    `<div class="addp"><div><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 5v14M5 12h14"/></svg><b>${tr('פרויקט חדש', 'New project')}</b>${tr('שולחים תוכניות ואנחנו בונים את המודל', 'Send the floor plans and we build the model')}</div></div>`;
+  $$('#pgrid [data-p]').forEach(a => a.onclick = e => { const p = PROJECTS.find(x => x.id === a.dataset.p); if (p !== PR) { setProject(p); toast({ title: tr(`עברתם ל${P(p.name)}`, `Switched to ${P(p.name)}`), sub: `${P(p.city)} · ${p.units} ${tr('דירות', 'units')}` }); } });
+}
+let lgViewer = null, authed = false;
+try { authed = sessionStorage.getItem('wmi-auth') === '1'; } catch (e) {}
+function showLogin() {
+  $('#login').hidden = false; if (pageViewer) pageViewer.paused = true;
+  if (!lgViewer) { lgViewer = new Viewer($('#lgStage'), { az: 0.9, el: 0.75, zoom: 1.05 }); lgViewer.scene.environmentIntensity = 0.35; }
+  $('#lgBtn').textContent = tr('כניסה', 'Sign in'); $('#lgErr').textContent = '';
+}
+function enter() {
+  authed = true; try { sessionStorage.setItem('wmi-auth', '1'); } catch (e) {}
+  $('#login').hidden = true; lgViewer?.dispose(); lgViewer = null;
+  if (location.hash === '#projects') route(); else location.hash = '#projects';
+}
+$('#lgForm').onsubmit = e => {
+  e.preventDefault(); const m = $('#lgMail').value.trim(), pw = $('#lgPass').value;
+  if (!/^\S+@\S+\.\S+$/.test(m)) { $('#lgErr').textContent = tr('הזינו כתובת אימייל מלאה, למשל name@company.co.il', 'Enter a full email address, e.g. name@company.com'); $('#lgMail').focus(); return; }
+  if (!pw) { $('#lgErr').textContent = tr('הזינו סיסמה', 'Enter your password'); $('#lgPass').focus(); return; }
+  $('#lgErr').textContent = ''; $('#lgBtn').innerHTML = `<i class="spin"></i>${tr('מתחברים…', 'Signing in…')}`; setTimeout(enter, 900);
+};
+$('#lgSso').onclick = () => { $('#lgBtn').innerHTML = `<i class="spin"></i>${tr('מתחברים…', 'Signing in…')}`; setTimeout(enter, 900); };
+$('#lgForgot').onclick = e => { e.preventDefault(); $('#lgErr').textContent = tr('בגרסה האמיתית יישלח קישור לאיפוס סיסמה למייל.', 'In the live product a reset link is emailed to you.'); };
+$('#logout').onclick = () => { authed = false; try { sessionStorage.removeItem('wmi-auth'); } catch (e) {} showLogin(); };
+
+setProject(PR);
 applyLang();
 route();
+if (!authed) showLogin();
