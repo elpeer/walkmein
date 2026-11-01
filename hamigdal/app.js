@@ -146,7 +146,7 @@ async function openPlan(id) {
   // realistic mode is the default: switch it on as soon as the model is up (the button shows the loading progress)
   if (!A.realistic && !openPlan.auto) { openPlan.auto = true; $('#realBtn').dataset.told = 1; $('#realBtn').click(); }
 }
-function closePlan() { tourStop(true); walkStop(true); planOpen = false; openId = null; $('#plan').classList.remove('open'); $('#plan').setAttribute('aria-hidden', 'true'); $('#bld').classList.remove('away'); A && A.stop(); $('.rcard') && $('.rcard').remove(); selectRoomUI(null); }
+function closePlan() { if (PRE && A && A.pov) A.povExit(0.01); preStop(); tourStop(true); walkStop(true); planOpen = false; openId = null; $('#plan').classList.remove('open'); $('#plan').setAttribute('aria-hidden', 'true'); $('#bld').classList.remove('away'); A && A.stop(); $('.rcard') && $('.rcard').remove(); selectRoomUI(null); }
 $('#back').onclick = () => { if (inApp) history.back(); else go({ floor: parse().floor }, true); };
 function setView(v) { $('#plan').classList.toggle('v2d', v !== '3d'); if (v !== '3d') { tourStop(true); walkStop(true); } view = v; $$('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v)); $('#p2d').hidden = v !== '2d'; ['#gl', '#hots', '#tools'].forEach(s => $(s).classList.toggle('off', v !== '3d')); if (v === '2d') $('.rcard') && $('.rcard').remove(); if (A && planOpen) v === '3d' ? A.start() : A.stop(); }
 $$('.seg button').forEach(b => b.onclick = () => setView(b.dataset.v));
@@ -260,12 +260,25 @@ function sideImg(k) {
 T.aud.addEventListener('timeupdate', () => { if (SD.list.length > 1 && T.aud.duration) sideImg(T.aud.currentTime / T.aud.duration >= 0.5 ? 1 : 0); });
 $('#tside').onclick = () => { const f = $('#tside').dataset.f; if (f) lightbox(`img/${f}.webp`, $('#tside figcaption b').textContent); };
 // a shared link with &tour=pov opens the unit and offers the narrated eye-level tour (audio needs one tap)
+let PRE = false;
+function preStop() { if (!PRE) return; PRE = false; $('#tstart') && $('#tstart').remove(); $('#plan').classList.remove('touring', 'pov', 'pretour'); document.body.classList.remove('touring'); }
 function offerTour(mode) {
   if (T.on || $('#tstart')) return;
-  const b = document.createElement('button'); b.id = 'tstart'; b.className = 'tstart';
-  b.innerHTML = `<i>${ICON.play}</i><span><b>${mode === 'pov' ? 'סיור מודרך בגובה העיניים' : 'סיור מודרך בדירה'}</b><small>כ־3 דקות · עם קריינות · הקישו כדי להתחיל</small></span>`;
-  b.onclick = () => { b.remove(); tourStart(mode); };
-  $('#plan').append(b);
+  const show = () => {
+    if (T.on || !planOpen) return;
+    const b = document.createElement('button'); b.id = 'tstart'; b.className = 'tstart';
+    b.innerHTML = `<i>${ICON.play}</i><span><b>${mode === 'pov' ? 'התחילו סיור מודרך' : 'סיור מודרך בדירה'}</b><small>כ־3 דקות · עם קריינות · הקישו כדי להתחיל</small></span>`;
+    b.onclick = () => { b.remove(); PRE = false; $('#plan').classList.remove('pretour'); tourStart(mode); };
+    $('#plan').append(b);
+  };
+  const s = mode === 'pov' && A && TOUR.find(x => x.pov);
+  if (!s) return show();
+  // jump straight inside the apartment at eye level, then wait for the tap that starts narration
+  if (view !== '3d') setView('3d'); if (E.on) walkStop(true);
+  $('.rcard') && $('.rcard').remove(); selectRoomUI(null);
+  PRE = true; T.mode = 'pov'; $('#plan').classList.add('touring', 'pov', 'pretour'); document.body.classList.add('touring');
+  A.highlight(null);
+  fadeCut(() => A.povEnter(s.pov.pos, s.pov.look)).then(() => { A.setDrift && A.setDrift(0); show(); });
 }
 
 // ---------- guided tour

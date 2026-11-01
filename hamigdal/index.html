@@ -537,6 +537,8 @@ h1,h2,h3,p{margin:0}
 .tside{position:absolute;z-index:5;margin:0;left:clamp(14px,2.6vw,34px);top:96px;width:min(400px,30vw);border-radius:24px;overflow:hidden;background:#0c2a23;box-shadow:0 34px 70px -30px rgba(0,0,0,.6);cursor:zoom-in;animation:tfade .8s var(--ease) both}
 .tside[hidden]{display:none}
 body.touring .wma-say{display:none!important}
+.plan.pretour::after{content:"";position:absolute;inset:0;z-index:5;background:radial-gradient(ellipse at center,rgba(12,42,35,.05),rgba(12,42,35,.45));pointer-events:none}
+.plan.pretour .tstart{z-index:7}
 .tsimg{position:relative;aspect-ratio:16/10;overflow:hidden}
 .tsimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s var(--ease)}
 .tsimg img.in{animation:tsin .7s var(--ease) both}
