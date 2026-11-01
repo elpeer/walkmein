@@ -1,5 +1,10 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/dashboard", "destination": "/dashboard/", "permanent": true },
+    { "source": "/ar", "destination": "/ar/", "permanent": true },
+    { "source": "/en", "destination": "/en/", "permanent": true }
+  ],
   "headers": [
     { "source": "/(.*)\\.(webp|jpg|png|mp3|mp4)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }
   ]
