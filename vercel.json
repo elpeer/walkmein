@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "redirects": [
     { "source": "/dashboard", "destination": "/dashboard/", "permanent": true },
+    { "source": "/hamigdal", "destination": "/hamigdal/", "permanent": true },
     { "source": "/ar", "destination": "/ar/", "permanent": true },
     { "source": "/en", "destination": "/en/", "permanent": true }
   ],

@@ -18,7 +18,7 @@ const P = p => Array.isArray(p) ? p[EN ? 1 : 0] : p; // [he, en] → current lan
 // static page text (index.html) → English
 const DICT = {
   'פרויקט': 'Project', 'נוף הכרמל': 'Nof HaCarmel', 'קריית ים · 36 דירות · 4 טיפוסים': 'Kiryat Yam · 36 units · 4 types',
-  'סקירה': 'Overview', 'עכשיו באתר': 'Live now', 'בניין ודירות': 'Building & units', 'דירה בעומק': 'Unit insights', 'לידים': 'Leads', 'לינקים אישיים': 'Personal links', 'הגדרות': 'Settings',
+  'סקירה': 'Overview', 'עכשיו באתר': 'Live now', 'עזרה בלייב': 'Live assist', 'בניין ודירות': 'Building & units', 'דירה בעומק': 'Unit insights', 'לידים': 'Leads', 'לינקים אישיים': 'Personal links', 'הגדרות': 'Settings',
   'ר': 'R', 'א': 'A', 'מ': 'M', 'ד': 'D', 'רונית אלון': 'Ronit Alon', 'מנהלת מכירות': 'Sales manager', 'גרסת הדגמה · הנתונים להמחשה': 'Demo version · sample data',
   'היום': 'Today', '7 ימים': '7 days', '30 יום': '30 days', 'גולשים עכשיו': 'visitors now', 'גולשים באתר עכשיו': 'Visitors online',
   'דירת 4 חדרים · טיפוס B': '4-room apartment · Type B', 'הכי נצפית השבוע': 'Most viewed this week',
@@ -277,6 +277,7 @@ function planSVG(cur, seen = [], heat = null) {
 const PAGES = {
   projects: [['הפרויקטים שלכם', 'Your projects'], ['בחרו פרויקט כדי לראות את הנתונים שלו', 'Pick a project to see its numbers']],
   overview: [['סקירת הפרויקט', 'Project overview'], ['נוף הכרמל · בניין A · מה קורה בחוויה השבוע', 'Nof HaCarmel · Building A · this week in the experience']],
+  assist: [['עזרה בלייב', 'Live assist'], ['כך נראית בקשה לשיחה בלייב באפליקציה של איש המכירות, בנייד ובמחשב', 'How a live call request looks in the sales rep’s app, on mobile and desktop']],
   live: [['עכשיו באתר', 'Live now'], ['מי צופה כרגע, באיזו דירה ובאיזה חדר. אפשר להציע עזרה בצ׳אט או בשיחת וידאו', 'Who is viewing right now, in which unit and which room. Offer help by chat or video call']],
   building: [['בניין ודירות', 'Building & units'], ['זמינות, צפיות ופניות לכל דירה', 'Availability, views and inquiries for every unit']],
   apartment: [['דירה בעומק', 'Unit insights'], ['איך קונים עוברים בתוך הדירה ואיפה הם עוזבים', 'How buyers move through the unit and where they drop off']],
@@ -289,12 +290,13 @@ function route() {
   const r = (location.hash || '#overview').slice(1);
   const key = PAGES[r] ? r : 'overview';
   if (pageViewer) { pageViewer.dispose(); pageViewer = null; }
+  if (current === 'assist' && key !== 'assist') asStop();
   current = key;
   $$('.page').forEach(p => p.classList.toggle('on', p.id === 'p-' + key));
   $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.r === key));
   $('#ptitle').textContent = P(PAGES[key][0]); $('#psub').textContent = P(PAGES[key][1]).replace(/נוף הכרמל|Nof HaCarmel/, P(PR.name));
   projectTexts(); $$('[data-live-n]').forEach(e => e.textContent = VIS.length);
-  ({ projects, overview, live, building, apartment, leads, links, settings })[key]();
+  ({ projects, assist, overview, live, building, apartment, leads, links, settings })[key]();
   scrollTo({ top: 0 });
 }
 addEventListener('hashchange', route);
@@ -625,6 +627,150 @@ setInterval(() => {
   renderSessions(); if (current === 'live' && !VIS.find(x => x.id === sel.live)) renderPanel();
   if (current === 'overview') syncHeroDots();
 }, 9000);
+
+
+// ------------------------------------------------------------------ live assist (the sales rep's app)
+const bcA = 'BroadcastChannel' in window ? new BroadcastChannel('walkmein-assist') : null;
+const AS = { dev: 'm', state: 'home', avail: true, timers: [], log: [], buyer: null, t: 0, tick: null, view: 'living' };
+const AGENT = { name: ['אבי שושן', 'Avi Shoshan'], first: ['אבי', 'Avi'], img: 'img/avi.webp', imgS: 'img/avi-s.webp' };
+const SIM_BUYER = () => ({ vid: null, name: [`מבקר מ${'תל אביב'}`, 'Visitor from Tel Aviv'], init: '?', project: ['המגדל', 'HaMigdal'], apt: ['קומה 12 · 4 חד׳', 'Floor 12 · 4 rooms'], room: ['סלון', 'living room'], mins: 6, src: ['אינסטגרם', 'Instagram'], seen: [['סלון', 'Living'], ['מרפסת', 'Balcony'], ['יחידת הורים', 'Master']] });
+const asT = (fn, ms) => AS.timers.push(setTimeout(fn, ms));
+function asStop() { AS.timers.forEach(clearTimeout); AS.timers = []; clearInterval(AS.tick); AS.tick = null; if (AS.state !== 'home') AS.state = 'home'; }
+function asLog(icon, text, hot) { AS.log.unshift({ icon, text, hot, at: new Date() }); AS.log = AS.log.slice(0, 14); const el = $('#asLog'); if (el) el.innerHTML = asLogHTML(); }
+const asLogHTML = () => AS.log.length ? AS.log.map(l => `<li class="${l.hot ? 'hot' : ''}"><span class="ic">${IC[l.icon] || IC.live}</span><div>${P(l.text)}<small>${l.at.toLocaleTimeString(EN ? 'en-US' : 'he-IL', { hour: '2-digit', minute: '2-digit' })}</small></div></li>`).join('') : `<li><div class="mute">${tr('עוד אין בקשות. לחצו על ״בקשה נכנסת״ או פתחו את המגדל כקונה.', 'No requests yet. Press “Incoming request” or open HaMigdal as a buyer.')}</div></li>`;
+const ICV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>';
+const ICE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 15c5-5 13-5 18 0l-2 3-4-1v-3c-2-.6-4-.6-6 0v3l-4 1z"/></svg>';
+const ICM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+const ICC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>';
+function assist() {
+  $('#asBadge').hidden = true;
+  const b = AS.buyer || SIM_BUYER();
+  const liveRows = VIS.slice(0, 4);
+  $('#asWrap').innerHTML = `
+  <div class="grid">
+    <div class="card">
+      <div class="agent"><img src="${AGENT.img}" alt=""><div><b>${P(AGENT.name)}</b><span class="mute" style="font-size:13px">${tr('יועץ מכירות · כל הפרויקטים', 'Sales advisor · all projects')}</span></div></div>
+      <div class="avl ${AS.avail ? '' : 'off'}" id="asAvl"><b><i class="dot"></i><span>${AS.avail ? tr('זמין עכשיו לשיחות בלייב', 'Available for live calls') : tr('לא זמין · הבקשות עוברות להודעה', 'Away · requests get an auto-reply')}</span></b><button class="sw" role="switch" aria-checked="${AS.avail}" aria-label="${tr('זמינות', 'Availability')}" id="asSw"></button></div>
+      <div class="kv"><div><small>${tr('שיחות היום', 'Calls today')}</small><b class="num">6</b></div><div><small>${tr('זמן ממוצע', 'Avg. length')}</small><b class="num">4:12</b></div><div><small>${tr('נקבעו פגישות', 'Meetings set')}</small><b class="num">3</b></div></div>
+      <p class="note">${tr('הבועה של אבי מופיעה לקונים באתר הפרויקט עם סימן ״זמין עכשיו״ כל עוד המתג דולק.', 'Avi’s bubble shows on the project site with an “available now” badge while this is on.')}</p>
+    </div>
+    <div class="card"><div class="hd"><h3>${tr('הדגמה', 'Demo')}</h3></div>
+      <div style="display:grid;gap:8px"><button class="btn y" id="asSim">${ICV}${tr('בקשה נכנסת לשיחת וידאו', 'Incoming video call request')}</button>
+      <a class="btn o" href="https://walkmein.com/hamigdal/" target="_blank" rel="noopener">${tr('פתחו את המגדל בצד הקונה ↗', 'Open HaMigdal as a buyer ↗')}</a></div>
+      <p class="note">${tr('פתחו את המגדל בלשונית נוספת באותו דפדפן ולחצו שם על ״שיחת וידאו״: הבקשה תקפוץ כאן בזמן אמת, ואפשר לענות לה מכאן.', 'Open HaMigdal in another tab of this browser and tap “Video call” there: the request pops up here live and you can answer it.')}</p>
+    </div>
+    <div class="card"><div class="hd"><h3>${tr('יומן בקשות', 'Request log')}</h3><span class="grow"></span><span class="chip g"><i class="dot"></i>${tr('חי', 'Live')}</span></div><ul class="log" id="asLog">${asLogHTML()}</ul></div>
+  </div>
+  <div class="astage">
+    <div class="bar2"><div class="seg" id="asDev"><button data-d="m" class="${AS.dev === 'm' ? 'on' : ''}">${tr('אפליקציה בנייד', 'Mobile app')}</button><button data-d="d" class="${AS.dev === 'd' ? 'on' : ''}">${tr('מחשב', 'Desktop')}</button></div><span class="grow"></span><span class="chip" id="asState"></span></div>
+    ${AS.dev === 'm' ? phoneHTML(b, liveRows) : laptopHTML(b, liveRows)}
+    <p class="cap2" id="asCap"></p>
+  </div>`;
+  $('#asSw').onclick = () => { AS.avail = !AS.avail; bcA?.postMessage({ t: 'agent-status', vid: '*', avail: AS.avail }); assist(); toast({ title: AS.avail ? tr('אתה זמין לשיחות', 'You are available') : tr('סימנת לא זמין', 'Marked as away'), sub: AS.avail ? tr('הבועה באתר מציגה ״זמין עכשיו״', 'The site bubble shows “available now”') : tr('בקשות יקבלו הודעה אוטומטית', 'Requests get an auto-reply') }); };
+  $('#asSim').onclick = () => incoming(SIM_BUYER());
+  $$('#asDev button').forEach(x => x.onclick = () => { AS.dev = x.dataset.d; const st = AS.state; assist(); asShow(st); });
+  asWire(b); asShow(AS.state);
+}
+const avB = b => `<span class="av" style="background:#ecebe4">${esc(b.init)}</span>`;
+function phoneHTML(b, rows) {
+  return `<div class="iph"><div class="scr"><div class="notch"></div>
+    <div class="sc" data-s="home"><div class="sb"><span>9:41</span><span>●●● 5G</span></div>
+      <div class="ah"><small>WalkMeIn · ${tr('אפליקציית מכירות', 'Sales app')}</small><h4>${tr('שלום אבי', 'Hi Avi')}</h4></div>
+      <div class="apill"><i class="dot"></i><b>${AS.avail ? tr('זמין לשיחות בלייב', 'Available for live calls') : tr('לא זמין', 'Away')}</b></div>
+      <div class="alist"><div class="mute" style="font-size:11.5px;padding:0 4px">${tr('עכשיו באתר', 'Online now')} · ${VIS.length}</div>${rows.map(v => `<div class="ai">${avatar(v)}<div><b>${esc(vName(v))}</b><span class="m">${aptLabel(v.apt)} · ${RN(v.room)}</span></div>${isHot(v) ? `<span class="go">${tr('חם', 'Hot')}</span>` : ''}</div>`).join('')}</div>
+      <div class="atab"><span class="on">${IC.live}${tr('בלייב', 'Live')}</span><span>${IC.lead}${tr('לידים', 'Leads')}</span><span>${ICC}${tr('צ׳אטים', 'Chats')}</span></div>
+      <div class="push" id="asPush"><span class="lgo">${ICV}</span><div><b>${tr('בקשה לשיחת וידאו', 'Video call request')}</b><small>${esc(P(b.name))} · ${P(b.project)} · ${P(b.apt)}</small><small>${tr('עכשיו ב', 'Now in the ')}${P(b.room)}</small></div><span class="tm">${tr('עכשיו', 'now')}</span></div>
+    </div>
+    <div class="sc ring2" data-s="ring" hidden><div class="who">${avB(b)}<h4>${esc(P(b.name))}</h4><p>${tr('מבקש שיחת וידאו', 'wants a video call')} · ${P(b.project)}</p>
+      <div class="chips"><span>${P(b.apt)}</span><span>${tr('עכשיו ב', 'In the ')}${P(b.room)}</span><span>${b.mins} ${tr('דק׳ באתר', 'min on site')}</span><span>${tr('ראה: ', 'Saw: ')}${b.seen.map(P).join(', ')}</span><span>${tr('הגיע מ', 'From ')}${P(b.src)}</span></div></div>
+      <div class="btns"><button class="no" data-a="decline"><i>${ICE}</i>${tr('לא עכשיו', 'Decline')}</button><button class="ok" data-a="accept"><i>${ICV}</i>${tr('לענות', 'Answer')}</button></div></div>
+    <div class="sc call2" data-s="call" hidden><div class="view" style="--v:url(img/view-living.webp)"><span class="lab">${tr('מה הקונה רואה עכשיו', 'What the buyer sees now')}</span><span class="tmr" data-tm>00:00</span><span class="ptr" style="left:40%;top:55%"></span></div>
+      <div class="tiles2"><div class="t2 spk" data-them>${avB(b)}<em>${esc(P(b.name)).split(' ')[0]} · ${tr('מצלמה כבויה', 'camera off')}</em></div><div class="t2"><img src="${AGENT.imgS}" alt=""><em>${tr('אתה', 'You')}</em></div></div>
+      <div class="cc" data-cc>…</div>
+      <div class="qa"><button data-q="bal">${tr('מעבר למרפסת', 'Go to balcony')}</button><button data-q="price">${tr('שליחת מחירון', 'Send price list')}</button><button data-q="meet">${tr('קביעת פגישה', 'Book a meeting')}</button></div>
+      <div class="cb"><button class="tg" aria-label="${tr('מיקרופון', 'Mic')}">${ICM}</button><button class="tg" aria-label="${tr('מצלמה', 'Camera')}">${ICV}</button><button class="end" data-a="end" aria-label="${tr('סיום', 'End')}">${ICE}</button></div></div>
+  </div></div>`;
+}
+function laptopHTML(b, rows) {
+  return `<div class="lap"><div class="lid"><div class="scr">
+    <div class="sc" data-s="home"><div class="rl"><b>WalkMeIn</b><span>${tr('סקירה', 'Overview')}</span><span class="on">${tr('עזרה בלייב', 'Live assist')}</span><span>${tr('לידים', 'Leads')}</span><span>${tr('לינקים', 'Links')}</span></div>
+      <div class="mn"><h5>${tr('עכשיו באתר', 'Online now')} · ${VIS.length}</h5><div class="tbl">${rows.map(v => `<div class="tr"><span class="who2">${avatar(v)}${esc(vName(v))}</span><span>${aptLabel(v.apt)}</span><span class="mute">${RN(v.room)}</span><span class="chip ${isHot(v) ? 'y' : ''}" style="height:22px;font-size:10.5px">${isHot(v) ? tr('חם', 'Hot') : mmss(v.aptT)}</span></div>`).join('')}</div></div>
+      <div class="inc" id="asInc"><div class="r1">${avB(b)}<div><b>${tr('בקשה לשיחת וידאו', 'Video call request')}</b><small>${esc(P(b.name))} · ${P(b.project)}</small><small>${P(b.apt)} · ${tr('עכשיו ב', 'in the ')}${P(b.room)}</small></div></div>
+        <div class="r2"><button class="no" data-a="decline">${tr('לא עכשיו', 'Decline')}</button><button class="ok" data-a="accept">${tr('לענות', 'Answer')}</button></div></div></div>
+    <div class="sc cl" data-s="call" hidden><div class="view" style="--v:url(img/view-living.webp)"><span class="lab">${tr('מה הקונה רואה עכשיו', 'What the buyer sees now')} · <span data-tm>00:00</span></span><span class="ptr" style="left:40%;top:55%"></span>
+        <div class="pip"><div class="t2 spk" data-them>${avB(b)}<em>${esc(P(b.name)).split(' ')[0]}</em></div><div class="t2"><img src="${AGENT.imgS}" alt=""><em>${tr('אתה', 'You')}</em></div></div>
+        <div class="cb"><button class="tg">${ICM}</button><button class="tg">${ICV}</button><button class="end" data-a="end">${ICE}</button></div></div>
+      <div class="side2"><div class="kv2"><b>${esc(P(b.name))}</b><span>${P(b.project)} · ${P(b.apt)}</span><span>${tr('ראה: ', 'Saw: ')}${b.seen.map(P).join(', ')}</span><span>${tr('הגיע מ', 'From ')}${P(b.src)} · ${b.mins} ${tr('דק׳ באתר', 'min on site')}</span></div>
+        <div class="msgs" data-cc></div>
+        <div class="qa"><button data-q="bal">${tr('למרפסת', 'Balcony')}</button><button data-q="price">${tr('מחירון', 'Price list')}</button><button data-q="meet">${tr('פגישה', 'Meeting')}</button></div></div></div>
+  </div></div><div class="base"></div></div>`;
+}
+const CAPS = { home: ['ממתין לבקשות. כשקונה באתר לוחץ על ״שיחת וידאו״ בבועה של אבי, ההתראה קופצת כאן.', 'Waiting for requests. When a buyer taps “Video call” in Avi’s bubble, the alert pops up here.'], push: ['התראת פוש באפליקציה: מי הקונה, באיזו דירה ובאיזה חדר הוא עכשיו.', 'A push alert in the app: who the buyer is, which unit and which room they are in.'], ring: ['מסך שיחה נכנסת עם כל ההקשר: מה הקונה ראה, כמה זמן הוא באתר ומאיפה הגיע.', 'Incoming call screen with context: what the buyer saw, time on site and source.'], call: ['בשיחה: אבי רואה בדיוק את מה שהקונה רואה, יכול להוביל אותו בין החדרים ולשלוח מחירון או לקבוע פגישה.', 'In the call: Avi sees exactly what the buyer sees, can guide them between rooms and send a price list or book a meeting.'] };
+function asShow(st) {
+  AS.state = st; if (current !== 'assist') return;
+  const s2 = AS.dev === 'd' && (st === 'push' || st === 'ring') ? 'home' : st;
+  $$('.astage .sc').forEach(x => x.hidden = x.dataset.s !== (st === 'push' ? 'home' : s2));
+  $('#asPush')?.classList.toggle('on', st === 'push');
+  $('#asInc')?.classList.toggle('on', st === 'push' || st === 'ring');
+  $('#asState').textContent = P({ home: ['ממתין', 'Idle'], push: ['התראה', 'Alert'], ring: ['שיחה נכנסת', 'Incoming call'], call: ['בשיחה', 'In call'] }[st]);
+  $('#asCap').textContent = P(CAPS[st]);
+  $$('[data-tm]').forEach(e => e.textContent = `${String(AS.t / 60 | 0).padStart(2, '0')}:${String(AS.t % 60).padStart(2, '0')}`);
+}
+function asWire(b) {
+  const st = $('.astage');
+  st.onclick = e => {
+    const a = e.target.closest('[data-a],[data-q],.push,.tg'); if (!a) return;
+    if (a.classList.contains('tg')) return a.classList.toggle('off');
+    if (a.id === 'asPush') return asShow('ring');
+    if (a.dataset.a === 'accept') return accept(b);
+    if (a.dataset.a === 'decline') { asStop(); asShow('home'); asLog('call', [`דחית שיחה מ${b.name[0]} · נשלחה הודעה שתחזור אליו`, `Declined ${b.name[1]} · auto-reply sent`]); if (b.vid) bcA?.postMessage({ t: 'decline', vid: b.vid }); return; }
+    if (a.dataset.a === 'end') return endCall(b);
+    const q = a.dataset.q;
+    if (q === 'bal') { $$('.astage .view').forEach(v => v.style.setProperty('--v', 'url(img/view-balcony.webp)')); cc(b, tr('עברתם יחד למרפסת', 'You moved to the balcony together'), true); if (b.vid) bcA?.postMessage({ t: 'agent-msg', vid: b.vid, text: 'עברתי איתך למרפסת. תראה את הנוף לפארק 🌳' }); }
+    if (q === 'price') { toast({ title: tr('המחירון נשלח לקונה', 'Price list sent'), sub: tr('בצ׳אט ובוואטסאפ', 'In chat and WhatsApp') }); cc(b, tr('שלחת מחירון', 'You sent the price list'), true); if (b.vid) bcA?.postMessage({ t: 'agent-msg', vid: b.vid, text: 'שלחתי לך עכשיו מחירון מסודר לדירה הזו 📄' }); }
+    if (q === 'meet') { toast({ title: tr('נשלחה הזמנה לפגישה', 'Meeting invite sent'), sub: tr('יום ה׳, 17:30 · משרד המכירות', 'Thu 5:30 pm · sales office') }); cc(b, tr('הצעת פגישה ביום ה׳ 17:30', 'You offered Thu 5:30 pm'), true); if (b.vid) bcA?.postMessage({ t: 'agent-msg', vid: b.vid, text: 'קבעתי לנו פגישה ביום חמישי ב־17:30 במשרד המכירות. מתאים?' }); }
+  };
+}
+function cc(b, text, me) {
+  $$('.astage [data-cc]').forEach(el => { if (el.classList.contains('msgs')) { el.insertAdjacentHTML('beforeend', `<div class="m2 ${me ? 'me' : ''}">${esc(text)}</div>`); while (el.children.length > 6) el.firstChild.remove(); } else el.textContent = (me ? '' : P(b.name).split(' ')[0] + ': ') + text; });
+  if (!me) { $$('.astage [data-them]').forEach(t => t.classList.add('spk')); asT(() => $$('.astage [data-them]').forEach(t => t.classList.remove('spk')), 2400); }
+}
+function incoming(b) {
+  if (!AS.avail) { asLog('call', [`בקשה מ${b.name[0]} כשלא היית זמין · נשלחה הודעה אוטומטית`, `Request from ${b.name[1]} while away · auto-reply sent`]); if (b.vid) bcA?.postMessage({ t: 'decline', vid: b.vid }); toast({ title: tr('בקשה לשיחה בזמן שאתה לא זמין', 'Call request while away'), sub: tr('הקונה קיבל הודעה שתחזור אליו', 'The buyer was told you’ll get back to them') }); return; }
+  asStop(); AS.buyer = b; AS.t = 0;
+  asLog('call', [`בקשה לשיחת וידאו · ${b.name[0]} · ${b.project[0]}`, `Video call request · ${b.name[1]} · ${b.project[1]}`], true);
+  if (current !== 'assist') { $('#asBadge').hidden = false; toast({ v: { init: b.init, color: '#ecebe4' }, title: tr('בקשה לשיחת וידאו', 'Video call request'), sub: `${P(b.name)} · ${P(b.project)}`, action: { label: tr('לענות', 'Answer'), fn: () => { location.hash = '#assist'; } } }); return; }
+  assist(); asShow('push');
+  if (AS.dev === 'm') asT(() => AS.state === 'push' && asShow('ring'), 2600);
+}
+function accept(b) {
+  asStop(); AS.t = 0; asShow('call'); if (b.vid) bcA?.postMessage({ t: 'accept', vid: b.vid });
+  asLog('call', [`ענית לשיחה עם ${b.name[0]}`, `Answered ${b.name[1]}`]);
+  AS.tick = setInterval(() => { AS.t++; $$('[data-tm]').forEach(e => e.textContent = `${String(AS.t / 60 | 0).padStart(2, '0')}:${String(AS.t % 60).padStart(2, '0')}`); }, 1000);
+  const pts = [['40%', '55%'], ['62%', '48%'], ['78%', '60%'], ['30%', '42%']]; let i = 0;
+  AS.timers.push(setInterval(() => { i = (i + 1) % pts.length; $$('.astage .ptr').forEach(p => { p.style.left = pts[i][0]; p.style.top = pts[i][1]; }); }, 2600));
+  if (!b.vid) {
+    asT(() => cc(b, tr('היי אבי, אני מסתכל על הדירה בקומה 12', 'Hi Avi, I’m looking at the 12th-floor unit')), 900);
+    asT(() => cc(b, tr('הסלון פונה לפארק?', 'Does the living room face the park?')), 6200);
+    asT(() => cc(b, tr('וואו, ואפשר לראות את המרפסת?', 'Wow, can I see the balcony?')), 12500);
+  }
+}
+function endCall(b) {
+  const secs = AS.t; asStop(); asShow('home'); if (b.vid) bcA?.postMessage({ t: 'agent-msg', vid: b.vid, text: 'תודה על השיחה! שלחתי לך סיכום בוואטסאפ.' });
+  asLog('call', [`שיחה עם ${b.name[0]} הסתיימה · ${mmss(secs)} דק׳ · נשמרה בכרטיס הליד`, `Call with ${b.name[1]} ended · ${mmss(secs)} · saved to the lead card`]);
+  toast({ title: tr('השיחה נשמרה', 'Call saved'), sub: tr(`${mmss(secs)} דק׳ · בכרטיס הליד`, `${mmss(secs)} · on the lead card`) });
+}
+// a real buyer tab on the same browser (hamigdal with the assist widget)
+bcA?.addEventListener('message', ({ data: d }) => {
+  if (!d || !d.vid || d.vid === '*') return;
+  const buyer = () => ({ vid: d.vid, name: ['מבקר באתר המגדל', 'Visitor on the HaMigdal site'], init: '?', project: [d.project || 'המגדל', 'HaMigdal'], apt: ['קומה 12 · 4 חד׳', 'Floor 12 · 4 rooms'], room: ['סלון', 'living room'], mins: 2, src: ['האתר', 'Website'], seen: [['בניין', 'Building'], ['סלון', 'Living']] });
+  if (d.t === 'hello') bcA.postMessage({ t: 'dash', vid: d.vid });
+  if (d.t === 'hello') asLog('eye', [`מבקר חדש באתר ${d.project}`, `New visitor on ${d.project}`]);
+  if (d.t === 'open') asLog('live', ['הקונה פתח צ׳אט עם אבי', 'The buyer opened a chat with Avi']);
+  if (d.t === 'chat' && d.from === 'buyer') { asLog('wa', [`הקונה כתב: ״${d.text}״`, `Buyer wrote: “${d.text}”`]); if (AS.state === 'call' && AS.buyer?.vid === d.vid) cc(AS.buyer, d.text); }
+  if (d.t === 'call-request') incoming(buyer());
+  if (d.t === 'call-end' && AS.buyer?.vid === d.vid && AS.state !== 'home') { asStop(); asShow('home'); asLog('call', ['הקונה סיים את השיחה', 'The buyer ended the call']); }
+});
 
 // ------------------------------------------------------------------ projects + login
 function projects() {
