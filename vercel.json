@@ -4,7 +4,8 @@
     { "source": "/dashboard", "destination": "/dashboard/", "permanent": true },
     { "source": "/hamigdal", "destination": "/hamigdal/", "permanent": true },
     { "source": "/ar", "destination": "/ar/", "permanent": true },
-    { "source": "/en", "destination": "/en/", "permanent": true }
+    { "source": "/en", "destination": "/en/", "permanent": true },
+    { "source": "/intro", "destination": "/intro/", "permanent": true }
   ],
   "headers": [
     { "source": "/(.*)\\.(webp|jpg|png|mp3|mp4)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }] }

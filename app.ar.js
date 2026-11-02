@@ -20,7 +20,7 @@ function onScroll() {
   if (!reduce && innerWidth >= 900) photo.style.transform = `translateY(${y * 0.25}px) scale(1.06)`;
   tabs.classList.toggle('on', y > h * 0.6);
   const ids = ['top', 'model', 'contact', 'pricing', 'faq'];
-  let cur = 'top'; for (const id of ['model', 'pricing', 'faq', 'contact']) { const el = document.getElementById(id); if (el.getBoundingClientRect().top < innerHeight * 0.5) cur = id; }
+  let cur = 'top'; for (const id of ['model', 'pricing', 'faq', 'contact']) { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < innerHeight * 0.5) cur = id; }
   $$('#tabs a').forEach((a, i) => a.classList.toggle('on', ids[i] === cur && cur !== 'contact'));
 }
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -218,7 +218,7 @@ function hscene() {
 }
 
 // ------------------------------------------------------------ pricing calculator
-{
+if ($('#range')) {
   const BASE = 1490, TIER = n => n <= 3 ? 890 : n <= 8 ? 690 : 490;
   const range = $('#range'), out = $('#nTypes'), fmt = n => '₪' + Math.round(n).toLocaleString('en-US');
   function typesCost(n) { let c = 0; for (let i = 2; i <= n; i++) c += TIER(i); return c; }
@@ -343,7 +343,7 @@ function sendLead(fd, msg, extra = '', pkg = null) {
 }
 $('#form').addEventListener('submit', e => { e.preventDefault(); sendLead(new FormData(e.target), $('#msg')); });
 // pricing CTA: open a lead form that carries the chosen package
-{
+if ($('#sumcta')) {
   const m = $('#leadM'), fmtN = v => '₪' + Math.round(v).toLocaleString('en-US'); let back = null;
   const open = e => {
     e.preventDefault(); back = e.currentTarget; const p = window.__pkg || { lines: [], total: 0, n: 1 };
@@ -377,7 +377,7 @@ const top=document.querySelector('#top');if(top)new IntersectionObserver(es=>{if
 { const io2 = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io2.unobserve(e.target); } }), { threshold: 0.08 }); $$('.brow').forEach(el => capture ? el.classList.add('in') : io2.observe(el)); }
 
 // ------------------------------------------------------------ add-on previews: "how it looks" popup per pricing add-on
-{
+if ($('.peek')) {
   const H = '../img/';
   const P = {
     real: { tag: 'إضافة لكل نوع شقة', t: 'صورة تصورية واقعية', d: 'ينتقل النموذج من مجسم أبيض أنيق إلى غرفة تبدو كصورة فوتوغرافية: خامات وإضاءة وإطلالة حقيقية من النوافذ. اسحبوا الخط للمقارنة.',
