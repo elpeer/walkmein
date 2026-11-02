@@ -1406,22 +1406,23 @@ section{scroll-margin-top:70px}
 .lvcta::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--lg);box-shadow:0 0 0 4px rgba(61,220,132,.22)}
 
 @media (min-width:900px){
-  .live-s .sh.big{font-size:40px}
-  .lvhead{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end}
-  .lvhead .vp{margin-bottom:6px}
-  .lx-stage{aspect-ratio:16/9}
-  .lx-map{left:10%;width:80%;top:-6%}
+  .live-s{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-rows:auto auto 1fr;grid-template-areas:"head stage" "cap stage" "cta stage";column-gap:56px;align-items:start}
+  .lvx{display:contents}
+  .lvhead{grid-area:head;padding-top:10px}
+  .live-s .sh.big{font-size:38px}
+  .lx-stage{grid-area:stage;aspect-ratio:1/1;width:min(100%,calc(100vh - 150px),680px);justify-self:end;align-self:start}
+  .lx-cap{grid-area:cap;margin-top:18px}
+  .lx-txt{min-height:96px}
+  .lvcta{grid-area:cta;justify-self:start;align-self:start;margin-top:8px}
+  .lx-map{left:-8%;width:116%;top:13%}
+  .lvx[data-p="3"] .lx-map,.lvx[data-p="4"] .lx-map{transform:translateX(18%) scale(.9);filter:brightness(.75) blur(1px)}
+  .lx-phone{left:auto;inset-inline-end:7%;bottom:-3%;height:86%;transform:translateY(110%)}
+  .lvx[data-p="3"] .lx-phone,.lvx[data-p="4"] .lx-phone{transform:none}
+  .lx-hud{top:20px;inset-inline:20px}
+  .lx-rep{top:auto;bottom:24px;inset-inline:auto;inset-inline-start:20px;width:270px;transform:translateY(40px)}
+  .lvx[data-p="4"] .lx-hud{opacity:1}
   .lx-dot>i{left:-10px;top:-10px;width:20px;height:20px}
   .lx-dot>em{font-size:12.5px;top:15px}
-  .lvx[data-p="3"] .lx-map,.lvx[data-p="4"] .lx-map{transform:translateX(14%) scale(.94);filter:brightness(.8)}
-  .lx-phone{left:auto;inset-inline-end:9%;bottom:-3%;height:92%;transform:translateY(110%)}
-  .lvx[data-p="3"] .lx-phone,.lvx[data-p="4"] .lx-phone{transform:none}
-  .lx-hud{top:22px;inset-inline:24px;justify-content:flex-start}
-  .lx-rep{top:auto;bottom:28px;inset-inline:auto 50%;inset-inline-start:24px;width:300px;transform:translateY(40px)}
-  .lvx[data-p="4"] .lx-hud{opacity:1}
   .lx-card{width:220px;margin-left:-110px}
-  .lx-cap{display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start;margin-top:22px}
-  .lx-segs{padding-top:6px}
-  .lx-txt{min-height:90px}
 }
 @media (prefers-reduced-motion:reduce){.live-s *{animation:none!important;transition:none!important}}
