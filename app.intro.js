@@ -412,15 +412,24 @@ if ($('.peek')) {
   addEventListener('keydown', e => { if (e.key === 'Escape' && !pv.hidden) close(); });
 }
 
-// live assist section: cycle through the three steps while in view
+// live assist section: scripted demo on the 3D apartment, five phases on a loop
 {
-  const sec = $('#live'), st = $('#lvstage');
-  if (sec && st) {
-    const btns = $$('#lsteps button'), DUR = 5200, still = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    let s = 1, t = null, vis = false, held = false;
-    const set = n => { s = n; st.dataset.s = n; btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.s == n)); sec.classList.remove('run'); void sec.offsetWidth; if (vis && !held && !still) sec.classList.add('run'); };
-    const loop = () => { clearTimeout(t); if (!vis || held || still) return; t = setTimeout(() => { set(s % 3 + 1); loop(); }, DUR); };
-    btns.forEach(b => b.onclick = () => { held = true; clearTimeout(t); set(+b.dataset.s); setTimeout(() => { held = false; set(s); loop(); }, 9000); });
-    new IntersectionObserver(es => { vis = es[0].isIntersecting; if (vis) { set(s); loop(); } else clearTimeout(t); }, { threshold: 0.3 }).observe(sec);
+  const box = $('#lvx');
+  if (box) {
+    const D = [4600, 3600, 3600, 5200, 6000], segs = $$('.lx-segs button'), lis = $$('.lx-txt li');
+    const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let p = 0, t = null, vis = false, hold = null;
+    const show = n => {
+      p = n; box.dataset.p = n;
+      segs.forEach((b, i) => { b.classList.toggle('done', i < n); b.classList.remove('cur'); b.setAttribute('aria-selected', i === n); });
+      void box.offsetWidth; segs[n].style.setProperty('--d', D[n] + 'ms'); segs[n].classList.add('cur');
+      lis.forEach((l, i) => l.classList.toggle('on', i === n));
+    };
+    const loop = () => { clearTimeout(t); if (!vis || hold || still) return; t = setTimeout(() => { show((p + 1) % D.length); loop(); }, D[p]); };
+    segs.forEach((b, i) => b.onclick = () => { clearTimeout(t); clearTimeout(hold); box.classList.add('held'); show(i);
+      hold = setTimeout(() => { hold = null; box.classList.remove('held'); show(p); loop(); }, 8000); });
+    if (still) box.classList.add('held');
+    new IntersectionObserver(es => { const was = vis; vis = es[0].isIntersecting; if (vis && !was) { show(0); loop(); } else if (!vis) clearTimeout(t); }, { threshold: 0.35 }).observe(box);
+    show(0);
   }
 }

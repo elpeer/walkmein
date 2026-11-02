@@ -216,45 +216,56 @@
 
   <!-- 4a · live assist: the sales rep joins the tour -->
   <section class="sheet live-s" id="live">
-    <div class="lvtxt">
+    <div class="lvhead">
       <h2 class="sh big">Your sales rep walks into the apartment with the buyer<em>Live chat and video calls, right inside the tour</em></h2>
-      <p class="vp">Most buyers tour in the evening, from home, when the sales office is closed. Now your rep sees who is inside an apartment at this moment and joins the tour with a message, a chat or a video call.</p>
-      <ol class="lsteps" id="lsteps">
-        <li><button type="button" data-s="1" aria-pressed="true"><b>The rep sees who’s inside right now</b><span>The dashboard shows who is touring right now, in which apartment and which room.</span><i></i></button></li>
-        <li><button type="button" data-s="2" aria-pressed="false"><b>Help offered at the right moment</b><span>A bubble with the rep’s photo pops up for the buyer, and the conversation continues in chat.</span><i></i></button></li>
-        <li><button type="button" data-s="3" aria-pressed="false"><b>Video call in one tap</b><span>The buyer asks for a call, the rep gets a notification and answers from phone or desktop. No app, no download.</span><i></i></button></li>
-      </ol>
-      <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">Try it on a live project</a>
+      <p class="vp">Most buyers tour in the evening, from home, when the sales office is closed. Now your rep sees who is inside an apartment at this moment and joins the tour by chat or video call.</p>
     </div>
-    <div class="lvstage" id="lvstage" data-s="1" aria-hidden="true">
-      <div class="lphone">
-        <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
-        <p class="lp-top"><b>Apartment 8</b>Living room and kitchen</p>
-        <div class="lfab"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>Alex is here to help</b><small>Available live now</small></span></div>
-        <div class="lchat">
-          <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>Alex</b><small>Sales team</small></span></div>
-          <p class="lm la">Hi, I’m Alex from the sales team. I see you’re in the living room of apartment 8. Want me to walk you through it?</p>
-          <p class="lm lu">Yes, can I see the balcony?</p>
-          <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>Video call</span>
+    <div class="lvx" id="lvx" data-p="0">
+      <div class="lx-stage" aria-hidden="true">
+        <div class="lx-hud"><span class="lx-live"><i></i>Live</span><b><span>3</span> buyers inside now</b></div>
+        <div class="lx-map">
+          <img class="lx-img" src="../img/f-rooms.webp" alt="" loading="lazy">
+          <span class="lx-dot d2"><i></i><em>Boston</em></span>
+          <span class="lx-dot d3"><i></i><em>Chicago</em></span>
+          <span class="lx-dot d1"><i></i><em>New York</em>
+            <span class="lx-card"><b>Buyer from New York</b><small>Living room, 2:14 min inside</small><span class="lx-help">Offer help<svg class="lx-cur" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></span></span>
+            <span class="lx-bub"><span class="lav"><img src="../img/avi.webp" alt=""></span><span class="lx-say">Hi, I’m Alex from the sales team. Want me to walk you through the apartment?</span></span>
+          </span>
         </div>
-        <div class="lvid">
-          <img class="lbig" src="../img/avi.webp" alt="">
-          <span class="lontag"><i></i>Live</span>
-          <p class="lcap">Let’s step out to the balcony, the view runs all the way to the sea</p>
-          <span class="lself"><img src="../img/live-room.webp" alt=""></span>
-          <span class="lctl"><i></i><i class="end"></i><i></i></span>
+        <div class="lx-phone">
+          <div class="lx-screen">
+            <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
+            <p class="lp-top"><b>Apartment 8</b>Living room and kitchen</p>
+            <div class="lchat">
+              <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>Alex</b><small>Sales team</small></span></div>
+              <p class="lm la">Hi, I’m Alex from the sales team. Want me to walk you through the apartment?</p>
+              <p class="lm lu">Yes! Can we do a video call?</p>
+              <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>Video call</span>
+              <i class="ltap"></i>
+            </div>
+            <div class="lvid">
+              <img class="lbig" src="../img/avi.webp" alt="">
+              <span class="lontag"><i></i>On call with Alex</span>
+              <p class="lcap">Let’s step out to the balcony, the view runs all the way to the sea</p>
+              <span class="lself"><img src="../img/live-room.webp" alt=""></span>
+              <span class="lctl"><i></i><i class="end"></i><i></i></span>
+            </div>
+          </div>
         </div>
+        <div class="lx-rep"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>Alex answered</b><small>Buyer from New York, apt 8</small></span><em>Connected</em></div>
       </div>
-      <div class="lrep">
-        <div class="lr-hd"><b>Touring now</b><span><i></i>3 buyers</span></div>
-        <ul>
-          <li class="lhot"><i></i><span><b>Buyer from New York</b><small>Apt 8, living room, 2:14 min</small></span><em class="e1">Offer help</em><em class="e2">In chat</em><em class="e3">On call</em></li>
-          <li><i></i><span><b>Buyer from Boston</b><small>Penthouse, balcony, 0:48 min</small></span></li>
-          <li><i></i><span><b>Buyer from Chicago</b><small>Apt 12, safe room, 1:05 min</small></span></li>
-        </ul>
-        <div class="lring"><span class="lbuy"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><span><b>Video call request</b><small>Buyer from New York, apt 8</small></span><span class="lacc">Answer</span></div>
+      <div class="lx-cap">
+        <div class="lx-segs" role="tablist" aria-label="Demo steps"><button type="button" data-p="0" aria-label="Step 1"><i></i></button><button type="button" data-p="1" aria-label="Step 2"><i></i></button><button type="button" data-p="2" aria-label="Step 3"><i></i></button><button type="button" data-p="3" aria-label="Step 4"><i></i></button><button type="button" data-p="4" aria-label="Step 5"><i></i></button></div>
+        <ol class="lx-txt">
+          <li><b>Every dot is a buyer touring the apartment right now</b><span>The rep sees in real time who is inside and in which room.</span></li>
+          <li><b>The rep taps Offer help</b><span>On the buyer who has been in the living room for over two minutes.</span></li>
+          <li><b>A bubble with the rep pops up for the buyer</b><span>With his photo and an offer to go through the apartment together.</span></li>
+          <li><b>The buyer replies and asks for a video call</b><span>In chat, from inside the apartment, without leaving the tour.</span></li>
+          <li><b>Both on a video call, inside the apartment</b><span>The rep answers from phone or desktop. No app, no download.</span></li>
+        </ol>
       </div>
     </div>
+    <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">Try it on a live project</a>
   </section>
 
   <!-- 4b · why it sells -->

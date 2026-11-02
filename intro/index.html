@@ -208,45 +208,56 @@
 
   <!-- 4a · live assist: the sales rep joins the tour -->
   <section class="sheet live-s" id="live">
-    <div class="lvtxt">
+    <div class="lvhead">
       <h2 class="sh big">נציג המכירות נכנס לדירה יחד עם הקונה<em>צ׳אט ושיחת וידאו בלייב, מתוך הסיור</em></h2>
-      <p class="vp">רוב הקונים מסיירים בדירה בערב, מהבית, כשמשרד המכירות סגור. עכשיו הנציג רואה מי נמצא בתוך הדירה ברגע זה, ומצטרף לסיור בהודעה, בצ׳אט או בשיחת וידאו.</p>
-      <ol class="lsteps" id="lsteps">
-        <li><button type="button" data-s="1" aria-pressed="true"><b>הנציג רואה מי בדירה עכשיו</b><span>בדאשבורד מופיעים הקונים שמסיירים כרגע, באיזו דירה ובאיזה חדר.</span><i></i></button></li>
-        <li><button type="button" data-s="2" aria-pressed="false"><b>הצעת עזרה ברגע הנכון</b><span>בועה עם התמונה של הנציג קופצת לקונה, וממשיכים בצ׳אט.</span><i></i></button></li>
-        <li><button type="button" data-s="3" aria-pressed="false"><b>שיחת וידאו בלחיצה</b><span>הקונה מבקש שיחה, הנציג מקבל התראה ועונה מהטלפון או מהמחשב. בלי אפליקציה ובלי הורדה.</span><i></i></button></li>
-      </ol>
-      <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">נסו את זה בפרויקט המגדל</a>
+      <p class="vp">רוב הקונים מסיירים בדירה בערב, מהבית, כשמשרד המכירות סגור. עכשיו הנציג רואה מי נמצא בתוך הדירה ברגע זה, ומצטרף לסיור בצ׳אט או בשיחת וידאו.</p>
     </div>
-    <div class="lvstage" id="lvstage" data-s="1" aria-hidden="true">
-      <div class="lphone">
-        <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
-        <p class="lp-top"><b>דירה 8</b>סלון ומטבח</p>
-        <div class="lfab"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>אבי כאן לעזור</b><small>זמין עכשיו בלייב</small></span></div>
-        <div class="lchat">
-          <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>אבי</b><small>צוות המכירות</small></span></div>
-          <p class="lm la">היי, אני אבי מצוות המכירות. רואה שאתם בסלון של דירה 8, רוצים שאעבור איתכם עליה?</p>
-          <p class="lm lu">כן, אפשר לראות את המרפסת?</p>
-          <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>שיחת וידאו</span>
+    <div class="lvx" id="lvx" data-p="0">
+      <div class="lx-stage" aria-hidden="true">
+        <div class="lx-hud"><span class="lx-live"><i></i>בשידור חי</span><b><span>3</span> קונים בדירה עכשיו</b></div>
+        <div class="lx-map">
+          <img class="lx-img" src="../img/f-rooms.webp" alt="" loading="lazy">
+          <span class="lx-dot d2"><i></i><em>חיפה</em></span>
+          <span class="lx-dot d3"><i></i><em>רמת גן</em></span>
+          <span class="lx-dot d1"><i></i><em>תל אביב</em>
+            <span class="lx-card"><b>קונה מתל אביב</b><small>בסלון, 2:14 דק׳ בדירה</small><span class="lx-help">הצעת עזרה<svg class="lx-cur" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></span></span>
+            <span class="lx-bub"><span class="lav"><img src="../img/avi.webp" alt=""></span><span class="lx-say">היי, אני אבי מצוות המכירות. רוצים שאעבור איתכם על הדירה?</span></span>
+          </span>
         </div>
-        <div class="lvid">
-          <img class="lbig" src="../img/avi.webp" alt="">
-          <span class="lontag"><i></i>בשידור חי</span>
-          <p class="lcap">בואו נצא למרפסת, יש פה נוף פתוח עד הים</p>
-          <span class="lself"><img src="../img/live-room.webp" alt=""></span>
-          <span class="lctl"><i></i><i class="end"></i><i></i></span>
+        <div class="lx-phone">
+          <div class="lx-screen">
+            <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
+            <p class="lp-top"><b>דירה 8</b>סלון ומטבח</p>
+            <div class="lchat">
+              <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>אבי</b><small>צוות המכירות</small></span></div>
+              <p class="lm la">היי, אני אבי מצוות המכירות. רוצים שאעבור איתכם על הדירה?</p>
+              <p class="lm lu">כן! אפשר בשיחת וידאו?</p>
+              <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>שיחת וידאו</span>
+              <i class="ltap"></i>
+            </div>
+            <div class="lvid">
+              <img class="lbig" src="../img/avi.webp" alt="">
+              <span class="lontag"><i></i>בשיחה עם אבי</span>
+              <p class="lcap">בואו נצא למרפסת, יש פה נוף פתוח עד הים</p>
+              <span class="lself"><img src="../img/live-room.webp" alt=""></span>
+              <span class="lctl"><i></i><i class="end"></i><i></i></span>
+            </div>
+          </div>
         </div>
+        <div class="lx-rep"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>אבי ענה לשיחה</b><small>קונה מתל אביב, דירה 8</small></span><em>מחובר</em></div>
       </div>
-      <div class="lrep">
-        <div class="lr-hd"><b>עכשיו בדירות</b><span><i></i>3 קונים</span></div>
-        <ul>
-          <li class="lhot"><i></i><span><b>קונה מתל אביב</b><small>דירה 8, סלון, 2:14 דק׳</small></span><em class="e1">הצעת עזרה</em><em class="e2">בצ׳אט</em><em class="e3">בשיחה</em></li>
-          <li><i></i><span><b>קונה מחיפה</b><small>פנטהאוז, מרפסת, 0:48 דק׳</small></span></li>
-          <li><i></i><span><b>קונה מרמת גן</b><small>דירה 12, ממ״ד, 1:05 דק׳</small></span></li>
-        </ul>
-        <div class="lring"><span class="lbuy"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><span><b>בקשה לשיחת וידאו</b><small>קונה מתל אביב, דירה 8</small></span><span class="lacc">לענות</span></div>
+      <div class="lx-cap">
+        <div class="lx-segs" role="tablist" aria-label="שלבי ההדגמה"><button type="button" data-p="0" aria-label="שלב 1"><i></i></button><button type="button" data-p="1" aria-label="שלב 2"><i></i></button><button type="button" data-p="2" aria-label="שלב 3"><i></i></button><button type="button" data-p="3" aria-label="שלב 4"><i></i></button><button type="button" data-p="4" aria-label="שלב 5"><i></i></button></div>
+        <ol class="lx-txt">
+          <li><b>כל נקודה היא קונה שמסייר עכשיו בדירה</b><span>הנציג רואה בזמן אמת מי בתוך הדירה ובאיזה חדר.</span></li>
+          <li><b>הנציג לוחץ על הצעת עזרה</b><span>על הקונה שנמצא בסלון כבר יותר משתי דקות.</span></li>
+          <li><b>אצל הקונה קופצת בועה עם הנציג</b><span>עם התמונה שלו והצעה לעבור יחד על הדירה.</span></li>
+          <li><b>הקונה עונה ומבקש שיחת וידאו</b><span>בצ׳אט, מתוך הדירה עצמה, בלי לעזוב את הסיור.</span></li>
+          <li><b>שניהם בשיחת וידאו, בתוך הדירה</b><span>הנציג עונה מהטלפון או מהמחשב. בלי אפליקציה ובלי הורדה.</span></li>
+        </ol>
       </div>
     </div>
+    <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">נסו את זה בפרויקט המגדל</a>
   </section>
 
   <!-- 4b · why it sells -->

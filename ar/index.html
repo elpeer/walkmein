@@ -209,45 +209,56 @@
 
   <!-- 4a · live assist: the sales rep joins the tour -->
   <section class="sheet live-s" id="live">
-    <div class="lvtxt">
+    <div class="lvhead">
       <h2 class="sh big">مندوب المبيعات يدخل الشقة مع المشتري<em>دردشة ومكالمة فيديو مباشرة، من داخل الجولة</em></h2>
-      <p class="vp">معظم المشترين يتجولون في الشقة مساءً من البيت، حين يكون مكتب المبيعات مغلقًا. الآن يرى المندوب من داخل الشقة في هذه اللحظة، وينضم إلى الجولة برسالة أو دردشة أو مكالمة فيديو.</p>
-      <ol class="lsteps" id="lsteps">
-        <li><button type="button" data-s="1" aria-pressed="true"><b>المندوب يرى من داخل الشقة الآن</b><span>تعرض لوحة التحكم المشترين الذين يتجولون الآن، في أي شقة وأي غرفة.</span><i></i></button></li>
-        <li><button type="button" data-s="2" aria-pressed="false"><b>عرض المساعدة في اللحظة المناسبة</b><span>تظهر للمشتري فقاعة بصورة المندوب، وتستمر المحادثة في الدردشة.</span><i></i></button></li>
-        <li><button type="button" data-s="3" aria-pressed="false"><b>مكالمة فيديو بنقرة</b><span>يطلب المشتري مكالمة، فيصل المندوبَ إشعار ويرد من الهاتف أو الحاسوب. بلا تطبيق وبلا تنزيل.</span><i></i></button></li>
-      </ol>
-      <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">جرّبوها في مشروع حقيقي</a>
+      <p class="vp">معظم المشترين يتجولون في الشقة مساءً من البيت، حين يكون مكتب المبيعات مغلقًا. الآن يرى المندوب من داخل الشقة في هذه اللحظة، وينضم إلى الجولة بالدردشة أو بمكالمة فيديو.</p>
     </div>
-    <div class="lvstage" id="lvstage" data-s="1" aria-hidden="true">
-      <div class="lphone">
-        <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
-        <p class="lp-top"><b>شقة 8</b>الصالة والمطبخ</p>
-        <div class="lfab"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>أيمن هنا للمساعدة</b><small>متاح الآن مباشرة</small></span></div>
-        <div class="lchat">
-          <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>أيمن</b><small>فريق المبيعات</small></span></div>
-          <p class="lm la">مرحبًا، أنا أيمن من فريق المبيعات. أراكم في صالة الشقة 8، هل تريدون أن أرافقكم في جولة عليها؟</p>
-          <p class="lm lu">نعم، هل يمكن أن نرى الشرفة؟</p>
-          <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>مكالمة فيديو</span>
+    <div class="lvx" id="lvx" data-p="0">
+      <div class="lx-stage" aria-hidden="true">
+        <div class="lx-hud"><span class="lx-live"><i></i>مباشر</span><b><span>3</span> مشترين في الشقة الآن</b></div>
+        <div class="lx-map">
+          <img class="lx-img" src="../img/f-rooms.webp" alt="" loading="lazy">
+          <span class="lx-dot d2"><i></i><em>أبوظبي</em></span>
+          <span class="lx-dot d3"><i></i><em>الشارقة</em></span>
+          <span class="lx-dot d1"><i></i><em>دبي</em>
+            <span class="lx-card"><b>مشترٍ من دبي</b><small>في الصالة، 2:14 د داخل الشقة</small><span class="lx-help">عرض المساعدة<svg class="lx-cur" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z"/></svg></span></span>
+            <span class="lx-bub"><span class="lav"><img src="../img/avi.webp" alt=""></span><span class="lx-say">مرحبًا، أنا أيمن من فريق المبيعات. هل تريدون أن أرافقكم في جولة على الشقة؟</span></span>
+          </span>
         </div>
-        <div class="lvid">
-          <img class="lbig" src="../img/avi.webp" alt="">
-          <span class="lontag"><i></i>مباشر</span>
-          <p class="lcap">لنخرج إلى الشرفة، الإطلالة هنا مفتوحة حتى البحر</p>
-          <span class="lself"><img src="../img/live-room.webp" alt=""></span>
-          <span class="lctl"><i></i><i class="end"></i><i></i></span>
+        <div class="lx-phone">
+          <div class="lx-screen">
+            <img class="lroom" src="../img/live-room.webp" alt="" loading="lazy">
+            <p class="lp-top"><b>شقة 8</b>الصالة والمطبخ</p>
+            <div class="lchat">
+              <div class="lch-hd"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>أيمن</b><small>فريق المبيعات</small></span></div>
+              <p class="lm la">مرحبًا، أنا أيمن من فريق المبيعات. هل تريدون أن أرافقكم في جولة على الشقة؟</p>
+              <p class="lm lu">نعم! هل يمكن بمكالمة فيديو؟</p>
+              <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>مكالمة فيديو</span>
+              <i class="ltap"></i>
+            </div>
+            <div class="lvid">
+              <img class="lbig" src="../img/avi.webp" alt="">
+              <span class="lontag"><i></i>في مكالمة مع أيمن</span>
+              <p class="lcap">لنخرج إلى الشرفة، الإطلالة هنا مفتوحة حتى البحر</p>
+              <span class="lself"><img src="../img/live-room.webp" alt=""></span>
+              <span class="lctl"><i></i><i class="end"></i><i></i></span>
+            </div>
+          </div>
         </div>
+        <div class="lx-rep"><span class="lav"><img src="../img/avi.webp" alt=""></span><span><b>أيمن رد على المكالمة</b><small>مشترٍ من دبي، شقة 8</small></span><em>متصل</em></div>
       </div>
-      <div class="lrep">
-        <div class="lr-hd"><b>يتجولون الآن</b><span><i></i>3 مشترين</span></div>
-        <ul>
-          <li class="lhot"><i></i><span><b>مشترٍ من دبي</b><small>شقة 8، الصالة، 2:14 د</small></span><em class="e1">عرض المساعدة</em><em class="e2">في الدردشة</em><em class="e3">في مكالمة</em></li>
-          <li><i></i><span><b>مشترٍ من أبوظبي</b><small>بنتهاوس، الشرفة، 0:48 د</small></span></li>
-          <li><i></i><span><b>مشترٍ من الشارقة</b><small>شقة 12، الغرفة الآمنة، 1:05 د</small></span></li>
-        </ul>
-        <div class="lring"><span class="lbuy"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><span><b>طلب مكالمة فيديو</b><small>مشترٍ من دبي، شقة 8</small></span><span class="lacc">رد</span></div>
+      <div class="lx-cap">
+        <div class="lx-segs" role="tablist" aria-label="خطوات العرض"><button type="button" data-p="0" aria-label="الخطوة 1"><i></i></button><button type="button" data-p="1" aria-label="الخطوة 2"><i></i></button><button type="button" data-p="2" aria-label="الخطوة 3"><i></i></button><button type="button" data-p="3" aria-label="الخطوة 4"><i></i></button><button type="button" data-p="4" aria-label="الخطوة 5"><i></i></button></div>
+        <ol class="lx-txt">
+          <li><b>كل نقطة هي مشترٍ يتجول الآن في الشقة</b><span>يرى المندوب مباشرةً من داخل الشقة وفي أي غرفة.</span></li>
+          <li><b>المندوب ينقر على عرض المساعدة</b><span>على المشتري الموجود في الصالة منذ أكثر من دقيقتين.</span></li>
+          <li><b>تظهر للمشتري فقاعة مع المندوب</b><span>مع صورته وعرض للتجول معًا في الشقة.</span></li>
+          <li><b>المشتري يرد ويطلب مكالمة فيديو</b><span>في الدردشة، من داخل الشقة نفسها، دون مغادرة الجولة.</span></li>
+          <li><b>الاثنان في مكالمة فيديو، داخل الشقة</b><span>يرد المندوب من الهاتف أو الحاسوب. بلا تطبيق وبلا تنزيل.</span></li>
+        </ol>
       </div>
     </div>
+    <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">جرّبوها في مشروع حقيقي</a>
   </section>
 
   <!-- 4b · why it sells -->
