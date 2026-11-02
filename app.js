@@ -412,24 +412,28 @@ if ($('.peek')) {
   addEventListener('keydown', e => { if (e.key === 'Escape' && !pv.hidden) close(); });
 }
 
-// live assist section: scripted demo on the 3D apartment, five phases on a loop
+// live assist section: rep app + buyer phone, five scripted phases on a loop
 {
   const box = $('#lvx');
   if (box) {
-    const D = [4600, 3600, 3600, 5200, 6000], segs = $$('.lx-segs button'), lis = $$('.lx-txt li');
-    const still = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    let p = 0, t = null, vis = false, hold = null;
+    const D = [4600, 3600, 3800, 5000, 6400], segs = $$('.lx-segs i'), lis = $$('.lx-steps li');
+    const calls = $('.lx-calls'), sec = $('.lsec'), still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let p = 0, t = null, vis = false, hold = null, tick = null;
     const show = n => {
-      p = n; box.dataset.p = n;
-      segs.forEach((b, i) => { b.classList.toggle('done', i < n); b.classList.remove('cur'); b.setAttribute('aria-selected', i === n); });
-      void box.offsetWidth; segs[n].style.setProperty('--d', D[n] + 'ms'); segs[n].classList.add('cur');
-      lis.forEach((l, i) => l.classList.toggle('on', i === n));
+      p = n; box.dataset.p = n; clearInterval(tick);
+      segs.forEach((s, i) => { s.classList.toggle('done', i < n); s.classList.remove('cur'); });
+      lis.forEach(l => l.classList.remove('run', 'on'));
+      void box.offsetWidth;
+      segs[n].style.setProperty('--d', D[n] + 'ms'); segs[n].classList.add('cur');
+      lis[n].style.setProperty('--d', D[n] + 'ms'); lis[n].classList.add('on'); if (!hold && !still) lis[n].classList.add('run');
+      calls.textContent = n === 4 ? 7 : 6;
+      if (n === 4) { let s = 12; sec.textContent = s; tick = setInterval(() => { s++; sec.textContent = String(s).padStart(2, '0'); }, 1000); }
     };
     const loop = () => { clearTimeout(t); if (!vis || hold || still) return; t = setTimeout(() => { show((p + 1) % D.length); loop(); }, D[p]); };
-    segs.forEach((b, i) => b.onclick = () => { clearTimeout(t); clearTimeout(hold); box.classList.add('held'); show(i);
-      hold = setTimeout(() => { hold = null; box.classList.remove('held'); show(p); loop(); }, 8000); });
+    $$('.lx-steps button').forEach(b => b.onclick = () => { clearTimeout(t); clearTimeout(hold); box.classList.add('held');
+      hold = setTimeout(() => { hold = null; box.classList.remove('held'); show(p); loop(); }, 8000); show(+b.dataset.p); });
     if (still) box.classList.add('held');
-    new IntersectionObserver(es => { const was = vis; vis = es[0].isIntersecting; if (vis && !was) { show(0); loop(); } else if (!vis) clearTimeout(t); }, { threshold: 0.35 }).observe(box);
+    new IntersectionObserver(es => { const was = vis; vis = es[0].isIntersecting; if (vis && !was) { show(0); loop(); } else if (!vis) clearTimeout(t); }, { threshold: 0.3 }).observe(box);
     show(0);
   }
 }
