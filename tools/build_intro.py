@@ -7,10 +7,10 @@ def cut(s, a, b):
 
 h = open('index.html', encoding='utf-8').read()
 h = cut(h, '<!-- 6 · pricing -->', '</section>')
-for a in ('<a href="#pricing">מחירים</a>', '<a href="#pricing"><small>07</small>מחירים</a>\n'):
+for a in ('<a href="#pricing">מחירים</a>', '<a href="#pricing"><small>08</small>מחירים</a>\n'):
     assert a in h, a; h = h.replace(a, '')
 h = re.sub(r'\s*<a href="#pricing"><svg.*?</a>', '', h, count=1)
-h = h.replace('<small>08</small>שאלות', '<small>07</small>שאלות')
+h = h.replace('<small>09</small>שאלות', '<small>08</small>שאלות')
 h = re.sub(r'<a class="lang"[^>]*>[^<]*</a>', '', h)
 h = re.sub(r'<link rel="alternate"[^>]*>', '', h)
 h = h.replace('<head>', '<head>\n<meta name="robots" content="noindex">', 1)
