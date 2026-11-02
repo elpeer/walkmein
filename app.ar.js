@@ -411,3 +411,16 @@ const top=document.querySelector('#top');if(top)new IntersectionObserver(es=>{if
   pv.addEventListener('click', e => { if (e.target.closest('[data-close]')) close(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !pv.hidden) close(); });
 }
+
+// live assist section: cycle through the three steps while in view
+{
+  const sec = $('#live'), st = $('#lvstage');
+  if (sec && st) {
+    const btns = $$('#lsteps button'), DUR = 5200, still = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let s = 1, t = null, vis = false, held = false;
+    const set = n => { s = n; st.dataset.s = n; btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.s == n)); sec.classList.remove('run'); void sec.offsetWidth; if (vis && !held && !still) sec.classList.add('run'); };
+    const loop = () => { clearTimeout(t); if (!vis || held || still) return; t = setTimeout(() => { set(s % 3 + 1); loop(); }, DUR); };
+    btns.forEach(b => b.onclick = () => { held = true; clearTimeout(t); set(+b.dataset.s); setTimeout(() => { held = false; set(s); loop(); }, 9000); });
+    new IntersectionObserver(es => { vis = es[0].isIntersecting; if (vis) { set(s); loop(); } else clearTimeout(t); }, { threshold: 0.3 }).observe(sec);
+  }
+}

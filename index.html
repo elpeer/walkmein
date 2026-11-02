@@ -21,7 +21,7 @@
 <div class="app" id="app">
     <header class="bar" id="bar">
       <a class="logo" href="./">WalkMeIn</a>
-      <nav class="dnav" aria-label="ניווט"><a href="#flow">איך זה בנוי</a><a href="#model">המודל</a><a href="#voice">סיור קולי</a><a href="#why">דאשבורד</a><a href="#pricing">מחירים</a></nav>
+      <nav class="dnav" aria-label="ניווט"><a href="#flow">איך זה בנוי</a><a href="#model">המודל</a><a href="#voice">סיור קולי</a><a href="#live">שיחה בלייב</a><a href="#why">דאשבורד</a><a href="#pricing">מחירים</a></nav>
       <div class="bends"><a class="lang" href="ar/" hreflang="ar" lang="ar" aria-label="العربية">عربي</a><a class="lang" href="en/" hreflang="en" lang="en" aria-label="English">EN</a><a class="dcta" href="#contact">לתיאום הדגמה</a><button class="burger" id="burger" aria-label="תפריט" aria-expanded="false"><i></i><i></i></button></div>
     </header>
 <div class="menu" id="menu" aria-hidden="true">
@@ -204,6 +204,49 @@
       </div>
     </div>
     <div class="stops"><span class="done">כניסה</span><span class="cur">סלון</span><span>מטבח</span><span>מרפסת מערבית</span><span>חדרים</span><span>יחידת הורים</span></div>
+  </section>
+
+  <!-- 4a · live assist: the sales rep joins the tour -->
+  <section class="sheet live-s" id="live">
+    <div class="lvtxt">
+      <h2 class="sh big">נציג המכירות נכנס לדירה יחד עם הקונה<em>צ׳אט ושיחת וידאו בלייב, מתוך הסיור</em></h2>
+      <p class="vp">רוב הקונים מסיירים בדירה בערב, מהבית, כשמשרד המכירות סגור. עכשיו הנציג רואה מי נמצא בתוך הדירה ברגע זה, ומצטרף לסיור בהודעה, בצ׳אט או בשיחת וידאו.</p>
+      <ol class="lsteps" id="lsteps">
+        <li><button type="button" data-s="1" aria-pressed="true"><b>הנציג רואה מי בדירה עכשיו</b><span>בדאשבורד מופיעים הקונים שמסיירים כרגע, באיזו דירה ובאיזה חדר.</span><i></i></button></li>
+        <li><button type="button" data-s="2" aria-pressed="false"><b>הצעת עזרה ברגע הנכון</b><span>בועה עם התמונה של הנציג קופצת לקונה, וממשיכים בצ׳אט.</span><i></i></button></li>
+        <li><button type="button" data-s="3" aria-pressed="false"><b>שיחת וידאו בלחיצה</b><span>הקונה מבקש שיחה, הנציג מקבל התראה ועונה מהטלפון או מהמחשב. בלי אפליקציה ובלי הורדה.</span><i></i></button></li>
+      </ol>
+      <a class="lvcta" href="/hamigdal/#floor=17&amp;apt=FF2">נסו את זה בפרויקט המגדל</a>
+    </div>
+    <div class="lvstage" id="lvstage" data-s="1" aria-hidden="true">
+      <div class="lphone">
+        <img class="lroom" src="img/live-room.webp" alt="" loading="lazy">
+        <p class="lp-top"><b>דירה 8</b>סלון ומטבח</p>
+        <div class="lfab"><span class="lav"><img src="img/avi.webp" alt=""></span><span><b>אבי כאן לעזור</b><small>זמין עכשיו בלייב</small></span></div>
+        <div class="lchat">
+          <div class="lch-hd"><span class="lav"><img src="img/avi.webp" alt=""></span><span><b>אבי</b><small>צוות המכירות</small></span></div>
+          <p class="lm la">היי, אני אבי מצוות המכירות. רואה שאתם בסלון של דירה 8, רוצים שאעבור איתכם עליה?</p>
+          <p class="lm lu">כן, אפשר לראות את המרפסת?</p>
+          <span class="lvbtn"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>שיחת וידאו</span>
+        </div>
+        <div class="lvid">
+          <img class="lbig" src="img/avi.webp" alt="">
+          <span class="lontag"><i></i>בשידור חי</span>
+          <p class="lcap">בואו נצא למרפסת, יש פה נוף פתוח עד הים</p>
+          <span class="lself"><img src="img/live-room.webp" alt=""></span>
+          <span class="lctl"><i></i><i class="end"></i><i></i></span>
+        </div>
+      </div>
+      <div class="lrep">
+        <div class="lr-hd"><b>עכשיו בדירות</b><span><i></i>3 קונים</span></div>
+        <ul>
+          <li class="lhot"><i></i><span><b>קונה מתל אביב</b><small>דירה 8, סלון, 2:14 דק׳</small></span><em class="e1">הצעת עזרה</em><em class="e2">בצ׳אט</em><em class="e3">בשיחה</em></li>
+          <li><i></i><span><b>קונה מחיפה</b><small>פנטהאוז, מרפסת, 0:48 דק׳</small></span></li>
+          <li><i></i><span><b>קונה מרמת גן</b><small>דירה 12, ממ״ד, 1:05 דק׳</small></span></li>
+        </ul>
+        <div class="lring"><span class="lbuy"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></span><span><b>בקשה לשיחת וידאו</b><small>קונה מתל אביב, דירה 8</small></span><span class="lacc">לענות</span></div>
+      </div>
+    </div>
   </section>
 
   <!-- 4b · why it sells -->
