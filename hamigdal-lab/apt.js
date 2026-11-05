@@ -461,12 +461,15 @@ export async function createApt(container, opts = {}) {
     else { idle = 0; if (raw < 200) { ftEma += (raw - ftEma) * 0.1; slowFor = ftEma > 36 ? slowFor + dt : 0; if (slowFor > 0.6 && prNow > 1) { applyPR(Math.max(1, prNow - 0.35)); slowFor = 0; ftEma = 24; } } }
     if (RL && realOn) RL.frame(P);
     if (!shadowsDone) { renderer.shadowMap.needsUpdate = true; if (intro >= 2.6) shadowsDone = true; }
-    if (RL && realOn && RL.render(moving || idle < 0.05, dt)) { opts.onFrame && opts.onFrame(); return; }
-    composer.render(dt);
+    if (DG) { DG.visible = dimsOn && !P.on; DG.userData.setHeight(layers.walls.scale.y * WALL_H + 0.18); DG.userData.face(camera); }
+    if (RL && realOn && RL.render(moving || idle < 0.05, dt)) { drawDims(); opts.onFrame && opts.onFrame(); return; }
+    composer.render(dt); drawDims();
     opts.onFrame && opts.onFrame();
   }
   // ---------------------------------------------------------------- realistic layer (loaded on demand)
-  let RL = null, realOn = false, realLoading = null;
+  let RL = null, realOn = false, realLoading = null, DG = null, dimsOn = false; const dimScene = new THREE.Scene();
+  // dimensions draw in their own pass on top of the finished frame (kept out of AO / path tracing)
+  const drawDims = () => { if (!DG || !DG.visible) return; const ac = renderer.autoClear; renderer.autoClear = false; renderer.render(dimScene, camera); renderer.autoClear = ac; };
   const ctx = { THREE, scene, root, layers, M, E2, X, Z, S, CX, CY, WALL_H, CEIL_H, EYE, renderer, camera, composer, gtao, sun, fill, rim, ceil, patch, pmrem, mobile, Q, BASE, P, mergeGeometries, RoundedBoxGeometry, DPR, get hl() { return HU.hlAmt.value; },
     invalidate() { shadowsDone = false; kick(); } };
   ctx.ABO = ABO_HANDLED;
@@ -493,6 +496,7 @@ export async function createApt(container, opts = {}) {
     focus(id) { drift = 0; const r = rooms.find(x => x.id === id); if (!r) return; const t = V(r.p.x, 0.5, r.p.z); const big = r.id === 'living' || r.id.startsWith('bal') || r.big; const dir = V(0.15, 1.7, 1).normalize(); const k = camera.aspect < 1 ? 1.6 : 1; flyTo(t.clone().addScaledVector(dir, (big ? 27 : 20) * k * SPAN / 22), t, 1.5); },
     zoom(f) { const d = camera.position.clone().sub(controls.target); const L = clamp(d.length() * f, controls.minDistance, controls.maxDistance); flyTo(controls.target.clone().add(d.setLength(L)), controls.target.clone(), 0.5); },
     setWalls(h) { wallT = h; wallH = h; kick(); },
+    async setDims(on) { dimsOn = !!on; if (on && !DG) { const m = await import('./dims.js'); DG = m.buildDims({ THREE, E2, X, Z, S, RoundedBoxGeometry }); dimScene.add(DG); } shadowsDone = false; kick(); return dimsOn; },
     project(p) { const front = tmp.copy(p).applyMatrix4(camera.matrixWorldInverse).z < -0.05; tmp.copy(p).project(camera); return { x: (tmp.x * .5 + .5) * container.clientWidth, y: (-tmp.y * .5 + .5) * container.clientHeight, vis: front && tmp.z < 1 }; },
     highlight, kick, renderer, camera, scene, controls, setRealistic, layers, ceil, get realistic() { return realOn; }, get RL() { return RL; },
     povEnter, povExit, povGo, get pov() { return P.on ? { x: P.pos.x / S + CX, y: P.pos.z / S + CY, yaw: P.camYaw, walking: !!P.walk, over: !!P.over } : null; },

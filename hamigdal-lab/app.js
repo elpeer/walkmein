@@ -154,6 +154,7 @@ function setTab(t) { $('#panel').dataset.tab = t; $$('.tabs button').forEach(b =
 $$('.tabs button').forEach(b => b.onclick = () => setTab(b.dataset.tab));
 $('#tools').onclick = e => { const b = e.target.closest('[data-t]'); if (!b || !A) return; const t = b.dataset.t;
   if (t === 'in') A.zoom(0.78); else if (t === 'out') A.zoom(1.28); else if (t === 'home') selectRoom(null);
+  else if (t === 'dims') { const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); A.setDims(on); $('#hots').style.display = on ? 'none' : ''; }
   else if (t === 'walls') { const low = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', low); A.setWalls(low ? 0.42 : 1); } };
 function buildRooms() {
   hotEls.length = 0; $('#hots').innerHTML = '';
