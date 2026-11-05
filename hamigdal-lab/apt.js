@@ -262,7 +262,7 @@ export async function createApt(container, opts = {}) {
       case 'umbrella': { const cx = X(x0), cz = Z(y0); cyl(M.alu, cx, 1.2, cz, 0.022, 0.022, 2.4, 10); const g = new THREE.ConeGeometry(1.0, 0.36, 8, 1, true); g.translate(cx, 2.32, cz); push(M.canvas, g); cyl(M.potDark, cx, 0.04, cz, 0.28, 0.3, 0.08, 20); break; }
       case 'pouf': rbox(M.pouf, r.cx, 0.2, r.cz, Math.min(r.w, r.d), 0.4, Math.min(r.w, r.d), 0.18, 0, 5); break;
       case 'rcoffee': { const rr = Math.min(r.w, r.d) / 2; cyl(M.glassSmoke, r.cx, 0.4, r.cz, rr, rr, 0.02, 48); box(M.glassSmoke, r.cx - rr * 0.6, 0, r.cz - 0.01, r.cx + rr * 0.6, 0.39, r.cz + 0.01); box(M.glassSmoke, r.cx - 0.01, 0, r.cz - rr * 0.6, r.cx + 0.01, 0.39, r.cz + rr * 0.6); rbox(M.book, r.cx - 0.12, 0.43, r.cz + 0.06, 0.28, 0.04, 0.2, 0.004); rbox(M.black, r.cx + 0.14, 0.425, r.cz - 0.08, 0.2, 0.03, 0.16, 0.004); break; }
-      case 'tvwall': { const [fx] = DIR[o]; const wall = fx > 0 ? r.x0 : r.x1, sgn = fx > 0 ? 1 : -1; box(M.veneer, wall, 0.32, r.z0 - 0.35, wall + sgn * 0.05, 2.15, r.z1 + 0.35); box(M.walnutDark, wall + sgn * 0.05, 0.28, r.z0 - 0.5, wall + sgn * 0.48, 0.58, r.z1 + 0.5); box(M.screen, wall + sgn * 0.05, 1.05, r.cz - 0.82, wall + sgn * 0.09, 1.98, r.cz + 0.82); break; }
+      case 'tvwall': { const [fx] = DIR[o]; const wall = fx > 0 ? r.x0 : r.x1, sgn = fx > 0 ? 1 : -1; box(M.veneer, wall, 0.32, r.z0 - 0.35, wall + sgn * 0.05, 2.15, r.z1 + 0.35); box(M.screen, wall + sgn * 0.05, 1.05, r.cz - 0.82, wall + sgn * 0.09, 1.98, r.cz + 0.82); break; }
       case 'oven': box(M.cabinet, r.x0, 0, r.z0, r.x1, 2.25, r.z1); box(M.black, r.x0 - 0.005, 0.95, r.z0 + 0.04, r.x0, 1.55, r.z1 - 0.04); break;
       case 'boiler': cyl(M.ceramic, r.cx, 1.4, r.cz, r.w / 2, r.w / 2, 1.0, 28); break;
       case 'acu': box(M.cabinet, r.x0, 0.1, r.z0, r.x1, 0.85, r.z1); cyl(M.groove, r.x0 - 0.002, 0.48, r.cz, 0.24, 0.24, 0.01, 28); break;
@@ -367,7 +367,7 @@ export async function createApt(container, opts = {}) {
   const P3 = (p, y = EYE) => V(X(p[0]), y, Z(p[1]));
   const sky = (() => { const c = document.createElement('canvas'); c.width = 8; c.height = 256; const g = c.getContext('2d'); const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, '#b9d3e6'); gr.addColorStop(0.42, '#e3eef4'); gr.addColorStop(0.5, '#f6f3ec'); gr.addColorStop(0.52, '#dcd6cb'); gr.addColorStop(1, '#cfc8bb'); g.fillStyle = gr; g.fillRect(0, 0, 8, 256); const t = new THREE.CanvasTexture(c); t.mapping = THREE.EquirectangularReflectionMapping; t.colorSpace = THREE.SRGBColorSpace; return t; })();
   onFit = () => { if (P.on) P.fovGoal = eyeFov(); };
-  function eyeFov() { const a = camera.aspect || 1.6; return a < 1 ? 72 : Math.max(46, 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(42)) / a) * 180 / Math.PI); }
+  function eyeFov() { const a = camera.aspect || 1.6; return a < 1 ? 88 : Math.max(60, 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(52)) / a) * 180 / Math.PI); } // wide, close to a real-estate wide-angle lens
   // ---- free roaming: walls, glass, railings and the big furniture are solid; the balcony slider is open
   const BLK = (() => { const out = [], R0 = 0.2; const add = (x0, z0, x1, z1) => out.push({ x0: Math.min(x0, x1) - R0, z0: Math.min(z0, z1) - R0, x1: Math.max(x0, x1) + R0, z1: Math.max(z0, z1) + R0 });
     E2.walls.forEach(([x0, y0, x1, y1]) => { let a = X(x0), b = X(x1), c = Z(y0), d = Z(y1); if (b - a < 0.13) { const m = (a + b) / 2; a = m - 0.065; b = m + 0.065; } if (d - c < 0.13) { const m = (c + d) / 2; c = m - 0.065; d = m + 0.065; } add(a, c, b, d); });
