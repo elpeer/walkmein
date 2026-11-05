@@ -19,7 +19,7 @@ const PICK = {
   desk: { id: 'B079HYXWPC', alt: 'B07HSJDN75', chair: 'B07M66SYGT', chairAlt: 'B07QF9Y248' },
 };
 const EXTRA = { floorLamp: 'B0742F7GT8', bedRug: 'B0714MJKX2', media: 'B07VHNMRY8', oChair: 'B082VFPXGJ', stool: 'B07MHMJD1P', bench: 'B075QFCZ1Z',
-  readChair: 'B07B4MMPSW', bean: 'B07TN1ZSX8', books: 'B07HSCNKCT', deskLamp: 'B07DTFBDTL', console: 'B075YQ46KX', mirror: 'B071NHXGFY', side: 'B072ZK887F', sideLamp: 'B07HK3HJ6P',
+  readChair: 'B07B4MMPSW', bean: 'B07TN1ZSX8', books: 'B07HSCNKCT', deskLamp: 'B07DTFBDTL', console: 'B075YQ46KX', mirror: 'B071NHXGFY', bathMirror: 'B073WGP8YJ', side: 'B072ZK887F', sideLamp: 'B07HK3HJ6P',
   artLeaf: 'B073P13P8Z', artGold: 'B073NZT5CF', artSea: 'B073NZPNNL', artHorizon: 'B073P13JKT',
   pLumbar: 'B074VLPC13', pLinen: 'B079TXJCR5', pDiamond: 'B079TXJTY4', pCream: 'B074VKWJWP', pPink: 'B074VMBGSZ', pNavy: 'B074VLRP5T',
   vaseTall: 'B075HWDSZY', bowl: 'B075HX7JFC', planterStand: 'B075HWR58K' };
@@ -46,7 +46,7 @@ export async function furnish(C, onReady) {
   const root = new THREE.Group(); root.name = 'abo';
   // place model so its front (+z) faces (fx,fz); w/d are target footprint along its own x / z
   function put(id, cx, cz, fx, fz, s, y = 0, sx = s, sz = s) {
-    const p = L[id]; if (!p) return null; const o = p.clone(true); o.scale.set(sx, s, sz); o.position.set(cx, y, cz); o.rotation.y = Math.atan2(fx, fz); root.add(o); return o;
+    const p = L[id]; if (!p) return null; const o = p.clone(true); o.name = id; o.scale.set(sx, s, sz); o.position.set(cx, y, cz); o.rotation.y = Math.atan2(fx, fz); root.add(o); return o;
   }
   const sz = id => L[id] ? L[id].userData.size : null;
   const outside = (x0, y0, x1, y1) => E2.zones.deck.some(([a, b, c, d]) => (x0 + x1) / 2 > a && (x0 + x1) / 2 < c && (y0 + y1) / 2 > b && (y0 + y1) / 2 < d);
@@ -57,7 +57,8 @@ export async function furnish(C, onReady) {
   const onTop = (id, obj, x, z, h, fx = 0, fz = 1) => { const k = sz(id); if (!k) return null; return put(id, x, z, fx, fz, h / k.y, topOf(obj, x, z, 0.75) - 0.005); };
   const pillow = (id, y, x, z, fx, fz, w = 0.46, lean = -0.28) => { const k = sz(id); if (!k) return null; const o = put(id, x, z, fx, fz, w / k.x, y - 0.04); if (o) o.rotateX(lean); return o; };
   // framed print / mirror on a wall: centre (px,py), facing (fx,fz), bottom height y0, width w
-  const hang = (id, px, py, fx, fz, y0, w) => { const k = sz(id); if (!k) return null; const [x, z] = P(px, py); const s = w / k.x; return put(id, x + fx * (k.z * s / 2 + 0.012), z + fz * (k.z * s / 2 + 0.012), fx, fz, s, y0); };
+  const BACKWARD = new Set([EXTRA.mirror]); // models whose face points to -z
+  const hang = (id, px, py, fx, fz, y0, w) => { const k = sz(id); if (!k) return null; const [x, z] = P(px, py); const s = w / k.x; const f = BACKWARD.has(id) ? -1 : 1; return put(id, x + fx * (k.z * s / 2 + 0.012), z + fz * (k.z * s / 2 + 0.012), f * fx, f * fz, s, y0); };
 
   for (const [t, x0, y0, x1, y1, o] of E2.furniture) {
     if (!HANDLED.has(t)) continue; const r = rect(x0, y0, x1, y1), out = outside(x0, y0, x1, y1);
@@ -140,6 +141,12 @@ export async function furnish(C, onReady) {
   { const k = sz(EXTRA.books); if (k) { const [x, z] = P(963, 868); put(EXTRA.books, x + k.z / 2 + 0.02, z, 1, 0, 1); } }
   { const k = sz(EXTRA.bean); if (k) { const [x, z] = P(1045, 885); put(EXTRA.bean, x, z, 0, 1, 0.78 / k.x); } }
   for (const d of at.desks || []) { if (!d.o) continue; const u = d.L0 / 2 - 0.18; const x = d.x + (d.fz ? u : 0), z = d.z + (d.fx ? -u : 0); onTop(EXTRA.deskLamp, d.o, x, z, 0.45, -d.fx, -d.fz); }
+  // bathroom mirrors over the basins
+  { // backlit rectangular mirrors like the bathroom render: glass slab, thin black edge, warm LED halo on the wall
+    const glass = new THREE.MeshStandardMaterial({ color: 0xcfd8dc, metalness: 1, roughness: 0.04, envMapIntensity: 1.4 }), edge = new THREE.MeshStandardMaterial({ color: 0x1b1d1c, roughness: 0.5 }), led = new THREE.MeshBasicMaterial({ color: 0xffe2b0, toneMapped: false });
+    const mirror = (px, py, fz, w, h, y0) => { const [x, z] = P(px, py); const mk = (m, ww, hh, d, off) => { const o = new THREE.Mesh(new THREE.BoxGeometry(ww, hh, d), m); o.position.set(x, y0 + h / 2, z + fz * off); root.add(o); return o; };
+      mk(led, w + 0.03, h + 0.03, 0.004, 0.003); mk(edge, w, h, 0.03, 0.025); mk(glass, w - 0.02, h - 0.02, 0.006, 0.042); };
+    mirror(810, 885, -1, 0.6, 0.8, 1.0); mirror(998, 581.6, -1, 0.56, 0.75, 1.0); }
   // safe room / second bedroom: art over the bed, a side table with a lamp
   hang(EXTRA.artGold, 640, 1094, 1, 0, 1.12, 0.72);
   { const k = sz(EXTRA.side); if (k) { const [x, z] = P(668, 1030); const st = put(EXTRA.side, x, z, 1, 0, 0.42 / k.x); onTop(EXTRA.sideLamp, st, x, z, 0.52, 1, 0); } }
