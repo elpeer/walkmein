@@ -10,6 +10,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { APT as E2 } from './aptdata.js';
+import { HANDLED as ABO_HANDLED } from './abo.js';
 
 const S = E2.S, CX = E2.CX, CY = E2.CY, WALL_H = 2.2;
 // footprint of everything that is drawn (apartment + balconies), in plan units
@@ -226,6 +227,7 @@ export async function createApt(container, opts = {}) {
   }
   function lamp(px, pz) { const x = X(px), z = Z(pz); cyl(M.cabinet, x, 0.02, z, 0.14, 0.15, 0.04, 24); cyl(M.steel, x, 0.65, z, 0.01, 0.01, 1.25, 8); const g = new THREE.SphereGeometry(0.2, 28, 18); g.translate(x, 1.42, z); push(M.lampShade, g); }
   for (const [t, x0, y0, x1, y1, o] of E2.furniture) {
+    if (ABO_HANDLED.has(t)) continue; // furnished with scanned products (abo.js)
     const r = rect(x0, y0, x1, y1); if (t !== 'umbrella' && (r.w < 0.05 || r.d < 0.05)) continue;
     const outside = E2.zones.deck.some(([a, b, c, d]) => (x0 + x1) / 2 > a && (x0 + x1) / 2 < c && (y0 + y1) / 2 > b && (y0 + y1) / 2 < d);
     switch (t) {
@@ -467,6 +469,8 @@ export async function createApt(container, opts = {}) {
   let RL = null, realOn = false, realLoading = null;
   const ctx = { THREE, scene, root, layers, M, E2, X, Z, S, CX, CY, WALL_H, CEIL_H, EYE, renderer, camera, composer, gtao, sun, fill, rim, ceil, patch, pmrem, mobile, Q, BASE, P, mergeGeometries, RoundedBoxGeometry, DPR, get hl() { return HU.hlAmt.value; },
     invalidate() { shadowsDone = false; kick(); } };
+  ctx.ABO = ABO_HANDLED;
+  import('./abo.js').then(m => m.furnish(ctx)).then(() => { shadowsDone = false; kick(); }, e => console.warn('abo', e));
   async function setRealistic(on, onProgress) {
     if (on && !RL) { realLoading ||= import('./real.js').then(m => m.buildReal(ctx, onProgress)); RL = await realLoading; }
     realOn = !!on; if (RL) RL.apply(realOn); shadowsDone = false; kick(); return realOn;

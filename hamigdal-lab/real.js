@@ -296,6 +296,7 @@ export async function buildReal(C, onProgress = () => { }) {
 
   // place everything listed in the plan
   for (const [t, x0, y0, x1, y1, o] of E2.furniture) {
+    if (C.ABO && C.ABO.has(t)) continue; // scanned products live in their own group (abo.js)
     const r = rect(x0, y0, x1, y1); if (t !== 'umbrella' && (r.w < 0.05 || r.d < 0.05)) continue;
     const outside = E2.zones.deck.some(([a, b, c, d]) => (x0 + x1) / 2 > a && (x0 + x1) / 2 < c && (y0 + y1) / 2 > b && (y0 + y1) / 2 < d);
     switch (t) {
