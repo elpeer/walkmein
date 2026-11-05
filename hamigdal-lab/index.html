@@ -150,6 +150,8 @@ h1,h2,h3,p{margin:0}
 #gl{position:absolute;inset:0}
 #gl canvas{display:block;width:100%!important;height:100%!important;touch-action:none}
 #gl.off,#hots.off,.tools.off{visibility:hidden}
+/* the dimensions switch stays available at eye level and in free walk */
+.plan.touring .tools{opacity:1;visibility:visible;pointer-events:auto}.plan.touring .tools>:not([data-t=dims]){display:none}
 #hots{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .hot{position:absolute;left:0;top:0;pointer-events:auto;display:flex;align-items:center;transition:opacity .3s}
 .hot>button{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.96);display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(0,0,0,.45),0 0 0 6px rgba(255,255,255,.35);transition:transform .25s var(--ease),background .25s,color .25s}

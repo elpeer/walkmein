@@ -461,7 +461,9 @@ export async function createApt(container, opts = {}) {
     else { idle = 0; if (raw < 200) { ftEma += (raw - ftEma) * 0.1; slowFor = ftEma > 36 ? slowFor + dt : 0; if (slowFor > 0.6 && prNow > 1) { applyPR(Math.max(1, prNow - 0.35)); slowFor = 0; ftEma = 24; } } }
     if (RL && realOn) RL.frame(P);
     if (!shadowsDone) { renderer.shadowMap.needsUpdate = true; if (intro >= 2.6) shadowsDone = true; }
-    if (DG) { DG.visible = dimsOn && !P.on; DG.userData.setHeight(layers.walls.scale.y * WALL_H + 0.18); DG.userData.face(camera); }
+    if (DG) { DG.visible = dimsOn; if (dimsOn) { const eye = P.on && P.overK < 0.5; let rid = null;
+      if (eye) { const px = P.pos.x / S + CX, py = P.pos.z / S + CY; for (const [id, rs] of Object.entries(E2.rects)) if (rs.some(([a, b, c, d]) => px > a && px < c && py > b && py < d)) { rid = id; break; } }
+      DG.userData.only(eye ? (rid || '-') : null); DG.userData.setHeight(eye ? 2.0 : layers.walls.scale.y * WALL_H + 0.18); DG.userData.face(camera); } }
     if (RL && realOn && RL.render(moving || idle < 0.05, dt)) { drawDims(); opts.onFrame && opts.onFrame(); return; }
     composer.render(dt); drawDims();
     opts.onFrame && opts.onFrame();
