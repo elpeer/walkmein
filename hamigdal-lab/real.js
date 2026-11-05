@@ -499,6 +499,7 @@ export async function buildReal(C, onProgress = () => { }) {
   // Architecture gets its diffuse light only from the atlas; sun glints and reflections stay real-time.
   const LM = { ok: false, eye: false };
   (async () => {
+    if (C.ABO) return; // the bake still holds the shadows of the old furniture: light the restyled flat in real time
     try {
       const [g, t] = await Promise.all([gl.loadAsync(OWN + 'lm_arch.glb'), tl.loadAsync(OWN + 'lm.webp')]);
       t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.channel = 1; t.anisotropy = 4;

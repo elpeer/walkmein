@@ -14,7 +14,7 @@ const PICK = {
   dining: { id: 'B07HSJJF2X', chair: 'B07QJ1X2QB' },
   odining: { id: 'B07K7SJWCH', chair: 'B07QK35B7K' },
   bed2: { id: 'B07B4VY12X' },
-  bed1: { id: 'B07H8V7MQS', alt: 'B071H75K71' },
+  bed1: { id: 'B07H8V7MQS', alt: 'B07H8V7MQS' },
   night: { id: 'B07QD6TXWS', lamp: 'B0824FHWSX' },
   desk: { id: 'B079HYXWPC', alt: 'B07HSJDN75', chair: 'B07M66SYGT', chairAlt: 'B07QF9Y248' },
 };
@@ -101,6 +101,15 @@ export async function furnish(C, onReady) {
         break; }
     }
   }
+  // ---------------------------------------------------------------- bedding (procedural, soft): a duvet over the mattress and a folded throw at the foot
+  const RB = C.RoundedBoxGeometry; const fab = c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.95, envMapIntensity: 0.6 });
+  const MAT = { duvet: fab(0xf3efe7), throwM: fab(0xb9835f), throwK: fab(0x9fae94), throwN: fab(0x3b4a5c), pillow: fab(0xfbf9f4) };
+  function soft(m, x, y, z, w, h, d, ry, rad = 0.04) { const g = new RB(w, h, d, 4, Math.min(rad, h / 2 - 0.001)); const o = new THREE.Mesh(g, m); o.position.set(x, y, z); o.rotation.y = ry; o.castShadow = o.receiveShadow = true; root.add(o); return o; }
+  function bedding(b) { const { o, t, hx, hz, W0, head } = b; if (!o) return; const k = new THREE.Box3().setFromObject(o); const Lb = hx ? k.max.x - k.min.x : k.max.z - k.min.z; const ry = Math.atan2(-hx, -hz);
+    const along = d => [head[0] - hx * d, head[1] - hz * d]; const [mx, mz] = along(Lb * 0.56); const top = topOf(o, mx, mz, 0.5);
+    const w = W0 + 0.04, dl = Lb * 0.66; soft(MAT.duvet, mx, top + 0.035, mz, hz ? w : dl, 0.08, hz ? dl : w, 0, 0.035);
+    const [tx, tz] = along(Lb * 0.8); soft(t === 'bed2' ? MAT.throwM : b.i === 1 ? MAT.throwK : MAT.throwN, tx, top + 0.085, tz, hz ? w + 0.02 : 0.42, 0.035, hz ? 0.42 : w + 0.02, 0, 0.015);
+    if (t === 'bed1') { const [px, pz] = along(0.32); soft(MAT.pillow, px, top + 0.09, pz, hz ? W0 * 0.75 : 0.36, 0.13, hz ? 0.36 : W0 * 0.75, 0, 0.06); } }
   // ---------------------------------------------------------------- styling: the touches that make it a home
   // living: throw pillows on the sofa, side table with a lamp, books and a vase on the coffee table
   if (at.sofa && at.sofa.o) { const { r, fx, fz, o } = at.sofa; const bx = r.cx + fx * at.sofa.back, bz = r.cz + fz * at.sofa.back; // back line of the sofa
@@ -120,7 +129,8 @@ export async function furnish(C, onReady) {
   // master bedroom: pillows, a bench at the foot of the bed, a reading corner by the window
   for (const b of at.beds || []) { const { o, t, hx, hz, W0, head } = b; const fx = -hx, fz = -hz; const lat = (u, d) => [head[0] - hx * d + (hz ? u : 0), head[1] - hz * d + (hx ? u : 0)];
     const ids = t === 'bed2' ? [[EXTRA.pDiamond, -0.38, 0.48], [EXTRA.pDiamond, 0.38, 0.48], [EXTRA.pLumbar, 0, 0.6]] : (b.i === 1 ? [[EXTRA.pPink, 0, 0.5]] : [[EXTRA.pNavy, 0, 0.46]]);
-    ids.forEach(([id, u, w], i) => { const d = i === 2 ? 0.62 : 0.48; const [x, z] = lat(u, d), [qx, qz] = lat(u, 0.62); pillow(id, topOf(o, qx, qz, 0.6), x, z, fx, fz, w * Math.min(1, W0 / 1.4 + 0.2), -0.3); }); }
+    bedding(b);
+    ids.forEach(([id, u, w], i) => { const d = i === 2 ? 0.62 : 0.48; const [x, z] = lat(u, d), [qx, qz] = lat(u, 0.62); pillow(id, topOf(root, qx, qz, 0.6), x, z, fx, fz, w * Math.min(1, W0 / 1.4 + 0.2), -0.3); }); }
   { const k = sz(EXTRA.bench); if (k && bed2) { const r = rect(bed2[1], bed2[2], bed2[3], bed2[4]); const [hx, hz] = DIR[bed2[5]]; const foot = hz ? (hz > 0 ? r.z0 : r.z1) : (hx > 0 ? r.x0 : r.x1); const s = 1.3 / k.x;
     const d = k.z * s / 2 + 0.06; put(EXTRA.bench, hx ? foot - hx * d : r.cx, hz ? foot - hz * d : r.cz, -hx, -hz, s); } }
   { const k = sz(EXTRA.readChair); if (k) { const [x, z] = P(930, 252); put(EXTRA.readChair, x, z, 0.6, 0.8, 0.76 / k.x); } const kf = sz(EXTRA.floorLamp); if (kf) { const [x, z] = P(902, 228); put(EXTRA.floorLamp, x, z, 1, 1, 1.5 / kf.y); } }
